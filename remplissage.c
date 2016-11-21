@@ -112,6 +112,7 @@ int recuperation_donnees(FILE *fp, int nb_lignes)
             }
         }
         printf("\nnb donnee:%i\n",nb_donnees);
+        logGlobal.tailleTab=nb_donnees;
         return nb_donnees;
     }
 
