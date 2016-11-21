@@ -9,8 +9,9 @@
 #include <time.h>
 
 logs Detection_circulaire(point centre, int rayon);
+void suppression(logs tableauSupp);
 void detection_pt_interet();
-void Suppression_circulaire(logs tableauSupp);
+
 
 
 

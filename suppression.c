@@ -25,18 +25,38 @@ logs Detection_circulaire (point centre,int rayon)
     return tableauCercleIn;
 }
 
-
-void Detection_pt_interet()
+void suppression(logs tableauSupp)
 {
     int i,j;
-    int nb_pt_centre_interet=logGlobal.tailleTab%10;
+    int incTabClean=0;
+    logs Logcleantmp=AllocationTableauPoint(logGlobalClean.tailleTab);
+    for(i=0;i<logGlobalClean.tailleTab;i++)
+    {
+        for (j = 0; j < tableauSupp.tailleTab;j++)
+        {
+             if (&(tableauSupp.tableauPoint[j])!=&(logGlobalClean.tableauPoint[i]))
+            {
+                CopiePoints(&(logGlobalClean.tableauPoint[j]),&(Logcleantmp.tableauPoint[incTabClean++]));
+            }
+        }
+    }
+    logGlobalClean=CopieTableau(Logcleantmp,incTabClean);
+    BackupFile(tableauSupp);
+}
+
+
+
+void detection_pt_interet()
+{
+    int i,j;
+    int nb_pt_centre_interet=5;
     printf("\n nb point pour etre un point d'interet dans le cercle : %i \n",nb_pt_centre_interet);
     logs tab_cercle;
     logs tab_cercle2;
     int rayon=20;
-    for(i=0;i<logGlobal.tailleTab;i++)
+    for(i=0;i<logGlobalClean.tailleTab;i++)
     {
-        tab_cercle=Detection_circulaire(logGlobal.tableauPoint[i],rayon);
+        tab_cercle=Detection_circulaire(logGlobalClean.tableauPoint[i],rayon);
         if (tab_cercle.tailleTab >=nb_pt_centre_interet)
         {
             for(j=0;j<tab_cercle.tailleTab;j++)
@@ -51,7 +71,7 @@ void Detection_pt_interet()
                 }
 
             }
-            Supression_Circulaire(tab_cercle);
+            suppression(tab_cercle);
             free(tab_cercle.tableauPoint);
         }
 
@@ -60,20 +80,4 @@ void Detection_pt_interet()
 
 
 
-}
-void Suppression_circulaire (logs tableauSupp)
-{
-    int i,j;
-    int incTabClean=0;
-    for(i=0;i<tableauSupp.tailleTab;i++)
-    {
-        for (j = 0; j < logGlobal.tailleTab;j++)
-        {
-             if (&(tableauSupp.tableauPoint[i])!=&(logGlobal.tableauPoint[j]))
-            {
-                CopiePoints(&logGlobal.tableauPoint[j],&logGlobalClean.tableauPoint[incTabClean++]);
-            }
-        }
-    }
-    BackupFile(tableauSupp);
 }
