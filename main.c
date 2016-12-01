@@ -18,46 +18,48 @@
 
 int main(int argc, char** argv)
 {
-     int i;
-     logs tlog;
-     FILE *fp;
-     int nb_lignes;
-     fp=fopen("geoloc-logs.txt","r");
-     nb_lignes=Nombre_lignes(fp);
-     Init_tableau(nb_lignes);
-     printf("\nnombre de lignes dans le fichier :%i \n",nb_lignes);
-     recuperation_donnees(fp,nb_lignes);
-     fclose(fp);
-     //logGlobalClean=CopieTableau(logGlobal,logGlobal.tailleTab);
-     //detection_pt_interet();
-     printf("taille du tableau tlog : %d\n",logGlobalClean.tailleTab);
+    logs tlog;
+    FILE *fp;
+    int nb_lignes;
+    printf("tour 1\n");
+    fp=fopen("geoloc-logs.txt","r");
+    nb_lignes=Nombre_lignes(fp);
+    Init_tableau(nb_lignes);
+    printf("\nnombre de lignes dans le fichier :%i \n",nb_lignes);
+    recuperation_donnees(fp,nb_lignes);
+    fclose(fp);
+    while(quit!=1)
+    {
+    GtkWidget *window;    //creation fenetre
+    GtkWidget *darea;     //creation zone de dessin sur la fenetre
+ 
+    //initialisation fenetre
+
+    gtk_init_check(&argc, &argv);
+    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
 
-GtkWidget *window;    /*creation fenetre*/
-GtkWidget *darea;     /*creation zone de dessin sur la fenetre*/
+    darea = gtk_drawing_area_new();
+    gtk_container_add(GTK_CONTAINER(window), darea);
 
-/*initialisation fenetre*/
-gtk_init(&argc, &argv);
-window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-darea = gtk_drawing_area_new();
-gtk_container_add(GTK_CONTAINER(window), darea);
-g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+    g_signal_connect(window, "destroy", G_CALLBACK(on_quit), &quit);
+    gtk_widget_set_events (darea, GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK);
+    g_signal_connect(G_OBJECT(darea), "button_press_event", G_CALLBACK (on_click_map), NULL);
 
-/*dessinage carte et points*/
-g_signal_connect(G_OBJECT(darea), "draw", G_CALLBACK(on_draw), NULL);
+    //dessin de la carte et points
+    g_signal_connect(G_OBJECT(darea), "draw", G_CALLBACK(on_draw), NULL);
+    
+    //positionnement de la fenetre
+    gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
+    gtk_window_set_default_size(GTK_WINDOW(window), HFENETRE,LFENETRE);
 
-/*positionnement de la fenetre*/
-gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
-gtk_window_set_default_size(GTK_WINDOW(window), HFENETRE,LFENETRE);
-gtk_window_set_title(GTK_WINDOW(window), "Bourges");
-//gtk_window_set_resizable(GTK_WINDOW(window),FALSE); //un soucis ici
+    gtk_window_set_title(GTK_WINDOW(window), "Bourges");
 
+    //gtk_window_set_resizable(GTK_WINDOW(window),FALSE); //un soucis ici
+    gtk_widget_show_all(window); //affichage de la fenetre
+    gtk_main();  // fonction de boucle de gtk
+    }
 
-gtk_widget_show_all(window); //affichage de la fenetre
-
-
-gtk_main();  // fonction de boucle de gtk
-
-
-return 0;
- }
+    return 0;
+}
+    

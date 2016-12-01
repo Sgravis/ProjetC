@@ -10,51 +10,50 @@
 
 
 gboolean on_draw(GtkWidget *widget, cairo_t *cr,gpointer user_data);
+void on_click_map(GtkWidget* canvas, GdkEventButton* event, void* data);
+void on_quit(GtkWidget *widget,gpointer user_data);
 
-
-void un_point(cairo_t* cr, long double latitude, long double longitude)
+void init_map()
 {
+	map.map_pos_x=0;
+	map.map_pos_y=0;
+	map.map_zoom=0;
+}
 
-	cairo_arc(cr,((2.39869958-latitude)/-0.000088242)+855,((212,47.0821639-longitude)/0.000055919)+156, 10, 0, 2 * M_PI);
+void do_point(cairo_t* cr, long double latitude, long double longitude)
+{
+	printf("long : %Lf, lat : %Lf\n",longitude,latitude);
+
+	cairo_arc(cr,((2.39869958-longitude)/-0.000088242)+855,((212,47.0821639-latitude)/0.000055919)+156, 3, 0, 2 * M_PI);
 	cairo_fill(cr);
-
-	cairo_arc(cr,501,495,3,0,2*M_PI);	 //(501,495)=position de l'aéroport
-	cairo_fill(cr);				  
-	
-	cairo_arc(cr, 855,156,3,0,2*M_PI);	//(855,156)=position de la cathédrale
-	cairo_fill(cr);				
-
-	cairo_set_source_rgb(cr,0,1,0);
-
-	cairo_arc(cr,((2.39869958-2.4174019)/-0.000088242)+855,((212,47.0821639-47.0808212)/0.000055919)+156,3,0,2*M_PI);      
-        cairo_fill(cr);
 
 	cairo_stroke(cr);    
 }
 
-void log_vers_carte(cairo_t* cr, logs log){
+void log_vers_carte(cairo_t* cr){
 
 	int i;
 	cairo_set_source_rgb(cr, 1, 0, 0);  /*couleur des point*/
     cairo_set_line_width(cr,1);
-    un_point(cr,10,20);
-	for(i=0;i<log.tailleTab;i++){  
-		un_point(cr,log.tableauPoint[i].latitude,log.tableauPoint[i].longitude);
+	for(i=0;i<logGlobal.tailleTab;i++)
+	{  
+		do_point(cr,logGlobal.tableauPoint[i].latitude,logGlobal.tableauPoint[i].longitude);
 	}
 }
 
-void do_drawing(cairo_t *cr)
+void do_map(cairo_t *cr)
 {
 
 	int w, h;
 	
 	/*initialisation image*/
-	cairo_surface_t *image;
+	cairo_surface_t *image;	
 	cairo_set_source_rgb(cr, 0, 0, 0);
 	cairo_set_line_width(cr, 0.5);
 
 	/*chargement de la carte*/
-	image = cairo_image_surface_create_from_png ("Carte_Bourges3.png");
+	image = cairo_image_surface_create_from_png ("Carte_Bourges_complete.png");
+
 	w = cairo_image_surface_get_width (image);
 	h = cairo_image_surface_get_height (image);
 	cairo_scale (cr,HFENETRE/w,LFENETRE/h);
@@ -63,42 +62,34 @@ void do_drawing(cairo_t *cr)
 	/*dessinage de la carte*/
 	cairo_paint (cr);
 	cairo_stroke(cr);
+	
 
 }
-
-int affichage(int argc, char *argv[])
+void on_quit(GtkWidget *widget,gpointer user_data)
 {
-GtkWidget *window;    /*creation fenetre*/
-GtkWidget *darea;     /*creation zone de dessin sur la fenetre*/
+	quit=1;
+	gtk_main_quit();
+}
 
-/*initialisation fenetre*/
-gtk_init(&argc, &argv);
-window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-darea = gtk_drawing_area_new();
-gtk_container_add(GTK_CONTAINER(window), darea);
-g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-
-/*dessinage carte et points*/
-g_signal_connect(G_OBJECT(darea), "draw", G_CALLBACK(on_draw), NULL);
-
-/*positionnement de la fenetre*/
-gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
-gtk_window_set_default_size(GTK_WINDOW(window), HFENETRE,LFENETRE);
-gtk_window_set_title(GTK_WINDOW(window), "Bourges");
-//gtk_window_set_resizable(GTK_WINDOW(window),FALSE); //un soucis ici
-
-
-gtk_widget_show_all(window); //affichage de la fenetre
-
-gtk_main();  // fonction de boucle de gtk
-
-return 0;
+void on_click_map(GtkWidget* darea, GdkEventButton* event, void* data)
+{
+    if (event->type==GDK_2BUTTON_PRESS )
+    {
+    	if(map.map_zoom==0){
+    		printf("double clique sur %f;%f \n",event->x,event->y);
+    		map.map_pos_x=event->x;
+    		map.map_pos_y=event->y;
+    		map.map_zoom=1;
+    		gtk_main_quit();
+    	}
+    	else{init_map();}
+    }
 }
 
 gboolean on_draw(GtkWidget *widget, cairo_t *cr,gpointer user_data)
 {
-	do_drawing(cr); /*affiche la carte*/
-	log_vers_carte(cr, logGlobal);	/*affiche un log*/
+	do_map(cr); /*affiche la carte*/
+	log_vers_carte(cr);	/*affiche le log*/
 	return FALSE;
 }
 #endif
