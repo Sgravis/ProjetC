@@ -7,7 +7,7 @@
 #include "allocation.h"
 #include "remplissage.h"
 
-int recuperation_donnees(FILE *fp, int nb_lignes)
+void recuperation_donnees(FILE *fp, int nb_lignes)
     {
         int i;
         int nb_donnees=0;
@@ -47,7 +47,7 @@ int recuperation_donnees(FILE *fp, int nb_lignes)
             {
 
                 c=fgetc(fp);
-                while(c != '\n')
+                while(c != '\n'&& c != EOF)
                 {
                     c=fgetc(fp);
                 }
@@ -62,7 +62,7 @@ int recuperation_donnees(FILE *fp, int nb_lignes)
             if (strcmp(lo,longi)!=0)
             {
                 c=fgetc(fp);
-                while(c != '\n' )
+                while(c != '\n' && c != EOF )
                 {
                     c=fgetc(fp);
                 }
@@ -77,7 +77,7 @@ int recuperation_donnees(FILE *fp, int nb_lignes)
             if (c != ';')
             {
                 c=fgetc(fp);
-                while(c != '\n')
+                while(c != '\n' && c != EOF )
                 {
                     c=fgetc(fp);
                 }
@@ -90,10 +90,10 @@ int recuperation_donnees(FILE *fp, int nb_lignes)
             {
 
             c=fgetc(fp);
-            if (c != '\n')
+            if (c != '\n' && c != EOF )
             {
                 c=fgetc(fp);
-                while(c != '\n')
+                while(c != '\n'&& c != EOF )
                 {
                     c=fgetc(fp);
                 }
@@ -104,17 +104,19 @@ int recuperation_donnees(FILE *fp, int nb_lignes)
             {
             logGlobal.tableauPoint[nb_donnees].longitude=test_long;
             logGlobal.tableauPoint[nb_donnees].latitude=test_lat;
-            nb_donnees++;
             temps=*localtime(&test_date);
             logGlobal.tableauPoint[nb_donnees].date=temps;
+            nb_donnees++;
+
 
 
             }
         }
         printf("\nnb donnee:%i\n",nb_donnees);
-        return nb_donnees;
-    }
 
+        logGlobal.tailleTab=nb_donnees;
+
+    }
 
 
 

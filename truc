@@ -1,0 +1,4 @@
+printf(" yoylo \n");
+for(i=0;i<logGlobal.tailleTab;i++){
+    printf("longitude : %lf latitude : %lf \n",logGlobal.tableauPoint[i].longitude,logGlobal.tableauPoint[i].latitude);
+}
