@@ -16,16 +16,6 @@ typedef struct
 	int tailleTab;
 }logs;
 
-typedef struct 
-{
-	float map_pos_x;
-	float map_pos_y;
-	int map_zoom;	
-}map_position;
-
-int quit;
-
-map_position map;
 logs logGlobal;
 logs logGlobalClean;
 
