@@ -9,6 +9,7 @@ $(EXECUTABLE): main.o allocation.o remplissage.o suppression.o cpprof.o
 
 main.o: main.c allocation.h cpprof.h remplissage.h structure_log.h suppression.h
 	$(CC) -c $< `pkg-config --cflags --libs gtk+-3.0` `pkg-config --cflags cairo`
+
 allocation.o: allocation.c allocation.h structure_log.h
 	$(CC) -c $< $(FLAGS)
 
