@@ -25,9 +25,9 @@ logs Detection_circulaire (point centre,int rayon)
     return tableauCercleIn;
 }
 
-void suppression(logs tableauSupp)
+void Suppression(logs tableauSupp)
 {
-    int i,j;
+	int i,j;
     int incTabClean=0;
     logs Logcleantmp=AllocationTableauPoint(logGlobalClean.tailleTab);
     for(i=0;i<logGlobalClean.tailleTab;i++)
@@ -36,12 +36,13 @@ void suppression(logs tableauSupp)
         {
              if (&(tableauSupp.tableauPoint[j])!=&(logGlobalClean.tableauPoint[i]))
             {
-                CopiePoints(&(logGlobalClean.tableauPoint[j]),&(Logcleantmp.tableauPoint[incTabClean++]));
+                CopiePoints(&logGlobalClean.tableauPoint[j],&Logcleantmp.tableauPoint[incTabClean++]);
             }
         }
     }
     logGlobalClean=CopieTableau(Logcleantmp,incTabClean);
     BackupFile(tableauSupp);
+
 }
 
 
@@ -49,8 +50,8 @@ void suppression(logs tableauSupp)
 void detection_pt_interet()
 {
     int i,j;
-    int nb_pt_centre_interet=5;
-    printf("\n nb point pour etre un point d'interet dans le cercle : %i \n",nb_pt_centre_interet);
+    int nb_pt_centre_interet=logGlobal.tailleTab%10;
+    //printf("\n nb point pour etre un point d'interet dans le cercle : %i \n",nb_pt_centre_interet);
     logs tab_cercle;
     logs tab_cercle2;
     int rayon=20;
@@ -71,7 +72,7 @@ void detection_pt_interet()
                 }
 
             }
-            suppression(tab_cercle);
+            Suppression(tab_cercle);
             free(tab_cercle.tableauPoint);
         }
 

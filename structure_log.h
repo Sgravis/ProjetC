@@ -19,6 +19,7 @@ typedef struct
 logs logGlobal;
 logs logGlobalClean;
 
+
 char tableauID[100][15];
 
 #endif

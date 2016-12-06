@@ -18,7 +18,7 @@
         }
 
     }
-    return compteur_lignes;
+    return compteur_lignes+1;
  }
 
 void Init_tableau(int taille)
