@@ -10,7 +10,7 @@
 #include <cairo.h>
 #include <gtk/gtk.h>
 #include <math.h>
-#include "cpprof.h"
+#include "visuel.h"
 #include "structure_log.h"
 #define HFENETRE 1628.0
 #define LFENETRE 680.0
@@ -32,7 +32,7 @@ int main(int argc, char** argv)
     {
     GtkWidget *window;    //creation fenetre
     GtkWidget *darea;     //creation zone de dessin sur la fenetre
- 
+
     //initialisation fenetre
 
     gtk_init_check(&argc, &argv);
@@ -48,7 +48,7 @@ int main(int argc, char** argv)
 
     //dessin de la carte et points
     g_signal_connect(G_OBJECT(darea), "draw", G_CALLBACK(on_draw), NULL);
-    
+
     //positionnement de la fenetre
     gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
     gtk_window_set_default_size(GTK_WINDOW(window), HFENETRE,LFENETRE);
@@ -62,4 +62,3 @@ int main(int argc, char** argv)
 
     return 0;
 }
-    
