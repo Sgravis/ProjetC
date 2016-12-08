@@ -4,7 +4,6 @@
 #include <cairo.h>
 #include <gtk/gtk.h>
 #include <stdio.h>
-#include "cpprof.h"
 #include <math.h>
 #include "structure_log.h"
 #define HFENETRE 1628.0

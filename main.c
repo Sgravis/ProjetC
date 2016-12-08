@@ -10,7 +10,7 @@
 #include <cairo.h>
 #include <gtk/gtk.h>
 #include <math.h>
-#include "cpprof.h"
+#include "visuel.h"
 #include "structure_log.h"
 #define HFENETRE 1628.0
 #define LFENETRE 680.0
