@@ -4,10 +4,10 @@
 #include <time.h>
 
 typedef struct {
-int ID_user;
-long double longitude;
-long double latitude;
-struct tm date;
+	int ID_user;
+	long double longitude;
+	long double latitude;
+	time_t date;
 }point;
 
 typedef struct
@@ -15,6 +15,16 @@ typedef struct
 	point * tableauPoint;
 	int tailleTab;
 }logs;
+
+typedef struct{
+	long double longitude;
+	long double latitude;
+}pointaddr;
+
+typedef struct {
+	pointaddr * tableauPointaddr;
+	int tailleTableauAddr;
+}addr;
 
 logs logGlobal;
 logs logGlobalClean;
