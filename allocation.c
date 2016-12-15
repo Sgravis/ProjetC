@@ -8,10 +8,13 @@
 
  int Nombre_lignes(FILE * fp)
  {
+
+    fseek(fp,0,SEEK_SET);
     char c;
     int compteur_lignes=0;
     while((c=fgetc(fp))!=EOF)
     {
+        
         if (c=='\n')
         {
             compteur_lignes++;
@@ -21,9 +24,10 @@
     return compteur_lignes+1;
  }
 
-void Init_tableau(int taille)
+void Init_tableau_global(int taille)
  {
     logGlobal.tableauPoint= (point*)malloc(taille*sizeof(point));
+
  }
 
 logs AllocationTableauPoint(int taille)
@@ -34,11 +38,11 @@ logs AllocationTableauPoint(int taille)
     return tlog;
 }
 
-void Liberer(logs tlog)
+/*void Liberer(logs tlog)
 {
     int i;
     for (i=0;i<tlog.tailleTab;i++)
     {
         free(&tlog.tableauPoint[i]);
     }
-}
+}*/
