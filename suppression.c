@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 #include <math.h>
 #include "structure_log.h"
 #include "allocation.h"
@@ -10,11 +11,11 @@
 
 logs Detection_circulaire (point centre,int rayon)
 {
-    logs tableauCercleIntmp=AllocationTableauPoint(logGlobal.tailleTab);
+    logs tableauCercleIntmp=AllocationTableauPoint(logGlobalClean.tailleTab);
     logs tableauCercleIn;
     int i;
     int incCercle=0;
-    for(i=0;i<logGlobal.tailleTab;i++)
+    for(i=0;i<logGlobalClean.tailleTab;i++)
     {
         if (sqrt(pow(((logGlobal.tableauPoint[i].latitude-centre.latitude)*111*1000),2)+pow(((centre.longitude-logGlobal.tableauPoint[i].longitude)*76*1000),2))<rayon)
         {
@@ -22,36 +23,61 @@ logs Detection_circulaire (point centre,int rayon)
         }
     }
     tableauCercleIn=CopieTableau(tableauCercleIntmp,incCercle);
+    free(tableauCercleIntmp.tableauPoint);
     return tableauCercleIn;
 }
 
-void Suppression(logs tableauSupp)
+void suppression(logs tableauSupp)
 {
-	int i,j;
+    int i,j,a;
     int incTabClean=0;
     logs Logcleantmp=AllocationTableauPoint(logGlobalClean.tailleTab);
     for(i=0;i<logGlobalClean.tailleTab;i++)
     {
-        for (j = 0; j < tableauSupp.tailleTab;j++)
+        a=0;
+        for (j=0; j < tableauSupp.tailleTab;j++)
         {
-             if (&(tableauSupp.tableauPoint[j])!=&(logGlobalClean.tableauPoint[i]))
+             if (comparaison_point(tableauSupp.tableauPoint[j],logGlobalClean.tableauPoint[i])==1)
             {
-                CopiePoints(&logGlobalClean.tableauPoint[j],&Logcleantmp.tableauPoint[incTabClean++]);
+                a=1;
             }
+            
+        }
+        if (a!=1)
+        {
+            CopiePoints(&(logGlobalClean.tableauPoint[j]),&(Logcleantmp.tableauPoint[incTabClean++]));
+
         }
     }
+    free(logGlobalClean.tableauPoint);
     logGlobalClean=CopieTableau(Logcleantmp,incTabClean);
     BackupFile(tableauSupp);
 
 }
 
+int comparaison_point(point p1, point p2)
+{
+
+    if(p1.longitude!=p2.longitude)
+    {
+        return -1;
+    }
+    if(p1.latitude!=p2.latitude)
+    {
+        return -1;
+    }
+    if(p1.date!=p2.date)
+    {
+        return -1;
+    }
+    return 1;
+}
 
 
 void detection_pt_interet()
 {
     int i,j;
-    int nb_pt_centre_interet=logGlobal.tailleTab%10;
-    //printf("\n nb point pour etre un point d'interet dans le cercle : %i \n",nb_pt_centre_interet);
+    int nb_pt_centre_interet=5;
     logs tab_cercle;
     logs tab_cercle2;
     int rayon=20;
@@ -72,13 +98,30 @@ void detection_pt_interet()
                 }
 
             }
-            Suppression(tab_cercle);
+            suppression(tab_cercle);
             free(tab_cercle.tableauPoint);
         }
 
     }
 
 
+}
 
+void afficher_tableau(int taille, logs tab)
+{
+    int i;
+    for(i=0;i<taille;i++)
+    {
+        printf("date:%ld,lat:%Lf,long:%Lf\n",tab.tableauPoint[i].date,tab.tableauPoint[i].latitude,tab.tableauPoint[i].longitude);
+    }
+
+}
+void afficher_tableau2(int taille, addr tab)
+{
+    int i;
+    for(i=0;i<15;i++)
+    {
+        printf("long:%Lf,lat:%Lf\n",tab.tableauPointaddr[i].latitude,tab.tableauPointaddr[i].longitude);
+    }
 
 }
