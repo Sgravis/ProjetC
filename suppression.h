@@ -11,6 +11,9 @@
 logs Detection_circulaire(point centre, int rayon);
 void suppression(logs tableauSupp);
 void detection_pt_interet();
+int comparaison_point(point p1, point p2);
+void afficher_tableau(int taille, logs tab);
+void afficher_tableau2(int taille, addr tab);
 
 
 
