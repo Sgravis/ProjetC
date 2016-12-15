@@ -11,8 +11,8 @@ Sam
 Jeudi 15 décembre
 --
 
-- [ ] Création du README.md
-- [ ] Création du cahier des charges
+- [X] Création du README.md
+- [X] Création du cahier des charges
 
 Vendredi 16 décembre
 --
