@@ -4,8 +4,8 @@ Partie 1: Pré-traitement des données
 Pour pouvoir partager les données avec d’autres groupes du projet, il est important de protéger la vie privée des utilisateurs ayant collecté les traces. Pour se faire nous proposons dans cette partie de réaliser des pré-traitements sur les traces afin de générer des nouveaux fichiers de traces ayant supprimé des informations sensibles.
 
 Les algorithmes proposés sont les suivants:
-- [ ] suppression de points dans un cercle donné (typiquement le domicile de l’utilisateur ou son bar favori)
-- [ ] suggestion de points d’intérêts à supprimer: il faut calculer des points pour lesquels on repère une fréquentation régulière et qui peut servir de centre pour un cercle
+- [X] suppression de points dans un cercle donné (typiquement le domicile de l’utilisateur ou son bar favori)
+- [X] suggestion de points d’intérêts à supprimer: il faut calculer des points pour lesquels on repère une fréquentation régulière et qui peut servir de centre pour un cercle
 - [ ] suppression des points se rendant à un point d’intérêt c’est-à-dire une “route”
 - [ ] calcul automatique du rayon d’un cercle à partir de la densité de population (en rase campagne, on imagine que les cercles ont des rayons de plusieurs kilomètres, en ville des centaines de mètres suffisent) en exploitant la base ADRESSE.
 
