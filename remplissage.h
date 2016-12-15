@@ -8,9 +8,12 @@
 #include <time.h>
 
 void recuperation_donnees(FILE *fp, int nb_lignes);
-void CopiePoints (point * point1,point * point2);
+void CopiePoints (point *point1,point *point2);
 void BackupFile (logs tlog);
-logs CopieTableau (logs tlog,int taille);
+logs CopieTableau(logs tlog1, int taille);
+logs resurrection_point(char * nom);
+addr recuperation_addr();
+
 
 
 
