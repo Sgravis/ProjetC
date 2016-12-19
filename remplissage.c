@@ -175,7 +175,7 @@ logs resurrection_point(char * nom)
         FILE *fp;
         fp=fopen(nom,"r");
         int nb_lignes;
-        nb_lignes--;
+        //nb_lignes--;
         nb_lignes=Nombre_lignes(fp);
         int i;
         time_t date;

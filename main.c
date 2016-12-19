@@ -39,7 +39,7 @@ int main(int argc, char** argv)
      printf("Affichage tableau de resurection des points: \n\n\n");
      afficher_tableau(resurection.tailleTab,resurection);
      printf("Affichage tableau adresse (que un bout): \n\n\n");
-     addr b;
+     addr b;    
      b=recuperation_addr();
      afficher_tableau2(12,b);
 
