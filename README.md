@@ -17,9 +17,9 @@ Dans cette partie, on souhaite visualiser les traces de géolocalisation. La vis
 
 Les algorithmes proposés sont:
 
-- [ ] Visualisation statique:
-	- [ ] Vue d’une carte et de points représentants les mesures.
-	- [ ] Aggrégation de points: les points redondants peuvent être fusionnés graphiquement pour représenter un taux de présence
+- [X] Visualisation statique:
+	- [X] Vue d’une carte et de points représentants les mesures.
+	- [X] Aggrégation de points: les points redondants peuvent être fusionnés graphiquement pour représenter un taux de présence
 	- [ ] Vue de routes en liant les points
 	- [ ] Vue des points d’intérêts
 	- [ ] Vue des cercles de protection de la vie privée
