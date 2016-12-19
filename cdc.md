@@ -33,7 +33,10 @@ Vendredi 16 décembre
 Loïc
 ==
 **Pour les vacances**
+- [ ] Relier les fonctions au rendu graphique
+
 Élé
+==
 - [ ] Générer la doxygène et remplir ma partie
 - [ ] Finir la gestion des points interet : cercle de taille réglable
  
