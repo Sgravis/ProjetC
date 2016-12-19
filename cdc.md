@@ -35,6 +35,7 @@ Loïc
 **Pour les vacances**
 - [ ] Relier les fonctions au rendu graphique
 - [ ] Commencer la visualisation dynamique
+
 Élé
 ==
 - [ ] Générer la doxygène et remplir ma partie
