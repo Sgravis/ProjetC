@@ -5,7 +5,7 @@ EXECUTABLE=prog
 all: $(EXECUTABLE)
 
 $(EXECUTABLE): main.o allocation.o remplissage.o suppression.o visuel.o
-	$(CC) -lm -o $@ $^ $(FLAGS) `pkg-config --cflags --libs gtk+-3.0` `pkg-config --cflags cairo`
+	$(CC) -o $@ $^ $(FLAGS) `pkg-config --cflags --libs gtk+-3.0` `pkg-config --cflags cairo` -lm
 
 main.o: main.c allocation.h visuel.h remplissage.h structure_log.h suppression.h
 	$(CC) -c $< `pkg-config --cflags --libs gtk+-3.0` `pkg-config --cflags cairo`

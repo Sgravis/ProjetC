@@ -10,19 +10,15 @@ void init_map()
 
 void do_point(cairo_t* cr, long double latitude, long double longitude)
 {
-	//printf("long : %Lf, lat : %Lf\n",longitude,latitude);
-
-	cairo_arc(cr,((2.39869958-longitude)/-0.000088242)+855,((212,47.0821639-latitude)/0.000055919)+156, 3, 0, 2 * M_PI);
+	cairo_arc(cr,((2.39869958-longitude)/-0.000088242)+855,((212,47.0821639-latitude)/0.000055919)+156, 2, 0, 2 * M_PI);
 	cairo_fill(cr);
-
-	cairo_stroke(cr);    
 }
 
 void log_vers_carte(cairo_t* cr){
 
 	int i;
-	cairo_set_source_rgb(cr, 1, 0, 0);  /*couleur des point*/
-    cairo_set_line_width(cr,1);
+	cairo_set_source_rgb(cr, 0.25, 0,1);  /*couleur des point*/
+        cairo_set_line_width(cr,8);
 	for(i=0;i<logGlobal.tailleTab;i++)
 	{  
 		do_point(cr,logGlobal.tableauPoint[i].latitude,logGlobal.tableauPoint[i].longitude);
@@ -36,7 +32,7 @@ void do_map(cairo_t *cr)
 	
 	/*initialisation image*/
 	cairo_surface_t *image;	
-	cairo_set_source_rgb(cr, 0, 0, 0);
+	cairo_set_source_rgb(cr,0,0, 0);
 	cairo_set_line_width(cr, 0.5);
 
 	/*chargement de la carte*/
