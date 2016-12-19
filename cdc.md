@@ -35,7 +35,7 @@ Loïc
 **Pour les vacances**
 Élé
 - [ ] Générer la doxygène et remplir ma partie
-- [ ] Finir la gestion des points interet : cercle de taille réglable
+ - [ ] Finir la gestion des points interet : cercle de taille réglable
 ==
 **Pour les vacances**
 Yannis
