@@ -38,11 +38,14 @@ Loïc
 
 Élé
 ==
+**Pour les vacances**
+
 - [ ] Générer la doxygène et remplir ma partie
 - [ ] Finir la gestion des points interet : cercle de taille réglable
- 
+- Ne pas oublier: -  pourquoi +1 dans resurection et pas dans les log de base?
+                  - corriger petite erreur de detection point intret (saute des points)
 ==
-**Pour les vacances**
+
 Yannis
 ==
 **Pour les vacances**
