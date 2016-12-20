@@ -18,7 +18,7 @@ void log_vers_carte(cairo_t* cr){
 
 	int i;
 	cairo_set_source_rgb(cr, 0.25, 0,1);  /*couleur des point*/
-        cairo_set_line_width(cr,8);
+    cairo_set_line_width(cr,8);
 	for(i=0;i<logGlobal.tailleTab;i++)
 	{  
 		do_point(cr,logGlobal.tableauPoint[i].latitude,logGlobal.tableauPoint[i].longitude);
@@ -40,7 +40,7 @@ void do_map(cairo_t *cr)
 
 	w = cairo_image_surface_get_width (image);
 	h = cairo_image_surface_get_height (image);
-	cairo_scale (cr,HFENETRE/w,LFENETRE/h);
+	cairo_scale (cr,((map.map_zoom+1)*HFENETRE)/w,((map.map_zoom+1)*LFENETRE)/h);
 	cairo_set_source_surface (cr, image, 0, 0);
 
 	/*dessinage de la carte*/
@@ -57,16 +57,19 @@ void on_quit(GtkWidget *widget,gpointer user_data)
 
 void on_click_map(GtkWidget* darea, GdkEventButton* event, void* data)
 {
+	printf("click\n");
+ 
     if (event->type==GDK_2BUTTON_PRESS )
     {
     	if(map.map_zoom==0){
     		printf("double clique sur %f;%f \n",event->x,event->y);
     		map.map_pos_x=event->x;
     		map.map_pos_y=event->y;
-    		map.map_zoom=1;
+    		map.map_zoom++;
     	}
     	else{init_map();}
     }
+    maj_map();
 }
 
 gboolean on_draw(GtkWidget *widget, cairo_t *cr,gpointer user_data)
@@ -75,3 +78,9 @@ gboolean on_draw(GtkWidget *widget, cairo_t *cr,gpointer user_data)
 	log_vers_carte(cr);	/*affiche le log*/
 	return FALSE;
 }
+
+void maj_map()
+{
+	gtk_widget_queue_draw (darea);
+}
+

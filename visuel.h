@@ -18,10 +18,13 @@ typedef struct
 
 int quit;
 
+GtkWidget* window;
+GtkWidget* darea;
+
 map_position map;
 
 gboolean on_draw(GtkWidget *widget, cairo_t *cr,gpointer user_data);
-void on_click_map(GtkWidget* canvas, GdkEventButton* event, void* data);
+void on_click_map(GtkWidget* darea,GdkEventButton* event, void* data);
 void on_quit(GtkWidget *widget,gpointer user_data);
 
 #endif
