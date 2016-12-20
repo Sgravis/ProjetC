@@ -33,8 +33,8 @@ int main(int argc, char** argv)
     afficher_tableau(logGlobal.tailleTab,logGlobal);
     printf("Affichage tableau clean: \n\n\n");
     afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
-    detection_pt_interet();
-    printf("Affichage tableau clean apres detection pt interet\n\n\n");
+    */detection_pt_interet();
+    /*printf("Affichage tableau clean apres detection pt interet\n\n\n");
     afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
     logs resurection=resurrection_point("BackupPoints.txt");
     printf("Affichage tableau de resurection des points: \n\n\n");

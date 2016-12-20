@@ -17,9 +17,9 @@ logs Detection_circulaire (point centre,int rayon)
     int incCercle=0;
     for(i=0;i<logGlobalClean.tailleTab;i++)
     {
-        if (sqrt(pow(((logGlobal.tableauPoint[i].latitude-centre.latitude)*111*1000),2)+pow(((centre.longitude-logGlobal.tableauPoint[i].longitude)*76*1000),2))<rayon)
+        if (sqrt(pow(((logGlobalClean.tableauPoint[i].latitude-centre.latitude)*111*1000),2)+pow(((centre.longitude-logGlobalClean.tableauPoint[i].longitude)*76*1000),2))<rayon)
         {
-            CopiePoints(&logGlobal.tableauPoint[i],&tableauCercleIntmp.tableauPoint[incCercle++]);
+            CopiePoints(&logGlobalClean.tableauPoint[i],&tableauCercleIntmp.tableauPoint[incCercle++]);
         }
     }
     tableauCercleIn=CopieTableau(tableauCercleIntmp,incCercle);
@@ -45,7 +45,7 @@ void suppression(logs tableauSupp)
         }
         if (a!=1)
         {
-            CopiePoints(&(logGlobalClean.tableauPoint[j]),&(Logcleantmp.tableauPoint[incTabClean++]));
+            CopiePoints(&(logGlobalClean.tableauPoint[i]),&(Logcleantmp.tableauPoint[incTabClean++]));
 
         }
     }
@@ -77,10 +77,10 @@ int comparaison_point(point p1, point p2)
 void detection_pt_interet()
 {
     int i,j;
-    int nb_pt_centre_interet=5;
+    int nb_pt_centre_interet=50;
     logs tab_cercle;
     logs tab_cercle2;
-    int rayon=20;
+    int rayon=40;
     for(i=0;i<logGlobalClean.tailleTab;i++)
     {
         tab_cercle=Detection_circulaire(logGlobalClean.tableauPoint[i],rayon);

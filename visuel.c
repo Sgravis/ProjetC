@@ -29,11 +29,12 @@ void do_point(cairo_t* cr, long double latitude, long double longitude)
 
 void log_vers_carte(cairo_t* cr)
 {
+	int i;
 	cairo_set_source_rgb(cr, 0.25, 0,1);  /*couleur des point*/
     cairo_set_line_width(cr,8);
-	for(int i=0;i<logGlobal.tailleTab;i++)  //parcourt et affiche tout les point des logs
+	for(i=0;i<logGlobalClean.tailleTab;i++)  //parcourt et affiche tout les point des logs
 	{  
-		do_point(cr,logGlobal.tableauPoint[i].latitude,logGlobal.tableauPoint[i].longitude);
+		do_point(cr,logGlobalClean.tableauPoint[i].latitude,logGlobalClean.tableauPoint[i].longitude);
 	}
 }
 

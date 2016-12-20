@@ -1,6 +1,12 @@
 CC=gcc
-FLAGS=-Wall
+DEBUG=yes
 EXECUTABLE=prog
+
+ifeq ($(DEBUG),yes)
+	FLAGS= -Wall -g
+else
+	FLAGS= -Wall
+endif
 
 all: $(EXECUTABLE)
 
@@ -27,3 +33,4 @@ clean:
 
 mrproper: clean
 	rm -rf prog
+	rm -f BackupPoints.txt
