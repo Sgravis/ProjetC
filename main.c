@@ -12,6 +12,7 @@
 #include <math.h>
 #include "visuel.h"
 #include "structure_log.h"
+#include "interaction.h"
 #define HFENETRE 1628.0
 #define LFENETRE 680.0
 
@@ -19,7 +20,7 @@
     
 int main(int argc, char** argv)
 {
-    //time_t i;
+    int result;
     logs tlog;
 
     FILE *fp;
@@ -73,6 +74,11 @@ int main(int argc, char** argv)
     gtk_box_pack_start(GTK_BOX(pVBox), pButton, TRUE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), pVBox, FALSE, FALSE, 0);
     
+<<<<<<< HEAD
+=======
+    //Voila la fonction pour faire une popup, passe la question en param, retourne 1 si il dit oui, 0 sinon
+    result =popup("anonymisation ?");
+>>>>>>> origin/master
 
     gtk_widget_show_all(window); //affichage de la fenetre
     gtk_main();  // fonction de boucle de gtk
