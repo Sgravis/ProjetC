@@ -1,11 +1,20 @@
 CC=gcc
-FLAGS=-Wall
+DEBUG=yes
 EXECUTABLE=prog
+
+ifeq ($(DEBUG),yes)
+	FLAGS= -Wall -g
+else
+	FLAGS= -Wall
+endif
 
 all: $(EXECUTABLE)
 
 $(EXECUTABLE): main.o allocation.o remplissage.o suppression.o visuel.o
+
 	$(CC) -lm -o $@ $^ $(FLAGS) `pkg-config --cflags --libs gtk+-3.0` `pkg-config --cflags cairo` -lm
+
+	$(CC) -o $@ $^ $(FLAGS) `pkg-config --cflags --libs gtk+-3.0` `pkg-config --cflags cairo` -lm
 
 main.o: main.c allocation.h visuel.h remplissage.h structure_log.h suppression.h
 	$(CC) -c $< `pkg-config --cflags --libs gtk+-3.0` `pkg-config --cflags cairo`
@@ -27,3 +36,4 @@ clean:
 
 mrproper: clean
 	rm -rf prog
+	rm -f BackupPoints.txt
