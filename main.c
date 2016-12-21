@@ -74,7 +74,7 @@ int main(int argc, char** argv)
     init_map();
 
         //init boutons
-    pButton = gtk_button_new_with_label("Bouton 1");
+    pButton = gtk_button_new_with_label("anonymisation");
     g_signal_connect(G_OBJECT(pButton), "clicked", G_CALLBACK(do_anonymous), NULL);
        
     gtk_box_pack_start(GTK_BOX(pVBox), pButton, TRUE, FALSE, 0);

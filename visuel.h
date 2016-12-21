@@ -1,6 +1,7 @@
 #ifndef VISUEL_H
 #define VISUEL_H
 
+#include "suppression.h"
 #include <cairo.h>
 #include <gtk/gtk.h>
 #include <stdio.h>

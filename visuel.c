@@ -25,7 +25,67 @@ void do_point(cairo_t* cr, point pt)
 	cairo_fill(cr);
 }
 
-
+void reset_anonymisation()
+{
+	pt_tampon.longitude=-10;
+	pt_tampon.latitude=-10;
+	pt_tampon.taillept=0;
+	x=0;
+	y=0;
+	anonyme_step=0;
+	maj_map();
+}
+void anonymisation()
+{
+	//appartition des cercles d'anonymisation
+	cairo_set_source_rgb(cr,1,1,0);
+	int result;
+	if(map.zoom==0){
+		cairo_arc(cr,pt_tampon.longitude,pt_tampon.latitude,6,0,2*M_PI);
+		cairo_fill(cr);
+		if(anonyme_step==4){
+			if( popup("anonymiser ce cercle ?")){
+				printf("rayon : %f\n",sqrt((x-pt_tampon.longitude)*(x-pt_tampon.longitude)+(y-pt_tampon.latitude)*(y-pt_tampon.latitude)));
+				//la fonction marche pas, je pense que le rayon est pas dans la bonne unite
+				suppression(Detection_circulaire(pt_tampon,(int)sqrt((x-pt_tampon.longitude)*(x-pt_tampon.longitude)+(y-pt_tampon.latitude)*(y-pt_tampon.latitude))));
+				reset_anonymisation();
+			}
+			else{
+				reset_anonymisation();
+			}
+		}
+		if (anonyme_step==3){
+			cairo_set_line_width(cr,1);
+			cairo_arc(cr,pt_tampon.longitude,pt_tampon.latitude,sqrt((x-pt_tampon.longitude)*(x-pt_tampon.longitude)+(y-pt_tampon.latitude)*(y-pt_tampon.latitude)), 0, 2 * M_PI);
+			cairo_stroke(cr);
+			anonyme_step=4;
+			maj_map();
+		}
+	
+	}
+	/*if(map.zoom==1){
+		cairo_arc(cr,-(map.pos_x-(HFENETRE/4))+pt_tampon.longitude,-(map.pos_y-(LFENETRE/4))+pt_tampon.latitude,6,0,2*M_PI);
+		cairo_fill(cr);
+		if(anonyme_step==4){
+			if( popup("anonymiser ce cercle ?")){
+				printf("rayon : %f\n",sqrt((x-pt_tampon.longitude)*(x-pt_tampon.longitude)+(y-pt_tampon.latitude)*(y-pt_tampon.latitude)));
+				//la fonction marche pas, je pense que le rayon est pas dans la bonne unite
+				suppression(Detection_circulaire(pt_tampon,(int)sqrt((x-pt_tampon.longitude)*(x-pt_tampon.longitude)+(y-pt_tampon.latitude)*(y-pt_tampon.latitude))));
+				reset_anonymisation();
+			}
+			else{
+				reset_anonymisation();
+			}
+		}
+		if (anonyme_step==3){
+			cairo_set_line_width(cr,1);
+			cairo_arc(cr,pt_tampon.longitude,pt_tampon.latitude,sqrt((x-pt_tampon.longitude)*(x-pt_tampon.longitude)+(y-pt_tampon.latitude)*(y-pt_tampon.latitude)), 0, 2 * M_PI);
+			cairo_stroke(cr);
+			anonyme_step=4;
+			maj_map();
+		}
+	}*/
+}
 /**
  * Affiche tout les log globaux sur la carte
  */
@@ -93,17 +153,7 @@ gboolean on_draw(GtkWidget *widget, cairo_t *crg,gpointer user_data)
 	cr=crg;
 	do_map(cr); 			/*affiche la carte*/
 	log_vers_carte(cr);		/*affiche le log*/
-	printf("j'affiche le tampon\n");
-	printf("centre anonyme : long : %Lf lat : %Lf\n",pt_tampon.longitude,pt_tampon.latitude);
-	
-	//appartition des cercles d'anonymisation
-	cairo_set_source_rgb(cr,1,1,0);
-	cairo_arc(cr,pt_tampon.longitude,pt_tampon.latitude,6,0,2*M_PI);
-	cairo_fill(cr);
-	cairo_set_line_width(cr,1);
-	cairo_arc(cr,pt_tampon.longitude,pt_tampon.latitude,x-pt_tampon.longitude, 0, 2 * M_PI);
-	cairo_stroke(cr);
-
+	anonymisation();
 
 	return FALSE;
 }
@@ -115,8 +165,3 @@ void maj_map()
 {
 	gtk_widget_queue_draw (darea);
 }
-
-/**
-*creation de boutons
-*/
-

@@ -14,26 +14,24 @@ void on_click_map(GtkWidget* darea, GdkEventButton* event, void* data)
     		map.zoom++;
     	}
     	else{init_map();}
+        reset_anonymisation();
         maj_map();
     }
-    if(anonyme==2)
+    if(anonyme_step==2)
     {
-        printf("je suis au second point\n");
         x=event->x;
-        cairo_arc(cr,pt_tampon.longitude,pt_tampon.latitude, event->x-pt_tampon.longitude, 0, 2 * M_PI); 
-        anonyme=0;
+        y=event->y;
+        anonyme_step=3;
         maj_map();
     }
 
-    if(anonyme==1)
+    if(anonyme_step==1)
     {
-        printf("je suis au premier point\n");
         pt_tampon.longitude=event->x;
         pt_tampon.latitude=event->y;
-        pt_tampon.taillept=8;
-        cairo_set_source_rgb(cr,0,1,0);
+        pt_tampon.taillept=5;
         maj_map();
-        anonyme=2;
+        anonyme_step=2;
     }
 }
 
@@ -53,5 +51,6 @@ int popup(char* nom)
 
 void do_anonymous(GtkWidget* pbutton, GdkEventButton* event, void* data)
 {
-    anonyme=1;
+    reset_anonymisation();
+    anonyme_step=1;
 }
