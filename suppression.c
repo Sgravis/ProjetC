@@ -7,6 +7,8 @@
 #include "allocation.h"
 #include "remplissage.h"
 #include "suppression.h"
+//#include "visuel.h"
+//#include "interaction.h"
 
 
 logs Detection_circulaire (point centre,int rayon)
@@ -26,6 +28,26 @@ logs Detection_circulaire (point centre,int rayon)
     free(tableauCercleIntmp.tableauPoint);
     return tableauCercleIn;
 }
+
+/*addr Detection_circulaire_base_adresse (point centre,int rayon, addr base)
+{
+    addr tableauCercleIntmp;
+    tableauCercleIntmp.tableauPointaddr=(pointaddr*)malloc(base.tailleTableauAddr*sizeof(pointaddr));
+    addr tableauCercleIn;
+    int i;
+    int incCercle=0;
+    for(i=0;i<base.tailleTableauAddr;i++)
+    {
+        if (sqrt(pow(((base.tableauPointaddr[i].latitude-centre.latitude)*111*1000),2)+pow(((centre.longitude-base.tableauPointaddr[i].longitude)*76*1000),2))<rayon)
+        {
+            CopiePoints_base_addr(&base.tableauPointaddr[i],&tableauCercleIntmp.tableauPointaddr[incCercle++]);
+        }
+    }
+    tableauCercleIn=CopieTableau_addr(tableauCercleIntmp,incCercle);
+    free(tableauCercleIntmp.tableauPointaddr);
+    return tableauCercleIn;
+}*/
+
 
 void suppression(logs tableauSupp)
 {
@@ -77,10 +99,10 @@ int comparaison_point(point p1, point p2)
 void detection_pt_interet()
 {
     int i,j;
-    int nb_pt_centre_interet=50;
+    int nb_pt_centre_interet=70;
     logs tab_cercle;
     logs tab_cercle2;
-    int rayon=40;
+    int rayon=70;
     for(i=0;i<logGlobalClean.tailleTab;i++)
     {
         tab_cercle=Detection_circulaire(logGlobalClean.tableauPoint[i],rayon);
@@ -99,11 +121,37 @@ void detection_pt_interet()
 
             }
             suppression(tab_cercle);
+            //redefinition_grosseur_cercle(tab_cercle);
+
             free(tab_cercle.tableauPoint);
         }
 
     }
 
+
+}
+void redefinition_grosseur_cercle(logs a_supr)
+{
+    int rayon=70;
+    int reponse;
+    logs tab_pt_interet_ds_cercle=Detection_circulaire(a_supr.tableauPoint[0],rayon);/*enlever car global*/
+    if(tab_pt_interet_ds_cercle.tailleTab<20)
+    {
+        do 
+        {        
+            rayon=rayon+25;
+            tab_pt_interet_ds_cercle=Detection_circulaire(a_supr.tableauPoint[0],rayon);/* enlever car global*/
+        }while(tab_pt_interet_ds_cercle.tailleTab<5);
+
+    }
+   /* reponse=popup("Anonymiser le cercle?");
+    if(reponse==1)
+    {
+        suppression(tab_pt_interet_ds_cercle);
+    }
+*/
+    free(tab_pt_interet_ds_cercle.tableauPoint);
+    //maj_map();
 
 }
 
@@ -116,12 +164,13 @@ void afficher_tableau(int taille, logs tab)
     }
 
 }
-void afficher_tableau2(int taille, addr tab)
+/*void afficher_tableau2()
 {
     int i;
     for(i=0;i<15;i++)
     {
-        printf("long:%Lf,lat:%Lf\n",tab.tableauPointaddr[i].latitude,tab.tableauPointaddr[i].longitude);
+        printf("long:%Lf,lat:%Lf\n",base_adresse.tableauPointaddr[i].latitude,base_adresse.tableauPointaddr[i].longitude);
     }
 
 }
+*/
