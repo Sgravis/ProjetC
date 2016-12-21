@@ -11,21 +11,21 @@
 
 typedef struct 
 {
-	float map_pos_x;
-	float map_pos_y;
-	int map_zoom;
+	float pos_x;
+	float pos_y;
+	int zoom;
 }map_position;
-
-int quit;
 
 GtkWidget* window;
 GtkWidget* darea;
-
 map_position map;
 
+void init_map();
+void do_point(cairo_t* cr, point pt);
+void do_map(cairo_t *cr);
+void log_vers_carte(cairo_t* cr);
 gboolean on_draw(GtkWidget *widget, cairo_t *cr,gpointer user_data);
 void on_click_map(GtkWidget* darea,GdkEventButton* event, void* data);
-void on_quit(GtkWidget *widget,gpointer user_data);
 void maj_map();
 
 #endif

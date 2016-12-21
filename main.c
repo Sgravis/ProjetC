@@ -47,7 +47,7 @@ int main(int argc, char** argv)
         //init fenetre
     gtk_init_check(&argc, &argv);
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    g_signal_connect(window, "destroy", G_CALLBACK(on_quit), &quit);
+    g_signal_connect(window, "destroy",gtk_main_quit,NULL);
     gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
     gtk_window_set_default_size(GTK_WINDOW(window), HFENETRE,LFENETRE);
     gtk_window_set_title(GTK_WINDOW(window), "Bourges");
@@ -57,6 +57,7 @@ int main(int argc, char** argv)
     g_signal_connect(G_OBJECT(darea), "draw", G_CALLBACK(on_draw), NULL);
     gtk_widget_set_events (darea, GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK);
     g_signal_connect(G_OBJECT(darea), "button_press_event", G_CALLBACK (on_click_map), NULL);
+    init_map();
     
     gtk_widget_show_all(window); //affichage de la fenetre
     gtk_main();  // fonction de boucle de gtk
