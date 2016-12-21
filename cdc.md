@@ -21,14 +21,27 @@ Vendredi 16 décembre
 --
 
 - [X] Loic GIT + Mardown
-- [ ] Modulation pré-traitement
+- [X] Modulation pré-traitement
 
 ***
+
+Mardi 20 décembre
+--
+
+- [X] Correction suppression et detection
+
+***
+
+Mercredi 21 décembre
+--
+
+- [X] Création agglomérat
+
+*** 
 
 **Pour les vacances**
 - [ ] Finir la gestion des routes (Suppression des routes menant à un point d'intéret)
 - [ ] Doxygene du pré-traitement (en partie)
-- [ ] Test
 
 Loïc
 ==

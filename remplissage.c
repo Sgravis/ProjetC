@@ -104,6 +104,7 @@ void recuperation_donnees(FILE *fp, int nb_lignes)
             logGlobal.tableauPoint[nb_donnees].longitude=test_long;
             logGlobal.tableauPoint[nb_donnees].latitude=test_lat;
             logGlobal.tableauPoint[nb_donnees].date=test_date;
+            logGlobal.tableauPoint[nb_donnees].taillept=1;
             nb_donnees++;
 
 
