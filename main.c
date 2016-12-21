@@ -17,7 +17,6 @@
 #define HFENETRE 1628.0
 #define LFENETRE 680.0
 
-
     
 int main(int argc, char** argv)
 {
@@ -37,7 +36,7 @@ int main(int argc, char** argv)
     printf("%d\n",logGlobalClean.tailleTab);
     printf("%d\n",logGlobalClean.tableauPoint[0].taillept);
     //afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
-
+    tlog=(agglomeration(tlog));
     /*printf("Affichage tableau global: \n\n\n");
     afficher_tableau(logGlobal.tailleTab,logGlobal);
     printf("Affichage tableau clean: \n\n\n");
@@ -53,7 +52,7 @@ int main(int argc, char** argv)
     b=recuperation_addr();
     afficher_tableau2(12,b);*/
 
-        //init fenetre
+        //init fenetre statique
     gtk_init_check(&argc, &argv);
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     g_signal_connect(window, "destroy",gtk_main_quit,NULL);
@@ -63,10 +62,10 @@ int main(int argc, char** argv)
 
         // init box
     pHBox = gtk_hbox_new(FALSE, 0);
-    pVBox = gtk_vbox_new(TRUE, 0);
+    pVBox = gtk_vbox_new(TRUE, 10);
     gtk_container_add(GTK_CONTAINER(window), pHBox);
 
-
+        //init dessin statique
     darea = gtk_drawing_area_new();
     gtk_container_add(GTK_CONTAINER(pHBox), darea);
     g_signal_connect(G_OBJECT(darea), "draw", G_CALLBACK(on_draw), NULL);
@@ -74,15 +73,26 @@ int main(int argc, char** argv)
     g_signal_connect(G_OBJECT(darea), "button_press_event", G_CALLBACK (on_click_map), NULL);
     init_map();
 
+        //init dessin dynamique
+        /*
+    darea2 = gtk_drawing_area_new();
+    gtk_container_add(GTK_CONTAINER(window), darea2);
+    g_signal_connect(G_OBJECT(darea2), "draw", G_CALLBACK(on_draw2), NULL);
+    gtk_widget_set_events (darea2, GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK);
+    g_signal_connect(G_OBJECT(darea2), "button_press_event", G_CALLBACK (on_click_map), NULL);
+    init_map();*/
+
         //init boutons
     pButton = gtk_button_new_with_label("Bouton 1");
-    g_signal_connect(G_OBJECT(pButton), "clicked", G_CALLBACK(gtk_main_quit), NULL);
-       
+    Bouton = gtk_button_new_with_label("Mode dynamique");
+    g_signal_connect(G_OBJECT(Bouton), "clicked",G_CALLBACK (mode_dynamique),NULL);
+
     gtk_box_pack_start(GTK_BOX(pVBox), pButton, TRUE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pVBox), Bouton, TRUE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), pVBox, FALSE, FALSE, 0);
     
     //Voila la fonction pour faire une popup, passe la question en param, retourne 1 si il dit oui, 0 sinon
-    result =popup("anonymisation ?");
+    //result =popup("anonymisation ?");
 
 
     gtk_widget_show_all(window); //affichage de la fenetre
@@ -90,3 +100,5 @@ int main(int argc, char** argv)
   
     return 0;
 }
+
+

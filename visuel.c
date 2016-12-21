@@ -19,9 +19,9 @@ void init_map()
 void do_point(cairo_t* cr, point pt)
 {
 	if(map.zoom==0)
-		cairo_arc(cr,((2.39869958-pt.longitude)/-0.000088242)+855,((212,47.0821639-pt.latitude)/0.000055919)+156, 2, 0, 2 * M_PI);
+		cairo_arc(cr,((2.39869958-pt.longitude)/-0.000088242)+855,((212,47.0821639-pt.latitude)/0.000055919)+156, pt.taillept, 0, 2 * M_PI);
 	if(map.zoom==1)
-		cairo_arc(cr,((2.39869958-pt.longitude)/-0.000088242)+(855-map.pos_x+405),((212,47.0821639-pt.latitude)/0.000055919)+(156-map.pos_y+170),1,0,2*M_PI);
+		cairo_arc(cr,((2.39869958-pt.longitude)/-0.000088242)+(855-map.pos_x+405),((212,47.0821639-pt.latitude)/0.000055919)+(156-map.pos_y+170),pt.taillept,0,2*M_PI);
 	cairo_fill(cr);
 }
 
@@ -49,8 +49,7 @@ void do_map(cairo_t *cr)
 	int w, h;
 	int TailleH,TailleL;
 	
-	//initialisation image
-	cairo_surface_t *image;	
+	//initialisation image	
 	cairo_set_source_rgb(cr,0,0,0);
 	cairo_set_line_width(cr,0.5);
 
@@ -84,7 +83,15 @@ void do_map(cairo_t *cr)
 
 }
 
+/**
+*test dynamique
+*/
 
+gboolean on_draw2(GtkWidget *widget, cairo_t *cr,gpointer user_data)
+{
+	do_map(cr);
+	return FALSE;
+}
 /**
  * affiche la carte et les point du log
  */
@@ -106,4 +113,7 @@ void maj_map()
 /**
 *creation de boutons
 */
-
+void mode_dynamique (){
+    g_signal_connect(G_OBJECT(darea), "draw", G_CALLBACK(on_draw2), NULL);
+    maj_map();
+}
