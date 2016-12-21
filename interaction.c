@@ -1,5 +1,6 @@
 #include "interaction.h"
 
+
 /**
  * detection du double clique pour l'actualisation du zoom
  */
@@ -13,8 +14,25 @@ void on_click_map(GtkWidget* darea, GdkEventButton* event, void* data)
     		map.zoom++;
     	}
     	else{init_map();}
+        reset_anonymisation();
+        maj_map();
     }
-    maj_map();
+    if(anonyme_step==2)
+    {
+        x=event->x;
+        y=event->y;
+        anonyme_step=3;
+        maj_map();
+    }
+
+    if(anonyme_step==1)
+    {
+        pt_tampon.longitude=event->x;
+        pt_tampon.latitude=event->y;
+        pt_tampon.taillept=5;
+        maj_map();
+        anonyme_step=2;
+    }
 }
 
 /**
@@ -29,4 +47,10 @@ int popup(char* nom)
 	result = gtk_dialog_run(GTK_DIALOG(dialog));
 	gtk_widget_destroy (dialog);
 	return result;
+}
+
+void do_anonymous(GtkWidget* pbutton, GdkEventButton* event, void* data)
+{
+    reset_anonymisation();
+    anonyme_step=1;
 }

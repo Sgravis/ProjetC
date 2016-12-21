@@ -31,10 +31,9 @@ int main(int argc, char** argv)
     recuperation_donnees(fp,nb_lignes);
     fclose(fp);
     logGlobalClean=CopieTableau(logGlobal,logGlobal.tailleTab);
-    printf("%d\n",logGlobalClean.tailleTab);
     logGlobalClean=agglomeration(logGlobal);
-    printf("%d\n",logGlobalClean.tailleTab);
-    printf("%d\n",logGlobalClean.tableauPoint[0].taillept);
+
+
     //afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
     tlog=(agglomeration(tlog));
     /*printf("Affichage tableau global: \n\n\n");
@@ -62,7 +61,7 @@ int main(int argc, char** argv)
 
         // init box
     pHBox = gtk_hbox_new(FALSE, 0);
-    pVBox = gtk_vbox_new(TRUE, 10);
+    pVBox = gtk_vbox_new(TRUE, 5);
     gtk_container_add(GTK_CONTAINER(window), pHBox);
 
         //init dessin statique
@@ -83,19 +82,22 @@ int main(int argc, char** argv)
     init_map();*/
 
         //init boutons
-    pButton = gtk_button_new_with_label("Bouton 1");
     Bouton = gtk_button_new_with_label("Mode dynamique");
     g_signal_connect(G_OBJECT(Bouton), "clicked",G_CALLBACK (mode_dynamique),NULL);
+    pButton = gtk_button_new_with_label("anonymisation");
+    g_signal_connect(G_OBJECT(pButton), "clicked", G_CALLBACK(do_anonymous), NULL);
+    Bouton2 = gtk_button_new_with_label("Mode statique");
+    g_signal_connect(G_OBJECT(Bouton2), "clicked",G_CALLBACK (mode_statique),NULL);
 
     gtk_box_pack_start(GTK_BOX(pVBox), pButton, TRUE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pVBox), Bouton, TRUE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pVBox), Bouton2, TRUE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), pVBox, FALSE, FALSE, 0);
     
     //Voila la fonction pour faire une popup, passe la question en param, retourne 1 si il dit oui, 0 sinon
-    //result =popup("anonymisation ?");
-
-
+    //result =popup("anonymisation ?"); 
     gtk_widget_show_all(window); //affichage de la fenetre
+    gtk_widget_hide(Bouton2);
     gtk_main();  // fonction de boucle de gtk
   
     return 0;
