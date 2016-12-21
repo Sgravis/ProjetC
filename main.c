@@ -22,36 +22,6 @@ int main(int argc, char** argv)
     //time_t i;
     logs tlog;
 
-     FILE *fp;
-     int nb_lignes;
-     fp=fopen("geoloc-logs.txt","r");
-     nb_lignes=Nombre_lignes(fp);
-     Init_tableau_global(nb_lignes);
-     recuperation_donnees(fp,nb_lignes);
-     fclose(fp);
-     logGlobalClean=CopieTableau(logGlobal,logGlobal.tailleTab);
-     printf("Affichage tableau global: \n\n\n");
-     //afficher_tableau(logGlobal.tailleTab,logGlobal);
-     //printf("Affichage tableau clean: \n\n\n");
-     //afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
-     detection_pt_interet();
-     //printf("Affichage tableau clean apres detection pt interet\n\n\n");
-     //afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
-     logs resurection=resurrection_point("BackupPoints.txt");
-     //printf("Affichage tableau de resurection des points: \n\n\n");
-     //afficher_tableau(resurection.tailleTab,resurection);
-     //printf("Affichage tableau adresse (que un bout): \n\n\n");
-     addr b;    
-     b=recuperation_addr();
-     //afficher_tableau2(12,b);
-
-    while(quit!=1)
-    {
-    GtkWidget *window;    //creation fenetre
-    GtkWidget *darea;     //creation zone de dessin sur la fenetre
-
-    //initialisation fenetre
-
     FILE *fp;
     int nb_lignes;
     fp=fopen("geoloc-logs.txt","r");
@@ -83,13 +53,27 @@ int main(int argc, char** argv)
     gtk_window_set_default_size(GTK_WINDOW(window), HFENETRE,LFENETRE);
     gtk_window_set_title(GTK_WINDOW(window), "Bourges");
 
+        // init box
+    pHBox = gtk_hbox_new(FALSE, 0);
+    pVBox = gtk_vbox_new(TRUE, 0);
+    gtk_container_add(GTK_CONTAINER(window), pHBox);
+
+
     darea = gtk_drawing_area_new();
-    gtk_container_add(GTK_CONTAINER(window), darea);
+    gtk_container_add(GTK_CONTAINER(pHBox), darea);
     g_signal_connect(G_OBJECT(darea), "draw", G_CALLBACK(on_draw), NULL);
     gtk_widget_set_events (darea, GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK);
     g_signal_connect(G_OBJECT(darea), "button_press_event", G_CALLBACK (on_click_map), NULL);
     init_map();
+
+        //init boutons
+    pButton = gtk_button_new_with_label("Bouton 1");
+    g_signal_connect(G_OBJECT(pButton), "clicked", G_CALLBACK(gtk_main_quit), NULL);
+       
+    gtk_box_pack_start(GTK_BOX(pVBox), pButton, TRUE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pHBox), pVBox, FALSE, FALSE, 0);
     
+
     gtk_widget_show_all(window); //affichage de la fenetre
     gtk_main();  // fonction de boucle de gtk
   
