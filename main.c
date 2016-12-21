@@ -32,14 +32,9 @@ int main(int argc, char** argv)
     recuperation_donnees(fp,nb_lignes);
     fclose(fp);
     logGlobalClean=CopieTableau(logGlobal,logGlobal.tailleTab);
-    printf("%d\n",logGlobalClean.tailleTab);
     logGlobalClean=agglomeration(logGlobal);
-    printf("%d\n",logGlobalClean.tailleTab);
-<<<<<<< HEAD
-    printf("%d\n",logGlobalClean.tableauPoint[1].taillept);
-=======
-    printf("%d\n",logGlobalClean.tableauPoint[0].taillept);
->>>>>>> 0575ae01c0721dc01eca777605a8bf5b83557e84
+
+
     //afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
 
     /*printf("Affichage tableau global: \n\n\n");
@@ -88,7 +83,7 @@ int main(int argc, char** argv)
     //Voila la fonction pour faire une popup, passe la question en param, retourne 1 si il dit oui, 0 sinon
     //result =popup("anonymisation ?");
 
-
+    
     gtk_widget_show_all(window); //affichage de la fenetre
     gtk_main();  // fonction de boucle de gtk
   

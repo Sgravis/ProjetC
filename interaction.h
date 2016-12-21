@@ -10,6 +10,7 @@
 int anonyme;
 
 point pt_tampon;
+float x;
 void on_click_map(GtkWidget* darea,GdkEventButton* event, void* data);
 int popup(char* nom);
 void do_anonymous(GtkWidget* pbutton, GdkEventButton* event, void* data);

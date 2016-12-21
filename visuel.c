@@ -91,8 +91,20 @@ void do_map(cairo_t *cr)
 gboolean on_draw(GtkWidget *widget, cairo_t *crg,gpointer user_data)
 {
 	cr=crg;
-	do_map(cr); /*affiche la carte*/
-	log_vers_carte(cr);	/*affiche le log*/
+	do_map(cr); 			/*affiche la carte*/
+	log_vers_carte(cr);		/*affiche le log*/
+	printf("j'affiche le tampon\n");
+	printf("centre anonyme : long : %Lf lat : %Lf\n",pt_tampon.longitude,pt_tampon.latitude);
+	
+	//appartition des cercles d'anonymisation
+	cairo_set_source_rgb(cr,1,1,0);
+	cairo_arc(cr,pt_tampon.longitude,pt_tampon.latitude,6,0,2*M_PI);
+	cairo_fill(cr);
+	cairo_set_line_width(cr,1);
+	cairo_arc(cr,pt_tampon.longitude,pt_tampon.latitude,x-pt_tampon.longitude, 0, 2 * M_PI);
+	cairo_stroke(cr);
+
+
 	return FALSE;
 }
 
