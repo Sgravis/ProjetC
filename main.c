@@ -13,6 +13,7 @@
 #include "visuel.h"
 #include "structure_log.h"
 #include "interaction.h"
+#include "agglomeration.h"
 #define HFENETRE 1628.0
 #define LFENETRE 680.0
 
@@ -31,6 +32,12 @@ int main(int argc, char** argv)
     recuperation_donnees(fp,nb_lignes);
     fclose(fp);
     logGlobalClean=CopieTableau(logGlobal,logGlobal.tailleTab);
+    printf("%d\n",logGlobalClean.tailleTab);
+    logGlobalClean=agglomeration(logGlobal);
+    printf("%d\n",logGlobalClean.tailleTab);
+    printf("%d\n",logGlobalClean.tableauPoint[1].taillept);
+    afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
+
     /*printf("Affichage tableau global: \n\n\n");
     afficher_tableau(logGlobal.tailleTab,logGlobal);
     printf("Affichage tableau clean: \n\n\n");
