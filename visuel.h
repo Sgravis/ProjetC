@@ -21,6 +21,7 @@ GtkWidget* darea;
 GtkWidget *pVBox;
 GtkWidget *pHBox;
 GtkWidget *pButton;
+cairo_t* cr;
 map_position map;
 
 void init_map();

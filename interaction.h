@@ -7,8 +7,11 @@
 #include <gtk/gtk.h>
 #include <stdio.h>
 
-int anonyme=0;
+int anonyme;
+
+point pt_tampon;
 void on_click_map(GtkWidget* darea,GdkEventButton* event, void* data);
 int popup(char* nom);
+void do_anonymous(GtkWidget* pbutton, GdkEventButton* event, void* data);
 
 #endif

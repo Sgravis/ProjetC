@@ -36,7 +36,7 @@ int main(int argc, char** argv)
     logGlobalClean=agglomeration(logGlobal);
     printf("%d\n",logGlobalClean.tailleTab);
     printf("%d\n",logGlobalClean.tableauPoint[1].taillept);
-    afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
+    //afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
 
     /*printf("Affichage tableau global: \n\n\n");
     afficher_tableau(logGlobal.tailleTab,logGlobal);
@@ -82,7 +82,7 @@ int main(int argc, char** argv)
     gtk_box_pack_start(GTK_BOX(pHBox), pVBox, FALSE, FALSE, 0);
     
     //Voila la fonction pour faire une popup, passe la question en param, retourne 1 si il dit oui, 0 sinon
-    result =popup("anonymisation ?");
+    //result =popup("anonymisation ?");
 
 
     gtk_widget_show_all(window); //affichage de la fenetre

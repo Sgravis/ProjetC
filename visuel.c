@@ -34,7 +34,6 @@ void log_vers_carte(cairo_t* cr)
 	int i;
 	cairo_set_source_rgb(cr,1,0,0);  //couleur des point
     cairo_set_line_width(cr,8);
-	printf("%i",logGlobalClean.tailleTab);
 	for(i=0;i<logGlobalClean.tailleTab;i++)  //parcourt et affiche tout les point des logs
 	{  
 		do_point(cr,logGlobalClean.tableauPoint[i]);
@@ -89,8 +88,9 @@ void do_map(cairo_t *cr)
 /**
  * affiche la carte et les point du log
  */
-gboolean on_draw(GtkWidget *widget, cairo_t *cr,gpointer user_data)
+gboolean on_draw(GtkWidget *widget, cairo_t *crg,gpointer user_data)
 {
+	cr=crg;
 	do_map(cr); /*affiche la carte*/
 	log_vers_carte(cr);	/*affiche le log*/
 	return FALSE;
