@@ -14,6 +14,13 @@ void on_click_map(GtkWidget* darea, GdkEventButton* event, void* data)
     	}
     	else{init_map();}
     }
+    if(anonyme=1)
+    {
+        cairo_set_source_rgb(cr,0,1,0);
+        do_point()
+    }
+
+
     maj_map();
 }
 
@@ -29,4 +36,9 @@ int popup(char* nom)
 	result = gtk_dialog_run(GTK_DIALOG(dialog));
 	gtk_widget_destroy (dialog);
 	return result;
+}
+
+void do_anonymous(GtkWidget* pbutton, GdkEventButton* event, void* data)
+{
+    anonyme=1;
 }

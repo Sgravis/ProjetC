@@ -7,6 +7,7 @@
 #include <gtk/gtk.h>
 #include <stdio.h>
 
+int anonyme=0;
 void on_click_map(GtkWidget* darea,GdkEventButton* event, void* data);
 int popup(char* nom);
 

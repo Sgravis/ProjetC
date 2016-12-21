@@ -69,7 +69,7 @@ int main(int argc, char** argv)
 
         //init boutons
     pButton = gtk_button_new_with_label("Bouton 1");
-    g_signal_connect(G_OBJECT(pButton), "clicked", G_CALLBACK(gtk_main_quit), NULL);
+    g_signal_connect(G_OBJECT(pButton), "clicked", G_CALLBACK(do_anonymous), NULL);
        
     gtk_box_pack_start(GTK_BOX(pVBox), pButton, TRUE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), pVBox, FALSE, FALSE, 0);
