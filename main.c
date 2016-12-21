@@ -35,8 +35,8 @@ int main(int argc, char** argv)
     printf("%d\n",logGlobalClean.tailleTab);
     logGlobalClean=agglomeration(logGlobal);
     printf("%d\n",logGlobalClean.tailleTab);
-    printf("%d\n",logGlobalClean.tableauPoint[1].taillept);
-    afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
+    printf("%d\n",logGlobalClean.tableauPoint[0].taillept);
+    //afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
 
     /*printf("Affichage tableau global: \n\n\n");
     afficher_tableau(logGlobal.tailleTab,logGlobal);

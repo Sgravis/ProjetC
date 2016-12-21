@@ -14,28 +14,15 @@ logs agglomeration(logs tlog)
 {
 	int i,j;
 	logs tlog2=CopieTableau(tlog,tlog.tailleTab);
-	logs tabagglo=AllocationTableauPoint(logGlobal.tailleTab); //Allocation tableau taille maximale possible
-	logs tabaggloclean;
-	int inctabagglo=0;
-	point tampon; //Allocation point tampon pour comparaison
 	for (i=0 ; i<tlog2.tailleTab ; i++) 
 	{
-		if (tlog2.tableauPoint[i].taillept != -1)
+		for (j = i+1 ; j < tlog2.tailleTab ; j++)
 		{
-			CopiePoints(&(tlog2.tableauPoint[i]),&tampon);
-			for (j = i+1 ; j < tlog2.tailleTab ; j++)
+			if ((tlog2.tableauPoint[i].latitude == tlog2.tableauPoint[j].latitude) && (tlog2.tableauPoint[i].longitude == tlog2.tableauPoint[j].longitude))
 			{
-				if ((tampon.latitude == tlog2.tableauPoint[j].latitude) && (tampon.longitude == tlog2.tableauPoint[j].longitude))
-				{
-					tampon.taillept++;
-					tlog2.tableauPoint[j].taillept=-1;
-				}
-
+				tlog2.tableauPoint[j].taillept++;
 			}
-		CopiePoints(&tampon,&(tabagglo.tableauPoint[inctabagglo++]));
 		}
-		
 	}
-	tabaggloclean=CopieTableau(tabagglo,inctabagglo);
-	return tabaggloclean;
+	return tlog2;
 }
