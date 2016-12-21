@@ -12,23 +12,6 @@ void init_map()
 	map.zoom=0;
 }
 
-/**
- * Met la carte a jour en fonction des parametre actuels
- */
-void maj_map()
-{
-	gtk_widget_queue_draw (darea);
-}
-
-/**
- * affiche la carte et les point du log
- */
-gboolean on_draw(GtkWidget *widget, cairo_t *cr,gpointer user_data)
-{
-	do_map(cr); //affiche la carte
-	log_vers_carte(cr);	//affiche le log
-	return FALSE;
-}
 
 /**
  * Affiche un point sur la carte
@@ -101,25 +84,6 @@ void do_map(cairo_t *cr)
 
 }
 
-/**
- * detection du double clique pour l'actualisation du zoom
- */
-void on_click_map(GtkWidget* darea, GdkEventButton* event, void* data)
-{
-	printf("click\n");
- 
-    if (event->type==GDK_2BUTTON_PRESS )
-    {
-    	printf("double clique sur %f;%f \n",event->x,event->y);
-    	if(map.zoom==0){
-    		map.pos_x=event->x;
-    		map.pos_y=event->y;
-    		map.zoom++;
-    	}
-    	else{init_map();}
-    }
-    maj_map();
-}
 
 /**
  * affiche la carte et les point du log

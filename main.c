@@ -74,11 +74,9 @@ int main(int argc, char** argv)
     gtk_box_pack_start(GTK_BOX(pVBox), pButton, TRUE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), pVBox, FALSE, FALSE, 0);
     
-<<<<<<< HEAD
-=======
     //Voila la fonction pour faire une popup, passe la question en param, retourne 1 si il dit oui, 0 sinon
     result =popup("anonymisation ?");
->>>>>>> origin/master
+
 
     gtk_widget_show_all(window); //affichage de la fenetre
     gtk_main();  // fonction de boucle de gtk
