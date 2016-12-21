@@ -12,23 +12,6 @@ void init_map()
 	map.zoom=0;
 }
 
-/**
- * Met la carte a jour en fonction des parametre actuels
- */
-void maj_map()
-{
-	gtk_widget_queue_draw (darea);
-}
-
-/**
- * affiche la carte et les point du log
- */
-gboolean on_draw(GtkWidget *widget, cairo_t *cr,gpointer user_data)
-{
-	do_map(cr); //affiche la carte
-	log_vers_carte(cr);	//affiche le log
-	return FALSE;
-}
 
 /**
  * Affiche un point sur la carte
@@ -98,4 +81,29 @@ void do_map(cairo_t *cr)
 	/*affichage de la carte*/
 	cairo_paint (cr);
 	cairo_stroke(cr);
+
 }
+
+
+/**
+ * affiche la carte et les point du log
+ */
+gboolean on_draw(GtkWidget *widget, cairo_t *cr,gpointer user_data)
+{
+	do_map(cr); /*affiche la carte*/
+	log_vers_carte(cr);	/*affiche le log*/
+	return FALSE;
+}
+
+/**
+ * Met la carte a jour en fonction des parametre actuels
+ */
+void maj_map()
+{
+	gtk_widget_queue_draw (darea);
+}
+
+/**
+*creation de boutons
+*/
+

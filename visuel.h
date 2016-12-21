@@ -18,6 +18,9 @@ typedef struct
 
 GtkWidget* window;
 GtkWidget* darea;
+GtkWidget *pVBox;
+GtkWidget *pHBox;
+GtkWidget *pButton;
 map_position map;
 
 void init_map();

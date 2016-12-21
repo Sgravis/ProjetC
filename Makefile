@@ -10,7 +10,9 @@ endif
 
 all: $(EXECUTABLE)
 
+
 $(EXECUTABLE): main.o allocation.o remplissage.o suppression.o visuel.o interaction.o agglomeration.o
+
 	$(CC) -o $@ $^ $(FLAGS) `pkg-config --cflags --libs gtk+-3.0` `pkg-config --cflags cairo` -lm
 
 main.o: main.c allocation.h visuel.h remplissage.h structure_log.h suppression.h interaction.h agglomeration.h
