@@ -1,5 +1,5 @@
-#ifndef CPPROF_H
-#define CPPROF_H
+#ifndef VISUEL_H
+#define VISUEL_H
 
 #include <cairo.h>
 #include <gtk/gtk.h>
@@ -25,7 +25,6 @@ void do_point(cairo_t* cr, point pt);
 void do_map(cairo_t *cr);
 void log_vers_carte(cairo_t* cr);
 gboolean on_draw(GtkWidget *widget, cairo_t *cr,gpointer user_data);
-void on_click_map(GtkWidget* darea,GdkEventButton* event, void* data);
 void maj_map();
 
 #endif
