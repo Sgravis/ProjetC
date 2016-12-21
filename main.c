@@ -29,19 +29,19 @@ int main(int argc, char** argv)
      fclose(fp);
      logGlobalClean=CopieTableau(logGlobal,logGlobal.tailleTab);
      printf("Affichage tableau global: \n\n\n");
-     afficher_tableau(logGlobal.tailleTab,logGlobal);
-     printf("Affichage tableau clean: \n\n\n");
-     afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
+     //afficher_tableau(logGlobal.tailleTab,logGlobal);
+     //printf("Affichage tableau clean: \n\n\n");
+     //afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
      detection_pt_interet();
-     printf("Affichage tableau clean apres detection pt interet\n\n\n");
-     afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
+     //printf("Affichage tableau clean apres detection pt interet\n\n\n");
+     //afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
      logs resurection=resurrection_point("BackupPoints.txt");
-     printf("Affichage tableau de resurection des points: \n\n\n");
-     afficher_tableau(resurection.tailleTab,resurection);
-     printf("Affichage tableau adresse (que un bout): \n\n\n");
+     //printf("Affichage tableau de resurection des points: \n\n\n");
+     //afficher_tableau(resurection.tailleTab,resurection);
+     //printf("Affichage tableau adresse (que un bout): \n\n\n");
      addr b;    
      b=recuperation_addr();
-     afficher_tableau2(12,b);
+     //afficher_tableau2(12,b);
 
     while(quit!=1)
     {
