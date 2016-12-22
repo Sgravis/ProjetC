@@ -19,9 +19,9 @@ void init_map()
 void do_point(cairo_t* cr, point pt)
 {
 	if(map.zoom==0)
-		cairo_arc(cr,((2.39869958-pt.longitude)/-0.000088242)+855,((212,47.0821639-pt.latitude)/0.000055919)+156, pt.taillept, 0, 2 * M_PI);
+		cairo_arc(cr,((2.39869958-pt.longitude)/-0.000088242)+855,((212,47.0821639-pt.latitude)/0.000055919)+156, 2, 0, 2 * M_PI);
 	if(map.zoom==1)
-		cairo_arc(cr,((2.39869958-pt.longitude)/-0.000088242)+(855-map.pos_x+405),((212,47.0821639-pt.latitude)/0.000055919)+(156-map.pos_y+170),pt.taillept,0,2*M_PI);
+		cairo_arc(cr,((2.39869958-pt.longitude)/-0.000088242)+(855-map.pos_x+405),((212,47.0821639-pt.latitude)/0.000055919)+(156-map.pos_y+170),1,0,2*M_PI);
 	cairo_fill(cr);
 }
 
@@ -29,7 +29,7 @@ void reset_anonymisation()
 {
 	pt_tampon.longitude=-10;
 	pt_tampon.latitude=-10;
-	pt_tampon.taillept=1;
+	pt_tampon.taillept=0;
 	x=0;
 	y=0;
 	anonyme_step=0;
@@ -47,7 +47,8 @@ void anonymisation()
 			if( popup("anonymiser ce cercle ?")){
 				printf("rayon : %f\n",sqrt((x-pt_tampon.longitude)*(x-pt_tampon.longitude)+(y-pt_tampon.latitude)*(y-pt_tampon.latitude)));
 				//la fonction marche pas, je pense que le rayon est pas dans la bonne unite
-				suppression(Detection_circulaire(pt_tampon,(int)sqrt((x-pt_tampon.longitude)*(x-pt_tampon.longitude)+(y-pt_tampon.latitude)*(y-pt_tampon.latitude))));
+				suppression(Detection_circulaire(pt_tampon,400));
+
 				reset_anonymisation();
 			}
 			else{
@@ -63,7 +64,7 @@ void anonymisation()
 		}
 	
 	}
-	if(map.zoom==1){
+	/*if(map.zoom==1){
 		cairo_arc(cr,-(map.pos_x-(HFENETRE/4))+pt_tampon.longitude,-(map.pos_y-(LFENETRE/4))+pt_tampon.latitude,6,0,2*M_PI);
 		cairo_fill(cr);
 		if(anonyme_step==4){
@@ -84,7 +85,7 @@ void anonymisation()
 			anonyme_step=4;
 			maj_map();
 		}
-	}
+	}*/
 }
 /**
  * Affiche tout les log globaux sur la carte
@@ -109,7 +110,8 @@ void do_map(cairo_t *cr)
 	int w, h;
 	int TailleH,TailleL;
 	
-	//initialisation image	
+	//initialisation image
+	cairo_surface_t *image;	
 	cairo_set_source_rgb(cr,0,0,0);
 	cairo_set_line_width(cr,0.5);
 
@@ -143,15 +145,7 @@ void do_map(cairo_t *cr)
 
 }
 
-/**
-*test dynamique
-*/
 
-gboolean on_draw2(GtkWidget *widget, cairo_t *cr,gpointer user_data)
-{
-	do_map(cr);
-	return FALSE;
-}
 /**
  * affiche la carte et les point du log
  */
@@ -171,20 +165,4 @@ gboolean on_draw(GtkWidget *widget, cairo_t *crg,gpointer user_data)
 void maj_map()
 {
 	gtk_widget_queue_draw (darea);
-}
-/**
-*creation de boutons
-*/
-void mode_dynamique (){
-    g_signal_connect(G_OBJECT(darea), "draw", G_CALLBACK(on_draw2), NULL);
-    gtk_widget_hide(Bouton);
-    gtk_widget_show(Bouton2);
-    maj_map();
-}
-
-void mode_statique (){
-    g_signal_connect(G_OBJECT(darea), "draw", G_CALLBACK(on_draw), NULL);
-    gtk_widget_hide(Bouton2);
-    gtk_widget_show(Bouton);
-    maj_map();
 }

@@ -46,4 +46,3 @@ logs AllocationTableauPoint(int taille)
         free(&tlog.tableauPoint[i]);
     }
 }*/
-
