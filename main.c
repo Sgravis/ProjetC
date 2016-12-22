@@ -46,22 +46,6 @@ int main(int argc, char** argv)
      //afficher_tableau(base_adresse.tailleTab,base_adresse);
      //afficher_tableau2();
     //afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
-    tlog=(agglomeration(tlog));
-    /*printf("Affichage tableau global: \n\n\n");
-    afficher_tableau(logGlobal.tailleTab,logGlobal);
-    printf("Affichage tableau clean: \n\n\n");
-    afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
-    */detection_pt_interet();
-    /*printf("Affichage tableau clean apres detection pt interet\n\n\n");
-    afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
-    logs resurection=resurrection_point("BackupPoints.txt");
-    printf("Affichage tableau de resurection des points: \n\n\n");
-    afficher_tableau(resurection.tailleTab,resurection);
-    printf("Affichage tableau adresse (que un bout): \n\n\n");
-    addr b;    
-    b=recuperation_addr();
-    afficher_tableau2(12,b);*/
-
         //init fenetre statique
     gtk_init_check(&argc, &argv);
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
