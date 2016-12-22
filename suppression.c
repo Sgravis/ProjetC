@@ -7,8 +7,10 @@
 #include "allocation.h"
 #include "remplissage.h"
 #include "suppression.h"
-//#include "visuel.h"
-//#include "interaction.h"
+#include <gtk//gtk.h>
+#include <cairo.h>
+#include "visuel.h"
+#include "interaction.h"
 
 
 logs Detection_circulaire (point centre,int rayon)
