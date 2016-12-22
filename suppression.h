@@ -14,8 +14,8 @@ void detection_pt_interet();
 int comparaison_point(point p1, point p2);
 void afficher_tableau(int taille, logs tab); /*ne devrait pas etre la*/
 /* afficher_tableau2(); ne devrait pas etre la*/
-/*addr Detection_circulaire_base_adresse (point centre,int rayon, addr base);*/
-void redefinition_grosseur_cercle(logs tab);
+logs Detection_circulaire_base_adresse (point centre,int rayon);
+void redefinition_grosseur_cercle(logs tab, int rayon);
 
 
 
