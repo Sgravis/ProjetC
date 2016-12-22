@@ -128,6 +128,12 @@ void CopiePoints (point* point1, point* point2)
 
 }
 
+/*void CopiePoints_base_addr (pointaddr* point1, pointaddr* point2)
+{
+
+   *point2=*point1;
+
+}*/
 logs CopieTableau(logs tlog,int taille)
 {
     logs tableauCopie=AllocationTableauPoint(taille);
@@ -139,6 +145,18 @@ logs CopieTableau(logs tlog,int taille)
     return tableauCopie;
 }
 
+/*addr CopieTableau_addr(addr tab,int taille)
+{
+    addr tableauCopie;
+    tableauCopie.tailleTableauAddr=taille;
+    tableauCopie.tableauPointaddr=(pointaddr*)malloc(taille*sizeof(pointaddr));
+    int i;
+    for (i=0;i<taille;i++)
+    {
+        CopiePoints_base_addr(&tab.tableauPointaddr[i],&tableauCopie.tableauPointaddr[i]);
+    }
+    return tableauCopie;
+}*/
 
 
 void BackupFile (logs tlog)
@@ -165,13 +183,14 @@ void BackupFile (logs tlog)
         fprintf(fichier,"%Lf",tlog.tableauPoint[i].latitude);
         fputs(",long:",fichier);
         fprintf(fichier,"%Lf",tlog.tableauPoint[i].longitude);
+        fputs(";",fichier);
         fputs("\n",fichier);
     }
     fclose(fichier);
     nb_passages++;
 }
 
-logs resurrection_point(char * nom)
+void resurrection_point(char * nom)
 {
         FILE *fp;
         fp=fopen(nom,"r");
@@ -184,7 +203,7 @@ logs resurrection_point(char * nom)
         long double lat;
         long double longi;
         fseek(fp,0,SEEK_SET);
-        logs logBack = AllocationTableauPoint(nb_lignes);
+        logBack=AllocationTableauPoint(nb_lignes);
         for(i=0;i<nb_lignes;i++)
         {
             fgets(c,6,fp);
@@ -193,23 +212,20 @@ logs resurrection_point(char * nom)
             fscanf(fp,"%Lf",&lat);
             fgets(c,7,fp);
             fscanf(fp,"%Lf",&longi);
-            fgets(c,2,fp);
+            fgets(c,3,fp);
             logBack.tableauPoint[i].longitude=longi;
             logBack.tableauPoint[i].latitude=lat;
             logBack.tableauPoint[i].date=date;
-
-            
         }
  
 
         logBack.tailleTab=nb_lignes;
-        return logBack;
+
 
 }
 
-addr recuperation_addr()
+void recuperation_addr() /* au lieu initialiser ici la base adresse, faire une fonction d'initialisation*/
 {
-    addr addrrecup;
     FILE *fp;
     char c;
     int i,j,nb_lignes;
@@ -217,8 +233,8 @@ addr recuperation_addr()
     
     nb_lignes=Nombre_lignes(fp);
     fseek(fp,0,SEEK_SET);
-    addrrecup.tailleTableauAddr=nb_lignes;
-    addrrecup.tableauPointaddr=(pointaddr*)malloc(nb_lignes*sizeof(pointaddr));
+    base_adresse.tailleTab=nb_lignes;
+    base_adresse.tableauPoint=(point*)malloc(nb_lignes*sizeof(point)); /*utiliser la fonction deja etablie*/
     for(i=0;i<nb_lignes;i++)
     {
         for(j=0;j<4;j++)
@@ -229,11 +245,12 @@ addr recuperation_addr()
                 c=fgetc(fp);
             }
         }
-        fscanf(fp,"%Lf",&(addrrecup.tableauPointaddr[i].latitude));
+        fscanf(fp,"%Lf",&(base_adresse.tableauPoint[i].longitude));
         c=fgetc(fp);
-        fscanf(fp,"%Lf",&(addrrecup.tableauPointaddr[i].longitude));
+        fscanf(fp,"%Lf",&(base_adresse.tableauPoint[i].latitude));
         c=fgetc(fp);
+        base_adresse.tableauPoint[i].date=0;
 
     }
-    return addrrecup;
+ 
 }

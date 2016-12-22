@@ -17,19 +17,12 @@ typedef struct
 	int tailleTab;
 }logs;
 
-typedef struct{
-	long double longitude;
-	long double latitude;
-}pointaddr;
 
-typedef struct {
-	pointaddr * tableauPointaddr;
-	int tailleTableauAddr;
-}addr;
 
 logs logGlobal;
 logs logGlobalClean;
-
+logs logBack;
+logs base_adresse;
 
 char tableauID[100][15];
 
