@@ -24,8 +24,8 @@ allocation.o: allocation.c allocation.h structure_log.h
 remplissage.o: remplissage.c allocation.h structure_log.h remplissage.h
 	$(CC) -c $< $(FLAGS)
 
-suppression.o: suppression.c suppression.h remplissage.h allocation.h structure_log.h
-	$(CC) -c $< $(FLAGS)
+suppression.o: suppression.c suppression.h remplissage.h allocation.h structure_log.h interaction.h visuel.h
+	$(CC) -c $< `pkg-config --cflags --libs gtk+-3.0` `pkg-config --cflags cairo`
 
 agglomeration.o: agglomeration.c agglomeration.h structure_log.h remplissage.h suppression.h allocation.h
 	$(CC) -c $< $(FLAGS)
@@ -42,3 +42,4 @@ clean:
 mrproper: clean
 	rm -rf prog
 	rm -f BackupPoints.txt
+
