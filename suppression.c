@@ -133,7 +133,7 @@ void detection_pt_interet()
 void redefinition_grosseur_cercle(logs a_supr)
 {
     int rayon=70;
-    int reponse;
+    //int reponse;
     logs tab_pt_interet_ds_cercle=Detection_circulaire(a_supr.tableauPoint[0],rayon);/*enlever car global*/
     if(tab_pt_interet_ds_cercle.tailleTab<20)
     {

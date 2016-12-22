@@ -22,32 +22,33 @@ int main(int argc, char** argv)
     //time_t i;
     int result;
     logs tlog;
-     FILE *fp;
-     int nb_lignes;
-     fp=fopen("geoloc-logs.txt","r");
-     nb_lignes=Nombre_lignes(fp);
-     Init_tableau_global(nb_lignes);
-     recuperation_donnees(fp,nb_lignes);
-     fclose(fp);
-     logGlobalClean=CopieTableau(logGlobal,logGlobal.tailleTab);
+    FILE *fp;
+    int nb_lignes;
+    fp=fopen("geoloc-logs.txt","r");
+    nb_lignes=Nombre_lignes(fp);
+    Init_tableau_global(nb_lignes);
+    recuperation_donnees(fp,nb_lignes);
+    fclose(fp);
+    logGlobalClean=CopieTableau(logGlobal,logGlobal.tailleTab);
 	logGlobalClean=agglomeration(logGlobal);
-     /*printf("Affichage tableau global: \n\n\n");
-     afficher_tableau(logGlobal.tailleTab,logGlobal);
-     printf("Affichage tableau clean: \n\n\n");
-     afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);*/
-     /*printf("Affichage tableau clean apres detection pt interet\n\n\n");
-     afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);*/
-     detection_pt_interet();
+    /*printf("Affichage tableau global: \n\n\n");
+    afficher_tableau(logGlobal.tailleTab,logGlobal);
+    printf("Affichage tableau clean: \n\n\n");
+    afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);*/
+    /*printf("Affichage tableau clean apres detection pt interet\n\n\n");
+    afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);*/
+    detection_pt_interet();
 
      
-     resurrection_point("BackupPoints.txt");
-     /*printf("Affichage tableau de resurection des points: \n\n\n");
-     afficher_tableau(logBack.tailleTab,logBack);*/
-     /*printf("Affichage tableau adresse (que un bout): \n\n\n");*/ 
-     recuperation_addr();
-     //afficher_tableau(base_adresse.tailleTab,base_adresse);
-     //afficher_tableau2();
+    resurrection_point("BackupPoints.txt");
+    /*printf("Affichage tableau de resurection des points: \n\n\n");
+    afficher_tableau(logBack.tailleTab,logBack);*/
+    /*printf("Affichage tableau adresse (que un bout): \n\n\n");*/ 
+    recuperation_addr();
+    //afficher_tableau(base_adresse.tailleTab,base_adresse);
+    //afficher_tableau2();
     //afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
+    
         //init fenetre statique
     gtk_init_check(&argc, &argv);
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
