@@ -17,6 +17,7 @@
 #define HFENETRE 1628.0
 #define LFENETRE 680.0
 
+
 int main(int argc, char** argv)
 {
     //time_t i;
@@ -37,18 +38,18 @@ int main(int argc, char** argv)
      afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);*/
      /*printf("Affichage tableau clean apres detection pt interet\n\n\n");
      afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);*/
-     detection_pt_interet();
+
 
      
-     resurrection_point("BackupPoints.txt");
+     //resurrection_point("BackupPoints.txt");
      /*printf("Affichage tableau de resurection des points: \n\n\n");
      afficher_tableau(logBack.tailleTab,logBack);*/
      /*printf("Affichage tableau adresse (que un bout): \n\n\n");*/ 
      recuperation_addr();
      //afficher_tableau(base_adresse.tailleTab,base_adresse);
      //afficher_tableau2();
-    //afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
-        //init fenetre statique
+
+
     gtk_init_check(&argc, &argv);
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     g_signal_connect(window, "destroy",gtk_main_quit,NULL);
@@ -58,25 +59,16 @@ int main(int argc, char** argv)
 
         // init box
     pHBox = gtk_hbox_new(FALSE, 0);
-    pVBox = gtk_vbox_new(TRUE, 5);
+    pVBox = gtk_vbox_new(TRUE, 0);
     gtk_container_add(GTK_CONTAINER(window), pHBox);
 
-        //init dessin statique
+
     darea = gtk_drawing_area_new();
     gtk_container_add(GTK_CONTAINER(pHBox), darea);
     g_signal_connect(G_OBJECT(darea), "draw", G_CALLBACK(on_draw), NULL);
     gtk_widget_set_events (darea, GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK);
     g_signal_connect(G_OBJECT(darea), "button_press_event", G_CALLBACK (on_click_map), NULL);
     init_map();
-
-        //init dessin dynamique
-        /*
-    darea2 = gtk_drawing_area_new();
-    gtk_container_add(GTK_CONTAINER(window), darea2);
-    g_signal_connect(G_OBJECT(darea2), "draw", G_CALLBACK(on_draw2), NULL);
-    gtk_widget_set_events (darea2, GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK);
-    g_signal_connect(G_OBJECT(darea2), "button_press_event", G_CALLBACK (on_click_map), NULL);
-    init_map();*/
 
         //init boutons
     Button_dyn = gtk_button_new_with_label("Mode dynamique");
@@ -93,6 +85,7 @@ int main(int argc, char** argv)
 
     gtk_widget_show_all(window); //affichage de la fenetre
     gtk_widget_hide(Button_stat);
+        detection_pt_interet();
     gtk_main();  // fonction de boucle de gtk
   
     return 0;
