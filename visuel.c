@@ -16,7 +16,7 @@ void init_map()
 /**
  * Affiche un point sur la carte
  */
-void do_point(cairo_t* cr, point pt)
+void do_point(point pt)
 {
 	if(map.zoom==0)
 		cairo_arc(cr,((2.39869958-pt.longitude)/-0.000088242)+855,((212,47.0821639-pt.latitude)/0.000055919)+156, pt.taillept, 0, 2 * M_PI);
@@ -89,21 +89,34 @@ void anonymisation()
 /**
  * Affiche tout les log globaux sur la carte
  */
-void log_vers_carte(cairo_t* cr)
+void log_vers_carte()
 {
 	int i;
 	cairo_set_source_rgb(cr,1,0,0);  //couleur des point
     cairo_set_line_width(cr,8);
 	for(i=0;i<logGlobalClean.tailleTab;i++)  //parcourt et affiche tout les point des logs
 	{  
-		do_point(cr,logGlobalClean.tableauPoint[i]);
+		do_point(logGlobalClean.tableauPoint[i]);
+
+	}
+}
+
+void log_vers_carte_dyn(int j)
+{
+	int i;
+	cairo_set_source_rgb(cr,0,1,0);  //couleur des point
+    cairo_set_line_width(cr,8);
+	for(i=0;i<j;i++)  //parcourt et affiche tout les point des logs
+	{  
+		do_point(logGlobalClean.tableauPoint[i]);
+
 	}
 }
 
 /**
  * Affiche l'image en fonction du zoom defini
  */
-void do_map(cairo_t *cr)
+void do_map()
 {
 
 	int w, h;
@@ -147,19 +160,24 @@ void do_map(cairo_t *cr)
 *test dynamique
 */
 
-gboolean on_draw2(GtkWidget *widget, cairo_t *cr,gpointer user_data)
+gboolean on_draw_dyn(GtkWidget *widget, cairo_t *cr,gpointer user_data)
 {
-	do_map(cr);
+	int i;
+	do_map();
+	for(i=0;i<logGlobalClean.tailleTab;i++){
+		log_vers_carte_dyn(i);
+	}
 	return FALSE;
 }
+
 /**
  * affiche la carte et les point du log
  */
 gboolean on_draw(GtkWidget *widget, cairo_t *crg,gpointer user_data)
 {
 	cr=crg;
-	do_map(cr); 			/*affiche la carte*/
-	log_vers_carte(cr);		/*affiche le log*/
+	do_map(); 			/*affiche la carte*/
+	log_vers_carte();		/*affiche le log*/
 	anonymisation();
 
 	return FALSE;
@@ -173,18 +191,17 @@ void maj_map()
 	gtk_widget_queue_draw (darea);
 }
 /**
-*creation de boutons
+*creation de Buttons
 */
 void mode_dynamique (){
-    g_signal_connect(G_OBJECT(darea), "draw", G_CALLBACK(on_draw2), NULL);
-    gtk_widget_hide(Bouton);
-    gtk_widget_show(Bouton2);
-    maj_map();
+    g_signal_connect(G_OBJECT(darea), "draw", G_CALLBACK(on_draw_dyn), NULL);
+    gtk_widget_hide(Button_dyn);
+    gtk_widget_show(Button_stat);
 }
 
 void mode_statique (){
     g_signal_connect(G_OBJECT(darea), "draw", G_CALLBACK(on_draw), NULL);
-    gtk_widget_hide(Bouton2);
-    gtk_widget_show(Bouton);
+    gtk_widget_hide(Button_stat);
+    gtk_widget_show(Button_dyn);
     maj_map();
 }

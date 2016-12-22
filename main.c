@@ -79,22 +79,20 @@ int main(int argc, char** argv)
     init_map();*/
 
         //init boutons
-    Bouton = gtk_button_new_with_label("Mode dynamique");
-    g_signal_connect(G_OBJECT(Bouton), "clicked",G_CALLBACK (mode_dynamique),NULL);
-    pButton = gtk_button_new_with_label("anonymisation");
-    g_signal_connect(G_OBJECT(pButton), "clicked", G_CALLBACK(do_anonymous), NULL);
-    Bouton2 = gtk_button_new_with_label("Mode statique");
-    g_signal_connect(G_OBJECT(Bouton2), "clicked",G_CALLBACK (mode_statique),NULL);
+    Button_dyn = gtk_button_new_with_label("Mode dynamique");
+    g_signal_connect(G_OBJECT(Button_dyn), "clicked",G_CALLBACK(mode_dynamique),NULL);
+    Button_anonyme = gtk_button_new_with_label("anonymisation");
+    g_signal_connect(G_OBJECT(Button_anonyme), "clicked", G_CALLBACK(do_anonymous), NULL);
+    Button_stat = gtk_button_new_with_label("Mode statique");
+    g_signal_connect(G_OBJECT(Button_stat), "clicked",G_CALLBACK(mode_statique),NULL);
 
-    gtk_box_pack_start(GTK_BOX(pVBox), pButton, TRUE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(pVBox), Bouton, TRUE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(pVBox), Bouton2, TRUE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(pHBox), pVBox, FALSE, FALSE, 0);
-    
-    //Voila la fonction pour faire une popup, passe la question en param, retourne 1 si il dit oui, 0 sinon
-    //result =popup("anonymisation ?"); 
+    gtk_box_pack_start(GTK_BOX(pVBox), Button_anonyme, TRUE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pVBox), Button_dyn, TRUE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pVBox), Button_stat, TRUE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pHBox), pVBox, FALSE, FALSE, 0); 
+
     gtk_widget_show_all(window); //affichage de la fenetre
-    gtk_widget_hide(Bouton2);
+    gtk_widget_hide(Button_stat);
     gtk_main();  // fonction de boucle de gtk
   
     return 0;
