@@ -23,14 +23,14 @@ int main(int argc, char** argv)
     //time_t i;
     int result;
     logs tlog;
-     FILE *fp;
-     int nb_lignes;
-     fp=fopen("geoloc-logs.txt","r");
-     nb_lignes=Nombre_lignes(fp);
-     Init_tableau_global(nb_lignes);
-     recuperation_donnees(fp,nb_lignes);
-     fclose(fp);
-     logGlobalClean=CopieTableau(logGlobal,logGlobal.tailleTab);
+    FILE *fp;
+    int nb_lignes;
+    fp=fopen("geoloc-logs.txt","r");
+    nb_lignes=Nombre_lignes(fp);
+    Init_tableau_global(nb_lignes);
+    recuperation_donnees(fp,nb_lignes);
+    fclose(fp);
+    logGlobalClean=CopieTableau(logGlobal,logGlobal.tailleTab);
 	logGlobalClean=agglomeration(logGlobal);
      /*printf("Affichage tableau global: \n\n\n");
      afficher_tableau(logGlobal.tailleTab,logGlobal);
@@ -85,7 +85,7 @@ int main(int argc, char** argv)
 
     gtk_widget_show_all(window); //affichage de la fenetre
     gtk_widget_hide(Button_stat);
-        detection_pt_interet();
+    detection_pt_interet();
     gtk_main();  // fonction de boucle de gtk
   
     return 0;

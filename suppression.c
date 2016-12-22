@@ -151,7 +151,7 @@ void redefinition_grosseur_cercle(logs a_supr, int rayon)
     if(reponse==1)
     {
         suppression(a_supr);
-     }
+    }
 
    free(tab_pt_interet_ds_cercle.tableauPoint);
    maj_map();
