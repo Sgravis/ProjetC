@@ -18,6 +18,8 @@ typedef struct
 	int zoom;
 }map_position;
 
+long int ind_dyn;
+
 GtkWidget* window;
 GtkWidget* darea;
 GtkWidget* darea2;

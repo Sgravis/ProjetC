@@ -167,6 +167,7 @@ void afficher_tableau(int taille, logs tab)
     }
 
 }
+
 /*void afficher_tableau2()
 {
     int i;
