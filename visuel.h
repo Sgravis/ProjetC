@@ -22,15 +22,17 @@ long int ind_dyn;
 
 GtkWidget* window;
 GtkWidget* darea;
-GtkWidget* darea2;
 GtkWidget *pVBox;
 GtkWidget *pHBox;
+<<<<<<< HEAD
 GtkWidget *Button_dyn;
 GtkWidget *Button_anonyme;
 GtkWidget *Button_stat;
+=======
+GtkWidget *pButton;
+>>>>>>> c293f4ef524fd350835d2b0e18ca0318b52f10cb
 cairo_t* cr;
 map_position map;
-cairo_surface_t *image;
 
 void reset_anonymisation();
 void init_map();
@@ -38,10 +40,10 @@ void do_point( point pt);
 void do_map();
 void log_vers_carte();
 gboolean on_draw(GtkWidget *widget, cairo_t *cr,gpointer user_data);
+<<<<<<< HEAD
 gboolean on_draw_dyn(GtkWidget *widget, cairo_t *cr,gpointer user_data);
+=======
+>>>>>>> c293f4ef524fd350835d2b0e18ca0318b52f10cb
 void maj_map();
-void mode_dynamique();
-void mode_statique ();
-
 
 #endif

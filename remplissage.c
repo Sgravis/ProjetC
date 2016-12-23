@@ -7,6 +7,8 @@
 #include "allocation.h"
 #include "remplissage.h"
 
+
+
 void recuperation_donnees(FILE *fp, int nb_lignes)
     {
         int i;

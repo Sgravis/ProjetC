@@ -21,27 +21,14 @@ Vendredi 16 décembre
 --
 
 - [X] Loic GIT + Mardown
-- [X] Modulation pré-traitement
+- [ ] Modulation pré-traitement
 
 ***
-
-Mardi 20 décembre
---
-
-- [X] Correction suppression et detection
-
-***
-
-Mercredi 21 décembre
---
-
-- [X] Création agglomérat
-
-*** 
 
 **Pour les vacances**
 - [ ] Finir la gestion des routes (Suppression des routes menant à un point d'intéret)
 - [ ] Doxygene du pré-traitement (en partie)
+- [ ] Test
 
 Loïc
 ==
@@ -51,14 +38,11 @@ Loïc
 
 Élé
 ==
-**Pour les vacances**
-
 - [ ] Générer la doxygène et remplir ma partie
 - [ ] Finir la gestion des points interet : cercle de taille réglable
-- Ne pas oublier: -  pourquoi +1 dans resurection et pas dans les log de base?
-                  - corriger petite erreur de detection point intret (saute des points)
+ 
 ==
-
+**Pour les vacances**
 Yannis
 ==
 **Pour les vacances**

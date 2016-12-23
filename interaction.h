@@ -1,6 +1,7 @@
 #ifndef INTERACTION_H
 #define INTERACTION_H
 
+
 #include "structure_log.h"
 #include "visuel.h"
 #include <cairo.h>
