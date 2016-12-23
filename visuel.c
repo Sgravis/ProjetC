@@ -201,6 +201,7 @@ void mode_dynamique (){
     g_signal_connect(G_OBJECT(darea),"draw", G_CALLBACK(on_draw_dyn), NULL);
     gtk_widget_hide(Button_dyn);
     gtk_widget_show(Button_stat);
+    ind_dyn=0;
 }
 
 void mode_statique (){
