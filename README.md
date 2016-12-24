@@ -7,7 +7,7 @@ Les algorithmes proposés sont les suivants:
 - [X] suppression de points dans un cercle donné (typiquement le domicile de l’utilisateur ou son bar favori)
 - [X] suggestion de points d’intérêts à supprimer: il faut calculer des points pour lesquels on repère une fréquentation régulière et qui peut servir de centre pour un cercle
 - [ ] suppression des points se rendant à un point d’intérêt c’est-à-dire une “route”
-- [ ] calcul automatique du rayon d’un cercle à partir de la densité de population (en rase campagne, on imagine que les cercles ont des rayons de plusieurs kilomètres, en ville des centaines de mètres suffisent) en exploitant la base ADRESSE.
+- [X] calcul automatique du rayon d’un cercle à partir de la densité de population (en rase campagne, on imagine que les cercles ont des rayons de plusieurs kilomètres, en ville des centaines de mètres suffisent) en exploitant la base ADRESSE.
 
 
 Partie 2: Visualisation des traces
@@ -19,7 +19,7 @@ Les algorithmes proposés sont:
 
 - [X] Visualisation statique:
 	- [X] Vue d’une carte et de points représentants les mesures.
-	- [X] Aggrégation de points: les points redondants peuvent être fusionnés graphiquement pour représenter un taux de présence
+	- [ ] Aggrégation de points: les points redondants peuvent être fusionnés graphiquement pour représenter un taux de présence
 	- [ ] Vue de routes en liant les points
 	- [ ] Vue des points d’intérêts
 	- [ ] Vue des cercles de protection de la vie privée
