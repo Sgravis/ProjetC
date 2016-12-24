@@ -48,7 +48,7 @@ void anonymisation()
 				printf("rayon : %f\n",sqrt((x-pt_tampon.longitude)*(x-pt_tampon.longitude)+(y-pt_tampon.latitude)*(y-pt_tampon.latitude)));
 				//suppression(Detection_circulaire(pt_tampon,(int)sqrt((x-pt_tampon.longitude)*(x-pt_tampon.longitude)+(y-pt_tampon.latitude)*(y-pt_tampon.latitude))));
 
-				suppression(Detection_circulaire(pt_tampon,400));
+				suppression(Detection_circulaire(pt_tampon,400,logGlobalClean),&logGlobalClean);
 
 
 				reset_anonymisation();
