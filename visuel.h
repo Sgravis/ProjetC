@@ -18,27 +18,19 @@ typedef struct
 	int zoom;
 }map_position;
 
-long int ind_dyn;
-
 GtkWidget* window;
 GtkWidget* darea;
 GtkWidget *pVBox;
 GtkWidget *pHBox;
-GtkWidget *Button_dyn;
-GtkWidget *Button_anonyme;
-GtkWidget *Button_stat;
+GtkWidget *pButton;
 cairo_t* cr;
 map_position map;
 
-void reset_anonymisation();
 void init_map();
-void do_point( point pt);
-void do_map();
-void log_vers_carte();
+void do_point(cairo_t* cr, point pt);
+void do_map(cairo_t *cr);
+void log_vers_carte(cairo_t* cr);
 gboolean on_draw(GtkWidget *widget, cairo_t *cr,gpointer user_data);
-gboolean on_draw_dyn(GtkWidget *widget, cairo_t *cr,gpointer user_data);
-void mode_statique ();
-void mode_dynamique ();
 void maj_map();
 
 #endif

@@ -23,14 +23,14 @@ int main(int argc, char** argv)
     //time_t i;
     int result;
     logs tlog;
-    FILE *fp;
-    int nb_lignes;
-    fp=fopen("geoloc-logs.txt","r");
-    nb_lignes=Nombre_lignes(fp);
-    Init_tableau_global(nb_lignes);
-    recuperation_donnees(fp,nb_lignes);
-    fclose(fp);
-    logGlobalClean=CopieTableau(logGlobal,logGlobal.tailleTab);
+     FILE *fp;
+     int nb_lignes;
+     fp=fopen("geoloc-logs.txt","r");
+     nb_lignes=Nombre_lignes(fp);
+     Init_tableau_global(nb_lignes);
+     recuperation_donnees(fp,nb_lignes);
+     fclose(fp);
+     logGlobalClean=CopieTableau(logGlobal,logGlobal.tailleTab);
 	logGlobalClean=agglomeration(logGlobal);
      /*printf("Affichage tableau global: \n\n\n");
      afficher_tableau(logGlobal.tailleTab,logGlobal);
@@ -71,21 +71,19 @@ int main(int argc, char** argv)
     init_map();
 
         //init boutons
-    Button_dyn = gtk_button_new_with_label("Mode dynamique");
-    g_signal_connect(G_OBJECT(Button_dyn), "clicked",G_CALLBACK(mode_dynamique),NULL);
-    Button_anonyme = gtk_button_new_with_label("anonymisation");
-    g_signal_connect(G_OBJECT(Button_anonyme), "clicked", G_CALLBACK(do_anonymous), NULL);
-    Button_stat = gtk_button_new_with_label("Mode statique");
-    g_signal_connect(G_OBJECT(Button_stat), "clicked",G_CALLBACK(mode_statique),NULL);
+    pButton = gtk_button_new_with_label("anonymisation");
+    g_signal_connect(G_OBJECT(pButton), "clicked", G_CALLBACK(do_anonymous), NULL);
+       
+    gtk_box_pack_start(GTK_BOX(pVBox), pButton, TRUE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pHBox), pVBox, FALSE, FALSE, 0);
+    
+    //Voila la fonction pour faire une popup, passe la question en param, retourne 1 si il dit oui, 0 sinon
+    //result =popup("anonymisation ?");
 
-    gtk_box_pack_start(GTK_BOX(pVBox), Button_anonyme, TRUE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(pVBox), Button_dyn, TRUE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(pVBox), Button_stat, TRUE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(pHBox), pVBox, FALSE, FALSE, 0); 
-
+    
     gtk_widget_show_all(window); //affichage de la fenetre
-    gtk_widget_hide(Button_stat);
-    //detection_pt_interet();
+    detection_pt_interet();
+
     gtk_main();  // fonction de boucle de gtk
   
     return 0;
