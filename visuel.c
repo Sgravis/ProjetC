@@ -210,3 +210,4 @@ void mode_statique (){
     gtk_widget_show(Button_dyn);
     maj_map();
 }
+
