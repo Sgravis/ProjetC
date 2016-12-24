@@ -8,14 +8,14 @@
 #include <stdlib.h>
 #include <time.h>
 
-logs Detection_circulaire(point centre, int rayon, logs base);
-void suppression(logs tableauSupp, logs *base);
+logs Detection_circulaire(point centre, int rayon);
+void suppression(logs tableauSupp);
 void detection_pt_interet();
 int comparaison_point(point p1, point p2);
 void afficher_tableau(int taille, logs tab); /*ne devrait pas etre la*/
 /* afficher_tableau2(); ne devrait pas etre la*/
 logs Detection_circulaire_base_adresse (point centre,int rayon);
-void redefinition_grosseur_cercle(logs tab, int rayon, logs * tmp);
+void redefinition_grosseur_cercle(logs tab, int rayon);
 
 
 

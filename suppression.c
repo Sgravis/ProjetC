@@ -11,18 +11,18 @@
 #include "interaction.h"
 
 
-logs Detection_circulaire (point centre,int rayon, logs base)
+logs Detection_circulaire (point centre,int rayon)
 {
-    logs tableauCercleIntmp=AllocationTableauPoint(base.tailleTab);
+    logs tableauCercleIntmp=AllocationTableauPoint(logGlobalClean.tailleTab);
     logs tableauCercleIn;
     int i;
     int incCercle=1;
     CopiePoints(&centre,&tableauCercleIntmp.tableauPoint[0]);
-    for(i=1;i<=base.tailleTab;i++)
+    for(i=1;i<=logGlobalClean.tailleTab;i++)
     {   
-        if (sqrt(pow(((base.tableauPoint[i].latitude-centre.latitude)*111*1000),2)+pow(((centre.longitude-base.tableauPoint[i].longitude)*76*1000),2))<rayon)
+        if (sqrt(pow(((logGlobalClean.tableauPoint[i].latitude-centre.latitude)*111*1000),2)+pow(((centre.longitude-logGlobalClean.tableauPoint[i].longitude)*76*1000),2))<rayon)
         {
-            CopiePoints(&base.tableauPoint[i],&tableauCercleIntmp.tableauPoint[incCercle++]);
+            CopiePoints(&logGlobalClean.tableauPoint[i],&tableauCercleIntmp.tableauPoint[incCercle++]);
         }
     }
     tableauCercleIn=CopieTableau(tableauCercleIntmp,incCercle);
@@ -51,17 +51,17 @@ logs Detection_circulaire_base_adresse (point centre,int rayon)
 
 
 
-void suppression(logs tableauSupp, logs *base)
+void suppression(logs tableauSupp)
 {
     int i,j,a;
     int incTabClean=0;
-    logs Logcleantmp=AllocationTableauPoint(base->tailleTab);
-    for(i=0;i<base->tailleTab;i++)
+    logs Logcleantmp=AllocationTableauPoint(logGlobalClean.tailleTab);
+    for(i=0;i<logGlobalClean.tailleTab;i++)
     {
         a=0;
         for (j=0; j < tableauSupp.tailleTab;j++)
         {
-             if (comparaison_point(tableauSupp.tableauPoint[j],base->tableauPoint[i])==1)
+             if (comparaison_point(tableauSupp.tableauPoint[j],logGlobalClean.tableauPoint[i])==1)
             {
                 a=1;
             }
@@ -69,12 +69,12 @@ void suppression(logs tableauSupp, logs *base)
         }
         if (a!=1)
         {
-            CopiePoints(&(base->tableauPoint[i]),&(Logcleantmp.tableauPoint[incTabClean++]));
+            CopiePoints(&(logGlobalClean.tableauPoint[i]),&(Logcleantmp.tableauPoint[incTabClean++]));
 
         }
     }
-    free(base->tableauPoint);
-    *base=CopieTableau(Logcleantmp,incTabClean);
+    free(logGlobalClean.tableauPoint);
+    logGlobalClean=CopieTableau(Logcleantmp,incTabClean);
     BackupFile(tableauSupp);
 
 }
@@ -101,19 +101,18 @@ int comparaison_point(point p1, point p2)
 void detection_pt_interet()
 {
     int i,j;
-    int nb_pt_centre_interet=((logGlobal.tailleTab)/10);
-    logs tmp=CopieTableau(logGlobalClean,logGlobalClean.tailleTab);
+    int nb_pt_centre_interet=70;
     logs tab_cercle;
     logs tab_cercle2;
     int rayon=70;
-    for(i=0;i<tmp.tailleTab;i++)
+    for(i=0;i<logGlobalClean.tailleTab;i++)
     {
-        tab_cercle=Detection_circulaire(tmp.tableauPoint[i],rayon,tmp);
+        tab_cercle=Detection_circulaire(logGlobalClean.tableauPoint[i],rayon);
         if (tab_cercle.tailleTab >=nb_pt_centre_interet)
         {
             for(j=0;j<tab_cercle.tailleTab;j++)
             {
-                tab_cercle2=Detection_circulaire(tab_cercle.tableauPoint[j],rayon,tmp);
+                tab_cercle2=Detection_circulaire(tab_cercle.tableauPoint[j],rayon);
                 if (tab_cercle2.tailleTab>tab_cercle.tailleTab)
                 {
                     free(tab_cercle.tableauPoint);
@@ -123,19 +122,18 @@ void detection_pt_interet()
                 }
 
             }
+            printf("ici\n");
            // suppression(tab_cercle);
-            redefinition_grosseur_cercle(tab_cercle,rayon,&tmp);
-
+            redefinition_grosseur_cercle(tab_cercle,rayon);
 
             free(tab_cercle.tableauPoint);
         }
 
     }
-            free(tmp.tableauPoint);
 
 
 }
-void redefinition_grosseur_cercle(logs a_supr, int rayon, logs * tmp)
+void redefinition_grosseur_cercle(logs a_supr, int rayon)
 {
     int reponse;
     logs tab_pt_interet_ds_cercle=Detection_circulaire_base_adresse(a_supr.tableauPoint[0],rayon);/*enlever car global*/
@@ -148,16 +146,11 @@ void redefinition_grosseur_cercle(logs a_supr, int rayon, logs * tmp)
         }while(tab_pt_interet_ds_cercle.tailleTab<20);
 
     }
-    a_supr=Detection_circulaire(a_supr.tableauPoint[0],rayon,*tmp);
+    a_supr=Detection_circulaire(a_supr.tableauPoint[0],rayon);
     reponse=popup("Anonymiser le cercle?");
     if(reponse==1)
     {
-        suppression(a_supr,&logGlobalClean);
-        suppression(a_supr,tmp);
-    }
-    else
-    {
-        suppression(a_supr,tmp);
+        suppression(a_supr);
     }
 
    free(tab_pt_interet_ds_cercle.tableauPoint);
@@ -174,6 +167,7 @@ void afficher_tableau(int taille, logs tab)
     }
 
 }
+
 /*void afficher_tableau2()
 {
     int i;
