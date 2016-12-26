@@ -171,7 +171,8 @@ void afficher_tableau(int taille, logs tab)
     int i;
     for(i=0;i<taille;i++)
     {
-        printf("date:%ld,lat:%Lf,long:%Lf\n",tab.tableauPoint[i].date,tab.tableauPoint[i].latitude,tab.tableauPoint[i].longitude);
+        //printf("date:%ld,lat:%Lf,long:%Lf\n",tab.tableauPoint[i].date,tab.tableauPoint[i].latitude,tab.tableauPoint[i].longitude);
+        printf("%d\n",tab.tableauPoint[i].route );
     }
 
 }
@@ -185,3 +186,14 @@ void afficher_tableau(int taille, logs tab)
 
 }
 */
+
+/*logs suppression_route (logs tlog)
+{
+    logs tlogcleantmp=CopieTableau(tlog,tlog.tailleTab);
+    int i;
+    for (i=0 ; i<tlog2.tailleTab ; i++)
+    {
+        if ()
+    }
+}*/
+

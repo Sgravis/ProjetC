@@ -32,6 +32,8 @@ int main(int argc, char** argv)
     fclose(fp);
     logGlobalClean=CopieTableau(logGlobal,logGlobal.tailleTab);
 	logGlobalClean=agglomeration(logGlobal);
+    logGlobalClean=initialisation_route(logGlobalClean);
+    afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
      /*printf("Affichage tableau global: \n\n\n");
      afficher_tableau(logGlobal.tailleTab,logGlobal);
      printf("Affichage tableau clean: \n\n\n");
