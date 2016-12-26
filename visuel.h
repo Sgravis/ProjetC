@@ -27,6 +27,10 @@ GtkWidget *pHBox;
 GtkWidget *Button_dyn;
 GtkWidget *Button_anonyme;
 GtkWidget *Button_stat;
+GtkWidget *Button_road;
+GtkWidget *Button_noroad;
+
+
 cairo_t* cr;
 map_position map;
 
@@ -45,6 +49,8 @@ gboolean on_draw(GtkWidget *widget, cairo_t *cr,gpointer user_data);
 gboolean on_draw_dyn(GtkWidget *widget, cairo_t *cr,gpointer user_data);
 void mode_statique ();
 void mode_dynamique ();
+void do_route();
+void undo_route();
 void maj_map();
 
 #endif

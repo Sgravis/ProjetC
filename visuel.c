@@ -188,8 +188,11 @@ gboolean on_draw(GtkWidget *widget, cairo_t *crg,gpointer user_data)
 {
 	cr=crg;
 	do_map(); 				/*affiche la carte*/
+	if(route==1)
+		do_route();
 	log_vers_carte();		/*affiche le log*/
 	anonymisation();
+
 	return FALSE;
 }
 
@@ -217,3 +220,32 @@ void mode_statique (){
     maj_map();
 }
 
+void do_route(){
+	int i;
+	route=1;
+	cairo_set_source_rgb(cr,0,1,0);
+	cairo_set_line_width(cr,2);
+	//cairo_move_to(cr,coord_to_pixel_long(logGlobalClean.tableauPoint[0].longitude),coord_to_pixel_lat(logGlobalClean.tableauPoint[0].latitude));
+	for(i=1;i<logGlobalClean.tailleTab;i++)
+	{
+		if(logGlobalClean.tableauPoint[i].route==1)
+		{
+			if(abs(coord_to_pixel_long(logGlobalClean.tableauPoint[i].longitude)-coord_to_pixel_long(logGlobalClean.tableauPoint[i+1].longitude))<50 && abs(coord_to_pixel_lat(logGlobalClean.tableauPoint[i].latitude)-coord_to_pixel_lat(logGlobalClean.tableauPoint[i+1].latitude))<50)
+			{
+				cairo_move_to(cr,coord_to_pixel_long(logGlobalClean.tableauPoint[i].longitude),coord_to_pixel_lat(logGlobalClean.tableauPoint[i].latitude));
+				cairo_line_to(cr,coord_to_pixel_long(logGlobalClean.tableauPoint[i+1].longitude),coord_to_pixel_lat(logGlobalClean.tableauPoint[i+1].latitude));
+			}
+		}
+		cairo_stroke(cr);
+	}
+	route=1;
+	gtk_widget_hide(Button_road);
+	gtk_widget_show(Button_noroad);
+maj_map();
+}
+
+void undo_route(){
+	route=0;
+	gtk_widget_hide(Button_noroad);
+	gtk_widget_show(Button_road);
+}
