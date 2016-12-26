@@ -149,6 +149,7 @@ void redefinition_grosseur_cercle(logs a_supr, int rayon, logs * tmp)
 
     }
     a_supr=Detection_circulaire(a_supr.tableauPoint[0],rayon,*tmp);
+    do_cercle(a_supr.tableauPoint[0],rayon);
     reponse=popup("Anonymiser le cercle?");
     if(reponse==1)
     {

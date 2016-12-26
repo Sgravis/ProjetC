@@ -34,6 +34,7 @@ int coord_to_pixel_long(long double longitude);
 int coord_to_pixel_lat(long double latitude);
 long double pixel_to_coord_long(int longitude);
 long double pixel_to_coord_lat(int latitude);
+void do_cercle(point centre, int rayon);
 
 void reset_anonymisation();
 void init_map();
