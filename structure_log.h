@@ -9,6 +9,7 @@ typedef struct {
 	long double latitude;
 	time_t date;
 	int taillept;
+	int route;
 }point;
 
 typedef struct

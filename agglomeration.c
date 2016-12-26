@@ -26,3 +26,18 @@ logs agglomeration(logs tlog)
 	}
 	return tlog2;
 }
+
+logs initialisation_route(logs tlog)
+{
+	int i;
+	logs tlog2=CopieTableau(tlog,tlog.tailleTab);
+	for (i=0 ; i < tlog2.tailleTab ; i++)
+	{
+		if (tlog2.tableauPoint[i].taillept == 1)
+		{
+			tlog2.tableauPoint[i].route=1;
+		}
+	}
+	return tlog2;
+}
+
