@@ -35,22 +35,8 @@ int main(int argc, char** argv)
 	logGlobalClean=agglomeration(logGlobal);
     logGlobalClean=initialisation_route(logGlobalClean);
     afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
-     /*printf("Affichage tableau global: \n\n\n");
-     afficher_tableau(logGlobal.tailleTab,logGlobal);
-     printf("Affichage tableau clean: \n\n\n");
-     afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);*/
-     /*printf("Affichage tableau clean apres detection pt interet\n\n\n");
-     afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);*/
 
-
-     
-     //resurrection_point("BackupPoints.txt");
-     /*printf("Affichage tableau de resurection des points: \n\n\n");
-     afficher_tableau(logBack.tailleTab,logBack);*/
-     /*printf("Affichage tableau adresse (que un bout): \n\n\n");*/ 
-     recuperation_addr();
-     //afficher_tableau(base_adresse.tailleTab,base_adresse);
-     //afficher_tableau2();
+    recuperation_addr();
 
 
     gtk_init_check(&argc, &argv);
