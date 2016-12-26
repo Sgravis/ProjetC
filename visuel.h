@@ -30,6 +30,11 @@ GtkWidget *Button_stat;
 cairo_t* cr;
 map_position map;
 
+int coord_to_pixel_long(long double longitude);
+int coord_to_pixel_lat(long double latitude);
+long double pixel_to_coord_long(int longitude);
+long double pixel_to_coord_lat(int latitude);
+
 void reset_anonymisation();
 void init_map();
 void do_point( point pt);
