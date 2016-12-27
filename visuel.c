@@ -1,6 +1,8 @@
 #include "visuel.h"
 
-
+/**
+* transforme les coordonees en fonction des données necessaires
+*/
 int coord_to_pixel_long(long double longitude){
 
 	if(map.zoom==0)
@@ -53,14 +55,20 @@ void do_point(point pt)
 	cairo_fill(cr);
 }
 
+/**
+*	affiche un cercle sur la carte, en fonction de son centre et de son rayon
+*/
 void do_cercle(point centre, int rayon)
 {
 	cairo_set_source_rgb(cr,1,1,0);
 	cairo_set_line_width(cr,1);
 	cairo_arc(cr,coord_to_pixel_long(centre.longitude), coord_to_pixel_lat(centre.latitude),rayon, 0, 2 * M_PI);
-	maj_map();
-
+	cairo_stroke(cr);
 }
+
+/**
+* clos la procédure d'anonymisation
+*/
 void reset_anonymisation()
 {
 	pt_tampon.longitude=-10;
@@ -71,6 +79,10 @@ void reset_anonymisation()
 	anonyme_step=0;
 	maj_map();
 }
+
+/**
+* procédure d'anonymisation (étape 3 et 4)
+*/
 void anonymisation()
 {
 	//appartition des cercles d'anonymisation
@@ -96,8 +108,8 @@ void anonymisation()
 		}
 	
 	}
-
 }
+
 /**
  * Affiche tout les log globaux sur la carte
  */
@@ -110,9 +122,11 @@ void log_vers_carte()
 	{  
 		do_point(logGlobalClean.tableauPoint[i]);
 	}
-		detection_pt_interet();
 }
 
+/**
+ * Affiche tout les log globaux sur la carte de manière dynamique
+ */
 void log_vers_carte_dyn()
 {
 	int i;
@@ -170,17 +184,6 @@ void do_map()
 
 
 
-gboolean on_draw_dyn(GtkWidget *widget, cairo_t *cr,gpointer user_data)
-{
-	do_map();
-	log_vers_carte_dyn();
-	if(ind_dyn<=logGlobalClean.tailleTab-50){
-		ind_dyn=ind_dyn+50;
-		maj_map();
-	}
-	return FALSE;
-}
-
 /**
  * affiche la carte et les point du log
  */
@@ -190,9 +193,16 @@ gboolean on_draw(GtkWidget *widget, cairo_t *crg,gpointer user_data)
 	do_map(); 				/*affiche la carte*/
 	if(route==1)
 		do_route();
-	log_vers_carte();		/*affiche le log*/
+	if(ind_dyn==-1)
+		log_vers_carte();		/*affiche le log*/
+	else{
+		log_vers_carte_dyn();
+		if(ind_dyn<=logGlobalClean.tailleTab-vitesse_dyn){
+			ind_dyn=ind_dyn+vitesse_dyn;
+			maj_map();
+		}
+	}
 	anonymisation();
-
 	return FALSE;
 }
 
@@ -205,30 +215,43 @@ void maj_map()
 }
 
 
-
+/**
+ * affiche les log dynamiquement et échange les boutons
+ */
 void mode_dynamique (){
-    g_signal_connect(G_OBJECT(darea),"draw", G_CALLBACK(on_draw_dyn), NULL);
     gtk_widget_hide(Button_dyn);
     gtk_widget_show(Button_stat);
-    ind_dyn=0;
+    undo_route();
+    GtkWidget *dialog_vit;
+	GtkDialogFlags flags_vit = GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT;
+	dialog_vit = gtk_dialog_new_with_buttons ("vitesse du dyn ?",GTK_WINDOW(window),flags_vit,("Très lent"),1,("lent"),2,("rapide"),5,NULL);
+	vitesse_dyn = 10*gtk_dialog_run(GTK_DIALOG(dialog_vit));
+	gtk_widget_destroy (dialog_vit);
+	   ind_dyn=0;
+    maj_map();
 }
 
+/**
+ * affiche les log statiquement et échange les boutons
+ */
 void mode_statique (){
     g_signal_connect(G_OBJECT(darea),"draw", G_CALLBACK(on_draw), NULL);
     gtk_widget_hide(Button_stat);
     gtk_widget_show(Button_dyn);
+    ind_dyn=-1;
     maj_map();
 }
 
+/**
+ * affiche les routes et échange les boutons
+ */
 void do_route(){
 	int i;
 	route=1;
-	cairo_set_source_rgb(cr,0,1,0);
+	cairo_set_source_rgb(cr,0,0,1);
 	cairo_set_line_width(cr,2);
-	//cairo_move_to(cr,coord_to_pixel_long(logGlobalClean.tableauPoint[0].longitude),coord_to_pixel_lat(logGlobalClean.tableauPoint[0].latitude));
 	for(i=1;i<logGlobalClean.tailleTab;i++)
 	{
-		if(logGlobalClean.tableauPoint[i].route==1)
 		{
 			if(abs(coord_to_pixel_long(logGlobalClean.tableauPoint[i].longitude)-coord_to_pixel_long(logGlobalClean.tableauPoint[i+1].longitude))<50 && abs(coord_to_pixel_lat(logGlobalClean.tableauPoint[i].latitude)-coord_to_pixel_lat(logGlobalClean.tableauPoint[i+1].latitude))<50)
 			{
@@ -244,6 +267,9 @@ void do_route(){
 maj_map();
 }
 
+/**
+ * cache les routes et échange les boutons
+ */
 void undo_route(){
 	route=0;
 	gtk_widget_hide(Button_noroad);

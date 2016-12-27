@@ -19,6 +19,7 @@ typedef struct
 }map_position;
 
 long int ind_dyn;
+int vitesse_dyn;
 
 GtkWidget* window;
 GtkWidget* darea;
@@ -29,6 +30,7 @@ GtkWidget *Button_anonyme;
 GtkWidget *Button_stat;
 GtkWidget *Button_road;
 GtkWidget *Button_noroad;
+GtkWidget *Button_pt_interet;
 
 
 cairo_t* cr;
@@ -51,6 +53,7 @@ void mode_statique ();
 void mode_dynamique ();
 void do_route();
 void undo_route();
+void interet();
 void maj_map();
 
 #endif
