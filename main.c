@@ -22,6 +22,8 @@ int main(int argc, char** argv)
 {
     //time_t i;
     int result;
+    route=0;
+    ind_dyn=-1;
     logs tlog;
     FILE *fp;
     int nb_lignes;
@@ -34,22 +36,8 @@ int main(int argc, char** argv)
 	logGlobalClean=agglomeration(logGlobal);
     logGlobalClean=initialisation_route(logGlobalClean);
     afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
-     /*printf("Affichage tableau global: \n\n\n");
-     afficher_tableau(logGlobal.tailleTab,logGlobal);
-     printf("Affichage tableau clean: \n\n\n");
-     afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);*/
-     /*printf("Affichage tableau clean apres detection pt interet\n\n\n");
-     afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);*/
 
-
-     
-     //resurrection_point("BackupPoints.txt");
-     /*printf("Affichage tableau de resurection des points: \n\n\n");
-     afficher_tableau(logBack.tailleTab,logBack);*/
-     /*printf("Affichage tableau adresse (que un bout): \n\n\n");*/ 
-     recuperation_addr();
-     //afficher_tableau(base_adresse.tailleTab,base_adresse);
-     //afficher_tableau2();
+    recuperation_addr();
 
 
     gtk_init_check(&argc, &argv);
@@ -72,6 +60,7 @@ int main(int argc, char** argv)
     g_signal_connect(G_OBJECT(darea), "button_press_event", G_CALLBACK (on_click_map), NULL);
     init_map();
 
+    logGlobalClean=initialisation_route(logGlobalClean);
         //init boutons
     Button_dyn = gtk_button_new_with_label("Mode dynamique");
     g_signal_connect(G_OBJECT(Button_dyn), "clicked",G_CALLBACK(mode_dynamique),NULL);
@@ -79,16 +68,25 @@ int main(int argc, char** argv)
     g_signal_connect(G_OBJECT(Button_anonyme), "clicked", G_CALLBACK(do_anonymous), NULL);
     Button_stat = gtk_button_new_with_label("Mode statique");
     g_signal_connect(G_OBJECT(Button_stat), "clicked",G_CALLBACK(mode_statique),NULL);
+    Button_road = gtk_button_new_with_label("route");
+    g_signal_connect(G_OBJECT(Button_road), "clicked",G_CALLBACK(do_route),NULL);
+    Button_noroad = gtk_button_new_with_label("retirer route");
+    g_signal_connect(G_OBJECT(Button_noroad), "clicked",G_CALLBACK(undo_route),NULL);
+    Button_pt_interet = gtk_button_new_with_label("enlever point d'interet");
+    g_signal_connect(G_OBJECT(Button_pt_interet), "clicked",G_CALLBACK(detection_pt_interet),NULL);
+
 
     gtk_box_pack_start(GTK_BOX(pVBox), Button_anonyme, TRUE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pVBox), Button_dyn, TRUE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pVBox), Button_stat, TRUE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pVBox), Button_road, TRUE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pVBox), Button_noroad, TRUE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pVBox), Button_pt_interet, TRUE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), pVBox, FALSE, FALSE, 0); 
 
     gtk_widget_show_all(window); //affichage de la fenetre
-    //detection_pt_interet();
     gtk_widget_hide(Button_stat);
-    //detection_pt_interet();
+    gtk_widget_hide(Button_noroad);
     gtk_main();  // fonction de boucle de gtk
   
     return 0;

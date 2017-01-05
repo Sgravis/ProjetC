@@ -49,6 +49,9 @@ int popup(char* nom)
 	return result;
 }
 
+/**
+ * commence la procédure d'anonymisation
+ */
 void do_anonymous(GtkWidget* pbutton, GdkEventButton* event, void* data)
 {
     reset_anonymisation();

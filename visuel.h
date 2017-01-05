@@ -19,6 +19,7 @@ typedef struct
 }map_position;
 
 long int ind_dyn;
+int vitesse_dyn;
 
 GtkWidget* window;
 GtkWidget* darea;
@@ -27,6 +28,11 @@ GtkWidget *pHBox;
 GtkWidget *Button_dyn;
 GtkWidget *Button_anonyme;
 GtkWidget *Button_stat;
+GtkWidget *Button_road;
+GtkWidget *Button_noroad;
+GtkWidget *Button_pt_interet;
+
+
 cairo_t* cr;
 map_position map;
 
@@ -34,6 +40,7 @@ int coord_to_pixel_long(long double longitude);
 int coord_to_pixel_lat(long double latitude);
 long double pixel_to_coord_long(int longitude);
 long double pixel_to_coord_lat(int latitude);
+void do_cercle(point centre, int rayon);
 
 void reset_anonymisation();
 void init_map();
@@ -44,6 +51,9 @@ gboolean on_draw(GtkWidget *widget, cairo_t *cr,gpointer user_data);
 gboolean on_draw_dyn(GtkWidget *widget, cairo_t *cr,gpointer user_data);
 void mode_statique ();
 void mode_dynamique ();
+void do_route();
+void undo_route();
+void interet();
 void maj_map();
 
 #endif
