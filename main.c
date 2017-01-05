@@ -73,8 +73,16 @@ int main(int argc, char** argv)
         //init boutons
     pButton = gtk_button_new_with_label("anonymisation");
     g_signal_connect(G_OBJECT(pButton), "clicked", G_CALLBACK(do_anonymous), NULL);
-       
+
+    pt_int_bouton = gtk_button_new_with_label("pt_interet");
+    g_signal_connect(G_OBJECT(pt_int_bouton), "clicked", G_CALLBACK(detection_pt_interet), NULL);
+
+    reset = gtk_button_new_with_label("reset_map");
+    g_signal_connect(G_OBJECT(pt_int_bouton), "clicked", G_CALLBACK(reset_log), NULL);
+    
     gtk_box_pack_start(GTK_BOX(pVBox), pButton, TRUE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pVBox), pt_int_bouton, TRUE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pVBox), reset, TRUE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), pVBox, FALSE, FALSE, 0);
     
     //Voila la fonction pour faire une popup, passe la question en param, retourne 1 si il dit oui, 0 sinon
@@ -82,7 +90,7 @@ int main(int argc, char** argv)
 
     
     gtk_widget_show_all(window); //affichage de la fenetre
-    detection_pt_interet();
+    //detection_pt_interet();
 
     gtk_main();  // fonction de boucle de gtk
   

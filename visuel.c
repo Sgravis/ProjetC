@@ -166,3 +166,7 @@ void maj_map()
 {
 	gtk_widget_queue_draw (darea);
 }
+void reset_log(){
+	do_map(cr);
+	maj_map();
+}

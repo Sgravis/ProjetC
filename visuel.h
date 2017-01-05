@@ -17,15 +17,18 @@ typedef struct
 	float pos_y;
 	int zoom;
 }map_position;
-
+GtkWidget* fichier;
 GtkWidget* window;
 GtkWidget* darea;
 GtkWidget *pVBox;
 GtkWidget *pHBox;
 GtkWidget *pButton;
+GtkWidget *reset;
+GtkWidget* pt_int_bouton;
 cairo_t* cr;
 map_position map;
 
+void reset_log();
 void init_map();
 void do_point(cairo_t* cr, point pt);
 void do_map(cairo_t *cr);
