@@ -22,9 +22,9 @@ Les algorithmes proposés sont:
 	- [ ] Aggrégation de points: les points redondants peuvent être fusionnés graphiquement pour représenter un taux de présence
 	- [ ] Vue de routes en liant les points
 	- [ ] Vue des points d’intérêts
-	- [ ] Vue des cercles de protection de la vie privée
+	- [X] Vue des cercles de protection de la vie privée
 - [ ] Visualisation dynamique:
-	- [ ] animation des points avec le temps; contrôle de la vitesse de rejeu
+	- [X] animation des points avec le temps; contrôle de la vitesse de rejeu
 	- [ ] animation des routes, etc.
 - [ ] Visualisation d’information contextuelle: la base ADRESSE peut permettre d’afficher l’adresse des points d’intérêt
 - [ ] Visualisation multiple de traces: ce mode est particulièrement utile pour comparer les traces avant et après traitement et pouvoir se rendre compte visuellement de l’effet de protection de la vie privée apportée
