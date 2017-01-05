@@ -29,24 +29,6 @@ logs Detection_circulaire (point centre,int rayon, logs base)
     free(tableauCercleIntmp.tableauPoint);
     return tableauCercleIn;
 }
-logs Detection_circulaire_base_adresse (point centre,int rayon)
-{
-    logs tableauCercleIntmp=AllocationTableauPoint(base_adresse.tailleTab);
-    logs tableauCercleIn;
-    int i;
-    int incCercle=0;
-    for(i=0;i<base_adresse.tailleTab;i++)
-    {
-        if (sqrt(pow(((base_adresse.tableauPoint[i].latitude-centre.latitude)*111*1000),2)+pow(((centre.longitude-base_adresse.tableauPoint[i].longitude)*76*1000),2))<rayon)
-        {
-            CopiePoints(&base_adresse.tableauPoint[i],&tableauCercleIntmp.tableauPoint[incCercle++]);
-        }
-    }
-    tableauCercleIn=CopieTableau(tableauCercleIntmp,incCercle);
-    free(tableauCercleIntmp.tableauPoint);
-    return tableauCercleIn;
-}
-
 
 void suppression(logs tableauSupp, logs *base)
 {
@@ -133,13 +115,13 @@ void detection_pt_interet()
 void redefinition_grosseur_cercle(logs a_supr, int rayon, logs * tmp)
 {
     int reponse;
-    logs tab_pt_interet_ds_cercle=Detection_circulaire_base_adresse(a_supr.tableauPoint[0],rayon);/*enlever car global*/
+    logs tab_pt_interet_ds_cercle=Detection_circulaire(a_supr.tableauPoint[0],rayon,base_adresse);
     if(tab_pt_interet_ds_cercle.tailleTab<20)
     {
         do 
         {    
             rayon=rayon+25;
-            tab_pt_interet_ds_cercle=Detection_circulaire_base_adresse(a_supr.tableauPoint[0],rayon);/* enlever car global*/
+            tab_pt_interet_ds_cercle=Detection_circulaire(a_supr.tableauPoint[0],rayon,base_adresse);
         }while(tab_pt_interet_ds_cercle.tailleTab<20);
 
     }
@@ -171,9 +153,14 @@ void afficher_tableau(int taille, logs tab)
     int i;
     for(i=0;i<taille;i++)
     {
-        //printf("date:%ld,lat:%Lf,long:%Lf\n",tab.tableauPoint[i].date,tab.tableauPoint[i].latitude,tab.tableauPoint[i].longitude);
-        if (tab.tableauPoint[i].taillept>10)
-        printf("taille  : %i\n",tab.tableauPoint[i].taillept);
+
+       // printf("date:%ld,lat:%Lf,long:%Lf\n",tab.tableauPoint[i].date,tab.tableauPoint[i].latitude,tab.tableauPoint[i].longitude);
+        if(tab.tableauPoint[i].agglomerat==1)
+        {
+        printf("%d\n",tab.tableauPoint[i].agglomerat);
+        }
+
+
     }
 
 }

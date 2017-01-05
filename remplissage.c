@@ -202,7 +202,6 @@ void resurrection_point()
         FILE *fp;
         fp=fopen("BackupPoints.txt","r");
         int nb_lignes;
-
         nb_lignes=Nombre_lignes(fp);
         nb_lignes--;
         int i;
@@ -227,6 +226,7 @@ void resurrection_point()
             logBack.tableauPoint[i].date=date;
         }
         logBack.tailleTab=nb_lignes;
+
         log_vers_carte(logBack);
 
 
