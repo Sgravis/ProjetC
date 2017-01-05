@@ -6,6 +6,8 @@
 #include "structure_log.h"
 #include "allocation.h"
 #include "remplissage.h"
+#include "visuel.h"
+#include "interaction.h"
 
 
 
@@ -256,4 +258,12 @@ void recuperation_addr() /* au lieu initialiser ici la base adresse, faire une f
 
     }
  
+}
+void remise_a_zero()
+{
+    free(logGlobalClean.tableauPoint);
+    logGlobalClean=CopieTableau(logGlobal,logGlobal.tailleTab);
+    
+    maj_map();
+
 }

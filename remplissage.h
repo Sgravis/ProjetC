@@ -13,6 +13,8 @@ void BackupFile (logs tlog);
 logs CopieTableau(logs tlog1, int taille);
 void resurrection_point(char * nom);
 void recuperation_addr();
+void remise_a_zero();
+
 /*void CopiePoints_base_addr (pointaddr* point1, pointaddr* point2);*/
 /*addr CopieTableau_addr(addr tab,int taille);*/
 

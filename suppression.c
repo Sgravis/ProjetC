@@ -29,7 +29,6 @@ logs Detection_circulaire (point centre,int rayon, logs base)
     free(tableauCercleIntmp.tableauPoint);
     return tableauCercleIn;
 }
-
 logs Detection_circulaire_base_adresse (point centre,int rayon)
 {
     logs tableauCercleIntmp=AllocationTableauPoint(base_adresse.tailleTab);
@@ -47,8 +46,6 @@ logs Detection_circulaire_base_adresse (point centre,int rayon)
     free(tableauCercleIntmp.tableauPoint);
     return tableauCercleIn;
 }
-
-
 
 
 void suppression(logs tableauSupp, logs *base)
