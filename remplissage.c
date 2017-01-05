@@ -8,7 +8,7 @@
 #include "remplissage.h"
 #include "visuel.h"
 #include "interaction.h"
-
+#include <sys/stat.h>
 
 
 
@@ -200,7 +200,13 @@ void BackupFile (logs tlog)
 void resurrection_point()
 {
         FILE *fp;
+
         fp=fopen("BackupPoints.txt","r");
+        if (!fp)
+        {
+            popupclose("pas de points à ressuciter");
+            return;
+        }
         int nb_lignes;
 
         nb_lignes=Nombre_lignes(fp);
@@ -225,6 +231,9 @@ void resurrection_point()
             logBack.tableauPoint[i].longitude=longi;
             logBack.tableauPoint[i].latitude=lat;
             logBack.tableauPoint[i].date=date;
+            logBack.tableauPoint[i].taillept=1;
+            logBack.tableauPoint[i].route=0;
+            logBack.tableauPoint[i].agglomerat=0;
         }
         logBack.tailleTab=nb_lignes;
         log_vers_carte(logBack);

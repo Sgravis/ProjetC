@@ -49,6 +49,16 @@ int popup(char* nom)
 	return result;
 }
 
+void popupclose(char* nom)
+{
+    GtkWidget *dialog;
+    GtkDialogFlags flags = GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT;
+    dialog = gtk_dialog_new_with_buttons (nom,GTK_WINDOW(window),flags,("OK"),1,NULL);
+    gtk_window_set_default_size(GTK_WINDOW(dialog),300,50);
+    gtk_dialog_run(GTK_DIALOG(dialog));
+    gtk_widget_destroy (dialog);
+}
+
 /**
  * commence la procédure d'anonymisation
  */
