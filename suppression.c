@@ -102,7 +102,7 @@ void detection_pt_interet()
     logs tmp=CopieTableau(logGlobalClean,logGlobalClean.tailleTab);
     logs tab_cercle;
     logs tab_cercle2;
-    int rayon=70;
+    int rayon=logGlobalClean.tailleTab/10;
     for(i=0;i<tmp.tailleTab;i++)
     {
         tab_cercle=Detection_circulaire(tmp.tableauPoint[i],rayon,tmp);
@@ -172,8 +172,8 @@ void afficher_tableau(int taille, logs tab)
     int i;
     for(i=0;i<taille;i++)
     {
-        //printf("date:%ld,lat:%Lf,long:%Lf\n",tab.tableauPoint[i].date,tab.tableauPoint[i].latitude,tab.tableauPoint[i].longitude);
-        //printf("%d\n",tab.tableauPoint[i].route );
+        printf("date:%ld,lat:%Lf,long:%Lf\n",tab.tableauPoint[i].date,tab.tableauPoint[i].latitude,tab.tableauPoint[i].longitude);
+        printf("%d\n",tab.tableauPoint[i].route );
     }
 
 }

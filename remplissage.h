@@ -11,7 +11,7 @@ void recuperation_donnees(FILE *fp, int nb_lignes);
 void CopiePoints (point *point1,point *point2);
 void BackupFile (logs tlog);
 logs CopieTableau(logs tlog1, int taille);
-void resurrection_point(char * nom);
+void resurrection_point();
 void recuperation_addr();
 void remise_a_zero();
 

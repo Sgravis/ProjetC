@@ -35,7 +35,6 @@ int main(int argc, char** argv)
     logGlobalClean=CopieTableau(logGlobal,logGlobal.tailleTab);
 	logGlobalClean=agglomeration(logGlobal);
     logGlobalClean=initialisation_route(logGlobalClean);
-    afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
 
     recuperation_addr();
 
@@ -83,6 +82,8 @@ int main(int argc, char** argv)
     g_signal_connect(G_OBJECT(Button_pt_interet), "clicked",G_CALLBACK(detection_pt_interet),NULL);
     Remise_a_0 = gtk_button_new_with_label("Remie a zero");
     g_signal_connect(G_OBJECT(Remise_a_0), "clicked",G_CALLBACK(remise_a_zero),NULL);
+    Affichage_pt_supp = gtk_button_new_with_label("Affichage pts supp");
+    g_signal_connect(G_OBJECT(Affichage_pt_supp), "clicked",G_CALLBACK(resurrection_point),NULL);
 
 
     gtk_box_pack_start(GTK_BOX(pVBox), Button_anonyme, TRUE, FALSE, 0);
@@ -92,6 +93,8 @@ int main(int argc, char** argv)
     gtk_box_pack_start(GTK_BOX(pVBox), Button_noroad, TRUE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pVBox), Button_pt_interet, TRUE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pVBox), Remise_a_0, TRUE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pVBox), Affichage_pt_supp, TRUE, FALSE, 0);
+
     gtk_box_pack_start(GTK_BOX(pHBox), pVBox, FALSE, FALSE, 0); 
 
     gtk_widget_show_all(window); //affichage de la fenetre

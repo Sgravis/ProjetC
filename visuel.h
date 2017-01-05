@@ -38,7 +38,7 @@ GtkWidget *Button_road;
 GtkWidget *Button_noroad;
 GtkWidget *Button_pt_interet;
 GtkWidget *Remise_a_0;
-
+GtkWidget *Affichage_pt_supp;
 
 cairo_t* cr;
 map_position map;
@@ -53,7 +53,6 @@ void reset_anonymisation();
 void init_map();
 void do_point( point pt);
 void do_map();
-void log_vers_carte();
 gboolean on_draw(GtkWidget *widget, cairo_t *cr,gpointer user_data);
 gboolean on_draw_dyn(GtkWidget *widget, cairo_t *cr,gpointer user_data);
 void mode_statique ();
@@ -62,5 +61,6 @@ void do_route();
 void undo_route();
 void interet();
 void maj_map();
+void log_vers_carte(logs base);
 
 #endif

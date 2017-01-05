@@ -8,7 +8,6 @@
 
  int Nombre_lignes(FILE * fp)
  {
-
     fseek(fp,0,SEEK_SET);
     char c;
     int compteur_lignes=0;

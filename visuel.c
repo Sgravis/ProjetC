@@ -113,14 +113,14 @@ void anonymisation()
 /**
  * Affiche tout les log globaux sur la carte
  */
-void log_vers_carte()
+void log_vers_carte(logs base)
 {
 	int i;
 	cairo_set_source_rgb(cr,1,0,0);  //couleur des point
     cairo_set_line_width(cr,8);
-	for(i=0;i<logGlobalClean.tailleTab;i++)  //parcourt et affiche tout les point des logs
+	for(i=0;i<base.tailleTab;i++)  //parcourt et affiche tout les point des logs
 	{  
-		do_point(logGlobalClean.tableauPoint[i]);
+		do_point(base.tableauPoint[i]);
 	}
 }
 
@@ -194,7 +194,7 @@ gboolean on_draw(GtkWidget *widget, cairo_t *crg,gpointer user_data)
 	if(route==1)
 		do_route();
 	if(ind_dyn==-1)
-		log_vers_carte();		/*affiche le log*/
+		log_vers_carte(logGlobalClean);		/*affiche le log*/
 	else{
 		log_vers_carte_dyn();
 		if(ind_dyn<=logGlobalClean.tailleTab-vitesse_dyn){
