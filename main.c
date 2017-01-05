@@ -62,6 +62,13 @@ int main(int argc, char** argv)
 
     logGlobalClean=initialisation_route(logGlobalClean);
         //init boutons
+
+    
+    //Voila la fonction pour faire une popup, passe la question en param, retourne 1 si il dit oui, 0 sinon
+    //result =popup("anonymisation ?");
+
+    
+    //detection_pt_interet();
     Button_dyn = gtk_button_new_with_label("Mode dynamique");
     g_signal_connect(G_OBJECT(Button_dyn), "clicked",G_CALLBACK(mode_dynamique),NULL);
     Button_anonyme = gtk_button_new_with_label("anonymisation");
@@ -74,6 +81,8 @@ int main(int argc, char** argv)
     g_signal_connect(G_OBJECT(Button_noroad), "clicked",G_CALLBACK(undo_route),NULL);
     Button_pt_interet = gtk_button_new_with_label("enlever point d'interet");
     g_signal_connect(G_OBJECT(Button_pt_interet), "clicked",G_CALLBACK(detection_pt_interet),NULL);
+    Remise_a_0 = gtk_button_new_with_label("Remie a zero");
+    g_signal_connect(G_OBJECT(Remise_a_0), "clicked",G_CALLBACK(remise_a_zero),NULL);
 
 
     gtk_box_pack_start(GTK_BOX(pVBox), Button_anonyme, TRUE, FALSE, 0);
@@ -82,6 +91,7 @@ int main(int argc, char** argv)
     gtk_box_pack_start(GTK_BOX(pVBox), Button_road, TRUE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pVBox), Button_noroad, TRUE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pVBox), Button_pt_interet, TRUE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pVBox), Remise_a_0, TRUE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), pVBox, FALSE, FALSE, 0); 
 
     gtk_widget_show_all(window); //affichage de la fenetre

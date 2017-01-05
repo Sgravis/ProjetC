@@ -25,12 +25,19 @@ GtkWidget* window;
 GtkWidget* darea;
 GtkWidget *pVBox;
 GtkWidget *pHBox;
+GtkWidget *pButton;
+GtkWidget *reset;
+GtkWidget* pt_int_bouton;
+cairo_t* cr;
+map_position map;
+
 GtkWidget *Button_dyn;
 GtkWidget *Button_anonyme;
 GtkWidget *Button_stat;
 GtkWidget *Button_road;
 GtkWidget *Button_noroad;
 GtkWidget *Button_pt_interet;
+GtkWidget *Remise_a_0;
 
 
 cairo_t* cr;

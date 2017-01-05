@@ -73,7 +73,7 @@ void reset_anonymisation()
 {
 	pt_tampon.longitude=-10;
 	pt_tampon.latitude=-10;
-	pt_tampon.taillept=0;
+	pt_tampon.taillept=1;
 	x=0;
 	y=0;
 	anonyme_step=0;

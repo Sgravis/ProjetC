@@ -121,6 +121,7 @@ void detection_pt_interet()
 
             }
            // suppression(tab_cercle);
+
             redefinition_grosseur_cercle(tab_cercle,rayon,&tmp);
 
 
