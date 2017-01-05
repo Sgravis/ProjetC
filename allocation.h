@@ -6,10 +6,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void InitLogs();
-void Init_tableau(int taille);
-int Nombre_lignes(FILE * fp);
-logs AllocationTableauPoint(int taille);
-void Liberer (logs tlog);
+void init_tableau_global(int taille);
+int nombre_lignes(FILE * fp);
+logs allocation_tableau_point(int taille);
+void liberer (logs tlog);
 
 #endif

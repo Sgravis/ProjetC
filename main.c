@@ -27,11 +27,11 @@ int main(int argc, char** argv)
     FILE *fp;
     int nb_lignes;
     fp=fopen("geoloc-logs.txt","r");
-    nb_lignes=Nombre_lignes(fp);
-    Init_tableau_global(nb_lignes);
+    nb_lignes=nombre_lignes(fp);
+    init_tableau_global(nb_lignes);
     recuperation_donnees(fp,nb_lignes);
     fclose(fp);
-    logGlobalClean=CopieTableau(logGlobal,logGlobal.tailleTab);
+    logGlobalClean=copie_tableau(logGlobal,logGlobal.tailleTab);
 	logGlobalClean=agglomeration(logGlobal);
     logGlobalClean=initialisation_route(logGlobalClean);
     recuperation_addr();

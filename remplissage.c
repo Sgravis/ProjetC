@@ -128,31 +128,32 @@ void recuperation_donnees(FILE *fp, int nb_lignes)
 
 
 
-void CopiePoints (point* point1, point* point2)
+void copie_points (point* point1, point* point2)
 {
 
     *point2=*point1;
 
 }
 
-/*void CopiePoints_base_addr (pointaddr* point1, pointaddr* point2)
+/*void copie_points_base_addr (pointaddr* point1, pointaddr* point2)
 {
 
    *point2=*point1;
 
 }*/
-logs CopieTableau(logs tlog,int taille)
+
+logs copie_tableau(logs tlog,int taille)
 {
-    logs tableauCopie=AllocationTableauPoint(taille);
+    logs tableauCopie=allocation_tableau_point(taille);
     int i;
     for (i=0;i<taille;i++)
     {
-        CopiePoints(&tlog.tableauPoint[i],&tableauCopie.tableauPoint[i]);
+        copie_points(&tlog.tableauPoint[i],&tableauCopie.tableauPoint[i]);
     }
     return tableauCopie;
 }
 
-/*addr CopieTableau_addr(addr tab,int taille)
+/*addr copie_tableau_addr(addr tab,int taille)
 {
     addr tableauCopie;
     tableauCopie.tailleTableauAddr=taille;
@@ -160,13 +161,13 @@ logs CopieTableau(logs tlog,int taille)
     int i;
     for (i=0;i<taille;i++)
     {
-        CopiePoints_base_addr(&tab.tableauPointaddr[i],&tableauCopie.tableauPointaddr[i]);
+        copie_points_base_addr(&tab.tableauPointaddr[i],&tableauCopie.tableauPointaddr[i]);
     }
     return tableauCopie;
 }*/
 
 
-void BackupFile (logs tlog)
+void backup_file(logs tlog)
 {
 
     static int nb_passages=0;
@@ -208,7 +209,7 @@ void resurrection_point()
             return;
         }
         int nb_lignes;
-        nb_lignes=Nombre_lignes(fp);
+        nb_lignes=nombre_lignes(fp);
         nb_lignes--;
         int i;
         time_t date;
@@ -216,7 +217,7 @@ void resurrection_point()
         long double lat;
         long double longi;
         fseek(fp,0,SEEK_SET);
-        logBack=AllocationTableauPoint(nb_lignes);
+        logBack=allocation_tableau_point(nb_lignes);
         for(i=0;i<nb_lignes;i++)
         {
 
@@ -248,7 +249,7 @@ void recuperation_addr() /* au lieu initialiser ici la base adresse, faire une f
     int i,j,nb_lignes;
     fp=fopen("AddrConvert.txt","r");
     
-    nb_lignes=Nombre_lignes(fp);
+    nb_lignes=nombre_lignes(fp);
     fseek(fp,0,SEEK_SET);
     base_adresse.tailleTab=nb_lignes;
     base_adresse.tableauPoint=(point*)malloc(nb_lignes*sizeof(point)); /*utiliser la fonction deja etablie*/
@@ -274,7 +275,7 @@ void recuperation_addr() /* au lieu initialiser ici la base adresse, faire une f
 void remise_a_zero()
 {
     free(logGlobalClean.tableauPoint);
-    logGlobalClean=CopieTableau(logGlobal,logGlobal.tailleTab);
+    logGlobalClean=copie_tableau(logGlobal,logGlobal.tailleTab);
     if(remove("BackupPoints.txt")<0)
     {
         perror("");

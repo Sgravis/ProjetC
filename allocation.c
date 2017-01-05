@@ -6,7 +6,7 @@
 #include "structure_log.h"
 #include "allocation.h"
 
- int Nombre_lignes(FILE * fp)
+ int nombre_lignes(FILE * fp)
  {
     fseek(fp,0,SEEK_SET);
     char c;
@@ -23,13 +23,13 @@
     return compteur_lignes+1;
  }
 
-void Init_tableau_global(int taille)
+void init_tableau_global(int taille)
  {
     logGlobal.tableauPoint= (point*)malloc(taille*sizeof(point));
 
  }
 
-logs AllocationTableauPoint(int taille)
+logs allocation_tableau_point(int taille)
 {   
     logs tlog;
     tlog.tableauPoint=(point*)malloc(taille*sizeof(point));
@@ -37,7 +37,7 @@ logs AllocationTableauPoint(int taille)
     return tlog;
 }
 
-/*void Liberer(logs tlog)
+/*void liberer(logs tlog)
 {
     int i;
     for (i=0;i<tlog.tailleTab;i++)

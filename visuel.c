@@ -95,8 +95,8 @@ void anonymisation()
 		do_point(pt_tampon);
 		if(anonyme_step==4){
 			if(1){//} popup("anonymiser ce cercle ?")){
-				suppression(Detection_circulaire(pt_tampon,sqrt(pow(x-coord_to_pixel_long(pt_tampon.longitude),2)+pow(y-coord_to_pixel_lat(pt_tampon.latitude),2))*6,logGlobalClean),&logGlobalClean);
-				//suppression(Detection_circulaire(pt_tampon,400,logGlobalClean),&logGlobalClean);
+				suppression(detection_circulaire(pt_tampon,sqrt(pow(x-coord_to_pixel_long(pt_tampon.longitude),2)+pow(y-coord_to_pixel_lat(pt_tampon.latitude),2))*6,logGlobalClean),&logGlobalClean);
+				//suppression(detection_circulaire(pt_tampon,400,logGlobalClean),&logGlobalClean);
 				reset_anonymisation();
 			}
 			else{
