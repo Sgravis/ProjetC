@@ -22,7 +22,7 @@ allocation.o: allocation.c allocation.h structure_log.h
 	$(CC) -c $< $(FLAGS)
 
 remplissage.o: remplissage.c allocation.h structure_log.h remplissage.h
-	$(CC) -c $< $(FLAGS)
+	$(CC) -c $< $(FLAGS) $(VISUEL)
 
 suppression.o: suppression.c suppression.h remplissage.h allocation.h structure_log.h
 	$(CC) -c $< $(FLAGS) $(VISUEL)

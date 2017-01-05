@@ -6,6 +6,9 @@
 #include "structure_log.h"
 #include "allocation.h"
 #include "remplissage.h"
+#include "visuel.h"
+#include "interaction.h"
+
 
 
 
@@ -194,13 +197,14 @@ void BackupFile (logs tlog)
     nb_passages++;
 }
 
-void resurrection_point(char * nom)
+void resurrection_point()
 {
         FILE *fp;
-        fp=fopen(nom,"r");
+        fp=fopen("BackupPoints.txt","r");
         int nb_lignes;
-        //nb_lignes--;
+
         nb_lignes=Nombre_lignes(fp);
+        nb_lignes--;
         int i;
         time_t date;
         char c[20];
@@ -210,6 +214,7 @@ void resurrection_point(char * nom)
         logBack=AllocationTableauPoint(nb_lignes);
         for(i=0;i<nb_lignes;i++)
         {
+
             fgets(c,6,fp);
             fscanf(fp,"%ld",&date);
             fgets(c,6,fp);
@@ -221,9 +226,8 @@ void resurrection_point(char * nom)
             logBack.tableauPoint[i].latitude=lat;
             logBack.tableauPoint[i].date=date;
         }
- 
-
         logBack.tailleTab=nb_lignes;
+        log_vers_carte(logBack);
 
 
 }
@@ -257,4 +261,17 @@ void recuperation_addr() /* au lieu initialiser ici la base adresse, faire une f
 
     }
  
+}
+void remise_a_zero()
+{
+    free(logGlobalClean.tableauPoint);
+    logGlobalClean=CopieTableau(logGlobal,logGlobal.tailleTab);
+    if(remove("BackupPoints.txt")<0)
+    {
+        perror("");
+    }
+    maj_map();
+
+
+
 }

@@ -117,14 +117,14 @@ void anonymisation()
 /**
  * Affiche tout les log globaux sur la carte
  */
-void log_vers_carte()
+void log_vers_carte(logs base)
 {
 	int i;
 	cairo_set_source_rgb(cr,1,0,0);  //couleur des point
     cairo_set_line_width(cr,8);
-	for(i=0;i<logGlobalClean.tailleTab;i++)  //parcourt et affiche tout les point des logs
+	for(i=0;i<base.tailleTab;i++)  //parcourt et affiche tout les point des logs
 	{  
-		do_point(logGlobalClean.tableauPoint[i]);
+		do_point(base.tableauPoint[i]);
 	}
 }
 
@@ -196,7 +196,7 @@ gboolean on_draw(GtkWidget *widget, cairo_t *crg,gpointer user_data)
 	cr=crg;
 	do_map(); 				/*affiche la carte*/
 	if(ind_dyn==-1)
-		log_vers_carte();		/*affiche le log*/
+		log_vers_carte(logGlobalClean);		/*affiche le log*/
 	else{
 		log_vers_carte_dyn();
 		if(ind_dyn<=logGlobalClean.tailleTab-vitesse_dyn){
@@ -206,7 +206,16 @@ gboolean on_draw(GtkWidget *widget, cairo_t *crg,gpointer user_data)
 	}
 	if(route==1)
 		do_route();
+
+	if (tmp_ano.taillept!=0){
+		cairo_set_source_rgb(cr,1,1,0);
+    	cairo_set_line_width(cr,1);
+    	cairo_arc(cr,coord_to_pixel_long(tmp_ano.longitude), coord_to_pixel_lat(tmp_ano.latitude),tmp_ano.taillept/6, 0, 2 * M_PI);
+    	cairo_stroke(cr);
+    }
 	anonymisation();
+
+
 	return FALSE;
 }
 
@@ -218,7 +227,6 @@ void maj_map()
 	gtk_widget_queue_draw(darea);
 }
 
-
 /**
  * affiche les log dynamiquement et échange les boutons
  */
@@ -228,10 +236,10 @@ void mode_dynamique (){
     undo_route();
     GtkWidget *dialog_vit;
 	GtkDialogFlags flags_vit = GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT;
-	dialog_vit = gtk_dialog_new_with_buttons ("vitesse du dyn ?",GTK_WINDOW(window),flags_vit,("Très lent"),1,("lent"),2,("rapide"),5,NULL);
-	vitesse_dyn = 10*gtk_dialog_run(GTK_DIALOG(dialog_vit));
+	dialog_vit = gtk_dialog_new_with_buttons ("vitesse du dyn ?",GTK_WINDOW(window),flags_vit,("Très lent"),1,("lent"),15,("rapide"),40,NULL);
+	vitesse_dyn = gtk_dialog_run(GTK_DIALOG(dialog_vit));
 	gtk_widget_destroy (dialog_vit);
-	   ind_dyn=0;
+	ind_dyn=0;
     maj_map();
 }
 
