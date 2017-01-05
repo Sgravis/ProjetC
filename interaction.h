@@ -9,7 +9,7 @@
 #include <stdio.h>
 
 int anonyme_step;
-
+int route;
 point pt_tampon;
 float x;
 float y;

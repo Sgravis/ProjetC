@@ -27,8 +27,8 @@ void on_click_map(GtkWidget* darea, GdkEventButton* event, void* data)
 
     if(anonyme_step==1)
     {
-        pt_tampon.longitude=event->x;
-        pt_tampon.latitude=event->y;
+        pt_tampon.longitude=pixel_to_coord_long(event->x);
+        pt_tampon.latitude=pixel_to_coord_lat(event->y);
         pt_tampon.taillept=5;
         maj_map();
         anonyme_step=2;
@@ -49,6 +49,9 @@ int popup(char* nom)
 	return result;
 }
 
+/**
+ * commence la procédure d'anonymisation
+ */
 void do_anonymous(GtkWidget* pbutton, GdkEventButton* event, void* data)
 {
     reset_anonymisation();

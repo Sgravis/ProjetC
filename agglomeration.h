@@ -14,5 +14,6 @@
 #include "agglomeration.h"
 
 logs agglomeration (logs tlog);
+logs initialisation_route(logs tlog);
 
 #endif

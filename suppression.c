@@ -150,6 +150,11 @@ void redefinition_grosseur_cercle(logs a_supr, int rayon, logs * tmp)
 
     }
     a_supr=Detection_circulaire(a_supr.tableauPoint[0],rayon,*tmp);
+    cairo_set_source_rgb(cr,1,1,0);
+    cairo_set_line_width(cr,1);
+    cairo_arc(cr,coord_to_pixel_long(a_supr.tableauPoint[0].longitude), coord_to_pixel_lat(a_supr.tableauPoint[0].latitude),rayon, 0, 2 * M_PI);
+    cairo_stroke(cr);
+    sleep(1);
     reponse=popup("Anonymiser le cercle?");
     if(reponse==1)
     {
@@ -163,7 +168,6 @@ void redefinition_grosseur_cercle(logs a_supr, int rayon, logs * tmp)
 
    free(tab_pt_interet_ds_cercle.tableauPoint);
    maj_map();
-
 }
 
 void afficher_tableau(int taille, logs tab)
@@ -171,7 +175,8 @@ void afficher_tableau(int taille, logs tab)
     int i;
     for(i=0;i<taille;i++)
     {
-        printf("date:%ld,lat:%Lf,long:%Lf\n",tab.tableauPoint[i].date,tab.tableauPoint[i].latitude,tab.tableauPoint[i].longitude);
+        //printf("date:%ld,lat:%Lf,long:%Lf\n",tab.tableauPoint[i].date,tab.tableauPoint[i].latitude,tab.tableauPoint[i].longitude);
+        //printf("%d\n",tab.tableauPoint[i].route );
     }
 
 }
@@ -185,3 +190,14 @@ void afficher_tableau(int taille, logs tab)
 
 }
 */
+
+/*logs suppression_route (logs tlog)
+{
+    logs tlogcleantmp=CopieTableau(tlog,tlog.tailleTab);
+    int i;
+    for (i=0 ; i<tlog2.tailleTab ; i++)
+    {
+        if ()
+    }
+}*/
+

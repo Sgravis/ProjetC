@@ -21,8 +21,24 @@ logs agglomeration(logs tlog)
 			if ((tlog2.tableauPoint[i].latitude == tlog2.tableauPoint[j].latitude) && (tlog2.tableauPoint[i].longitude == tlog2.tableauPoint[j].longitude))
 			{
 				tlog2.tableauPoint[j].taillept++;
+				tlog2.tableauPoint[j].agglomerat=1;
 			}
 		}
 	}
 	return tlog2;
 }
+
+logs initialisation_route(logs tlog)
+{
+	int i;
+	logs tlog2=CopieTableau(tlog,tlog.tailleTab);
+	for (i=0 ; i < tlog2.tailleTab ; i++)
+	{
+		if (tlog2.tableauPoint[i].taillept == 1)
+		{
+			tlog2.tableauPoint[i].route=1;
+		}
+	}
+	return tlog2;
+}
+
