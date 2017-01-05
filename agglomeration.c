@@ -14,17 +14,18 @@ logs agglomeration(logs tlog)
 {
 	int i,j;
 	logs tlog2=CopieTableau(tlog,tlog.tailleTab);
-	/*for (i=0 ; i<tlog2.tailleTab ; i++) 
+	for (i=0 ; i<tlog2.tailleTab ; i++) 
 	{
 		for (j = i+1 ; j < tlog2.tailleTab ; j++)
 		{
 			if ((tlog2.tableauPoint[i].latitude == tlog2.tableauPoint[j].latitude) && (tlog2.tableauPoint[i].longitude == tlog2.tableauPoint[j].longitude))
 			{
 				tlog2.tableauPoint[j].taillept++;
+				tlog2.tableauPoint[i].agglomerat=1;
 				tlog2.tableauPoint[j].agglomerat=1;
 			}
 		}
-	}*/
+	}
 	detection_agglomerat();
 	afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
 	return tlog2;

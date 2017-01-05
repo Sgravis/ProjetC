@@ -34,7 +34,6 @@ int main(int argc, char** argv)
     logGlobalClean=CopieTableau(logGlobal,logGlobal.tailleTab);
 	logGlobalClean=agglomeration(logGlobal);
     logGlobalClean=initialisation_route(logGlobalClean);
-
     recuperation_addr();
 
 
@@ -79,7 +78,7 @@ int main(int argc, char** argv)
     g_signal_connect(G_OBJECT(Button_noroad), "clicked",G_CALLBACK(undo_route),NULL);
     Button_pt_interet = gtk_button_new_with_label("enlever point d'interet");
     g_signal_connect(G_OBJECT(Button_pt_interet), "clicked",G_CALLBACK(detection_pt_interet),NULL);
-    Remise_a_0 = gtk_button_new_with_label("Remie a zero");
+    Remise_a_0 = gtk_button_new_with_label("Remise a zero");
     g_signal_connect(G_OBJECT(Remise_a_0), "clicked",G_CALLBACK(remise_a_zero),NULL);
     Affichage_pt_supp = gtk_button_new_with_label("Affichage pts supp");
     g_signal_connect(G_OBJECT(Affichage_pt_supp), "clicked",G_CALLBACK(resurrection_point),NULL);
