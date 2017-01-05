@@ -21,6 +21,7 @@ logs agglomeration(logs tlog)
 			if ((tlog2.tableauPoint[i].latitude == tlog2.tableauPoint[j].latitude) && (tlog2.tableauPoint[i].longitude == tlog2.tableauPoint[j].longitude))
 			{
 				tlog2.tableauPoint[j].taillept++;
+				tlog2.tableauPoint[j].agglomerat=1;
 			}
 		}
 	}
