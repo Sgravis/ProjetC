@@ -191,8 +191,6 @@ gboolean on_draw(GtkWidget *widget, cairo_t *crg,gpointer user_data)
 {
 	cr=crg;
 	do_map(); 				/*affiche la carte*/
-	if(route==1)
-		do_route();
 	if(ind_dyn==-1)
 		log_vers_carte();		/*affiche le log*/
 	else{
@@ -202,6 +200,8 @@ gboolean on_draw(GtkWidget *widget, cairo_t *crg,gpointer user_data)
 			maj_map();
 		}
 	}
+	if(route==1)
+		do_route();
 	anonymisation();
 	return FALSE;
 }
@@ -248,8 +248,8 @@ void mode_statique (){
 void do_route(){
 	int i;
 	route=1;
-	cairo_set_source_rgb(cr,0,0,1);
-	cairo_set_line_width(cr,2);
+	cairo_set_source_rgb(cr,0,0.5,0.5);
+	cairo_set_line_width(cr,1);
 	for(i=1;i<logGlobalClean.tailleTab;i++)
 	{
 		{
