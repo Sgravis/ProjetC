@@ -35,7 +35,7 @@ int main(int argc, char** argv)
     logGlobalClean=CopieTableau(logGlobal,logGlobal.tailleTab);
 	logGlobalClean=agglomeration(logGlobal);
     logGlobalClean=initialisation_route(logGlobalClean);
-    afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
+    //afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
 
     recuperation_addr();
 

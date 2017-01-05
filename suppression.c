@@ -123,10 +123,7 @@ void detection_pt_interet()
                 }
 
             }
-           // suppression(tab_cercle);
             redefinition_grosseur_cercle(tab_cercle,rayon,&tmp);
-
-
             free(tab_cercle.tableauPoint);
         }
 
@@ -149,6 +146,7 @@ void redefinition_grosseur_cercle(logs a_supr, int rayon, logs * tmp)
 
     }
     a_supr=Detection_circulaire(a_supr.tableauPoint[0],rayon,*tmp);
+
     cairo_set_source_rgb(cr,1,1,0);
     cairo_set_line_width(cr,1);
     cairo_arc(cr,coord_to_pixel_long(a_supr.tableauPoint[0].longitude), coord_to_pixel_lat(a_supr.tableauPoint[0].latitude),rayon, 0, 2 * M_PI);
@@ -175,7 +173,8 @@ void afficher_tableau(int taille, logs tab)
     for(i=0;i<taille;i++)
     {
         //printf("date:%ld,lat:%Lf,long:%Lf\n",tab.tableauPoint[i].date,tab.tableauPoint[i].latitude,tab.tableauPoint[i].longitude);
-        //printf("%d\n",tab.tableauPoint[i].route );
+        if (tab.tableauPoint[i].taillept>10)
+        printf("taille  : %i\n",tab.tableauPoint[i].taillept);
     }
 
 }

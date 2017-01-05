@@ -50,8 +50,12 @@ void init_map()
  * Affiche un point sur la carte
  */
 void do_point(point pt)
-{
-	cairo_arc(cr,coord_to_pixel_long(pt.longitude),coord_to_pixel_lat(pt.latitude), 2, 0, 2 * M_PI);
+{	
+	pt.taillept++;
+	if (pt.taillept!=2)
+		pt.taillept/=3;
+
+	cairo_arc(cr,coord_to_pixel_long(pt.longitude),coord_to_pixel_lat(pt.latitude), pt.taillept, 0, 2 * M_PI);
 	cairo_fill(cr);
 }
 
@@ -252,6 +256,7 @@ void do_route(){
 	cairo_set_line_width(cr,1);
 	for(i=1;i<logGlobalClean.tailleTab;i++)
 	{
+		if(logGlobalClean.tableauPoint[i].route==1 && logGlobalClean.tableauPoint[i].agglomerat == 0)
 		{
 			if(abs(coord_to_pixel_long(logGlobalClean.tableauPoint[i].longitude)-coord_to_pixel_long(logGlobalClean.tableauPoint[i+1].longitude))<50 && abs(coord_to_pixel_lat(logGlobalClean.tableauPoint[i].latitude)-coord_to_pixel_lat(logGlobalClean.tableauPoint[i+1].latitude))<50)
 			{
