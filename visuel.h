@@ -20,6 +20,7 @@ typedef struct
 
 long int ind_dyn;
 int vitesse_dyn;
+point tmp_ano;
 
 GtkWidget* window;
 GtkWidget* darea;

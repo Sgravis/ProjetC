@@ -29,24 +29,6 @@ logs Detection_circulaire (point centre,int rayon, logs base)
     free(tableauCercleIntmp.tableauPoint);
     return tableauCercleIn;
 }
-logs Detection_circulaire_base_adresse (point centre,int rayon)
-{
-    logs tableauCercleIntmp=AllocationTableauPoint(base_adresse.tailleTab);
-    logs tableauCercleIn;
-    int i;
-    int incCercle=0;
-    for(i=0;i<base_adresse.tailleTab;i++)
-    {
-        if (sqrt(pow(((base_adresse.tableauPoint[i].latitude-centre.latitude)*111*1000),2)+pow(((centre.longitude-base_adresse.tableauPoint[i].longitude)*76*1000),2))<rayon)
-        {
-            CopiePoints(&base_adresse.tableauPoint[i],&tableauCercleIntmp.tableauPoint[incCercle++]);
-        }
-    }
-    tableauCercleIn=CopieTableau(tableauCercleIntmp,incCercle);
-    free(tableauCercleIntmp.tableauPoint);
-    return tableauCercleIn;
-}
-
 
 void suppression(logs tableauSupp, logs *base)
 {
@@ -120,11 +102,8 @@ void detection_pt_interet()
                 }
 
             }
-           // suppression(tab_cercle);
 
             redefinition_grosseur_cercle(tab_cercle,rayon,&tmp);
-
-
             free(tab_cercle.tableauPoint);
         }
 
@@ -136,22 +115,21 @@ void detection_pt_interet()
 void redefinition_grosseur_cercle(logs a_supr, int rayon, logs * tmp)
 {
     int reponse;
-    logs tab_pt_interet_ds_cercle=Detection_circulaire_base_adresse(a_supr.tableauPoint[0],rayon);/*enlever car global*/
+    logs tab_pt_interet_ds_cercle=Detection_circulaire(a_supr.tableauPoint[0],rayon,base_adresse);
     if(tab_pt_interet_ds_cercle.tailleTab<20)
     {
         do 
         {    
             rayon=rayon+25;
-            tab_pt_interet_ds_cercle=Detection_circulaire_base_adresse(a_supr.tableauPoint[0],rayon);/* enlever car global*/
+            tab_pt_interet_ds_cercle=Detection_circulaire(a_supr.tableauPoint[0],rayon,base_adresse);
         }while(tab_pt_interet_ds_cercle.tailleTab<20);
 
     }
     a_supr=Detection_circulaire(a_supr.tableauPoint[0],rayon,*tmp);
-    cairo_set_source_rgb(cr,1,1,0);
-    cairo_set_line_width(cr,1);
-    cairo_arc(cr,coord_to_pixel_long(a_supr.tableauPoint[0].longitude), coord_to_pixel_lat(a_supr.tableauPoint[0].latitude),rayon, 0, 2 * M_PI);
-    cairo_stroke(cr);
-    sleep(1);
+
+    tmp_ano=a_supr.tableauPoint[0];
+    tmp_ano.taillept=rayon;
+
     reponse=popup("Anonymiser le cercle?");
     if(reponse==1)
     {
@@ -162,6 +140,9 @@ void redefinition_grosseur_cercle(logs a_supr, int rayon, logs * tmp)
     {
         suppression(a_supr,tmp);
     }
+    tmp_ano.longitude=-1;
+    tmp_ano.latitude=-1;
+    tmp_ano.taillept=0;
 
    free(tab_pt_interet_ds_cercle.tableauPoint);
    maj_map();
@@ -172,8 +153,14 @@ void afficher_tableau(int taille, logs tab)
     int i;
     for(i=0;i<taille;i++)
     {
-        printf("date:%ld,lat:%Lf,long:%Lf\n",tab.tableauPoint[i].date,tab.tableauPoint[i].latitude,tab.tableauPoint[i].longitude);
-        printf("%d\n",tab.tableauPoint[i].route );
+
+       // printf("date:%ld,lat:%Lf,long:%Lf\n",tab.tableauPoint[i].date,tab.tableauPoint[i].latitude,tab.tableauPoint[i].longitude);
+        if(tab.tableauPoint[i].agglomerat==1)
+        {
+        printf("%d\n",tab.tableauPoint[i].agglomerat);
+        }
+
+
     }
 
 }

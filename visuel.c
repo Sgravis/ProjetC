@@ -50,8 +50,12 @@ void init_map()
  * Affiche un point sur la carte
  */
 void do_point(point pt)
-{
-	cairo_arc(cr,coord_to_pixel_long(pt.longitude),coord_to_pixel_lat(pt.latitude), 2, 0, 2 * M_PI);
+{	
+	pt.taillept++;
+	if (pt.taillept!=2)
+		pt.taillept/=3;
+
+	cairo_arc(cr,coord_to_pixel_long(pt.longitude),coord_to_pixel_lat(pt.latitude), pt.taillept, 0, 2 * M_PI);
 	cairo_fill(cr);
 }
 
@@ -191,8 +195,6 @@ gboolean on_draw(GtkWidget *widget, cairo_t *crg,gpointer user_data)
 {
 	cr=crg;
 	do_map(); 				/*affiche la carte*/
-	if(route==1)
-		do_route();
 	if(ind_dyn==-1)
 		log_vers_carte(logGlobalClean);		/*affiche le log*/
 	else{
@@ -202,7 +204,18 @@ gboolean on_draw(GtkWidget *widget, cairo_t *crg,gpointer user_data)
 			maj_map();
 		}
 	}
+	if(route==1)
+		do_route();
+
+	if (tmp_ano.taillept!=0){
+		cairo_set_source_rgb(cr,1,1,0);
+    	cairo_set_line_width(cr,1);
+    	cairo_arc(cr,coord_to_pixel_long(tmp_ano.longitude), coord_to_pixel_lat(tmp_ano.latitude),tmp_ano.taillept/6, 0, 2 * M_PI);
+    	cairo_stroke(cr);
+    }
 	anonymisation();
+
+
 	return FALSE;
 }
 
@@ -214,7 +227,6 @@ void maj_map()
 	gtk_widget_queue_draw(darea);
 }
 
-
 /**
  * affiche les log dynamiquement et échange les boutons
  */
@@ -224,10 +236,10 @@ void mode_dynamique (){
     undo_route();
     GtkWidget *dialog_vit;
 	GtkDialogFlags flags_vit = GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT;
-	dialog_vit = gtk_dialog_new_with_buttons ("vitesse du dyn ?",GTK_WINDOW(window),flags_vit,("Très lent"),1,("lent"),2,("rapide"),5,NULL);
-	vitesse_dyn = 10*gtk_dialog_run(GTK_DIALOG(dialog_vit));
+	dialog_vit = gtk_dialog_new_with_buttons ("vitesse du dyn ?",GTK_WINDOW(window),flags_vit,("Très lent"),1,("lent"),15,("rapide"),40,NULL);
+	vitesse_dyn = gtk_dialog_run(GTK_DIALOG(dialog_vit));
 	gtk_widget_destroy (dialog_vit);
-	   ind_dyn=0;
+	ind_dyn=0;
     maj_map();
 }
 
@@ -248,10 +260,11 @@ void mode_statique (){
 void do_route(){
 	int i;
 	route=1;
-	cairo_set_source_rgb(cr,0,0,1);
-	cairo_set_line_width(cr,2);
+	cairo_set_source_rgb(cr,0,0.5,0.5);
+	cairo_set_line_width(cr,1);
 	for(i=1;i<logGlobalClean.tailleTab;i++)
 	{
+		if(logGlobalClean.tableauPoint[i].route==1 && logGlobalClean.tableauPoint[i].agglomerat == 0)
 		{
 			if(abs(coord_to_pixel_long(logGlobalClean.tableauPoint[i].longitude)-coord_to_pixel_long(logGlobalClean.tableauPoint[i+1].longitude))<50 && abs(coord_to_pixel_lat(logGlobalClean.tableauPoint[i].latitude)-coord_to_pixel_lat(logGlobalClean.tableauPoint[i+1].latitude))<50)
 			{

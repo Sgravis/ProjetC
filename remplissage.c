@@ -208,7 +208,6 @@ void resurrection_point()
             return;
         }
         int nb_lignes;
-
         nb_lignes=Nombre_lignes(fp);
         nb_lignes--;
         int i;
@@ -236,6 +235,7 @@ void resurrection_point()
             logBack.tableauPoint[i].agglomerat=0;
         }
         logBack.tailleTab=nb_lignes;
+
         log_vers_carte(logBack);
 
 
