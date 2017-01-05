@@ -20,7 +20,6 @@
 
 int main(int argc, char** argv)
 {
-    //time_t i;
     int result;
     route=0;
     ind_dyn=-1;

@@ -15,5 +15,8 @@
 
 logs agglomeration (logs tlog);
 logs initialisation_route(logs tlog);
+void detection_agglomerat();
+void redefinition_grosseur_agglomerat(logs a_supr, int rayon, logs * tmp);
+void ajout_agglomerat(logs tableau);
 
 #endif
