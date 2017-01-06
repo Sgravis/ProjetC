@@ -151,13 +151,14 @@ void redefinition_grosseur_cercle(logs a_supr, int rayon, logs * tmp)
 void afficher_tableau(int taille, logs tab)
 {
     int i;
+    int k=0;
     for(i=0;i<taille;i++)
     {
 
        // printf("date:%ld,lat:%Lf,long:%Lf\n",tab.tableauPoint[i].date,tab.tableauPoint[i].latitude,tab.tableauPoint[i].longitude);
-        if(tab.tableauPoint[i].agglomerat==1)
+        if((tab.tableauPoint[i].agglomerat >= 1) && (tab.tableauPoint[i].route == 1))
         {
-        printf("%d\n",tab.tableauPoint[i].agglomerat);
+        printf("%d\n",++k);
         }
 
 

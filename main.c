@@ -35,7 +35,7 @@ int main(int argc, char** argv)
 	logGlobalClean=agglomeration(logGlobal);
     logGlobalClean=initialisation_route(logGlobalClean);
     recuperation_addr();
-
+    afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
 
     gtk_init_check(&argc, &argv);
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
