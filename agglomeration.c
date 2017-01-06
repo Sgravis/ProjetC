@@ -13,7 +13,7 @@
 logs agglomeration(logs tlog)
 {
 	int i,j;
-	logs tlog2=CopieTableau(tlog,tlog.tailleTab);
+	logs tlog2=copie_tableau(tlog,tlog.tailleTab);
 	for (i=0 ; i<tlog2.tailleTab ; i++) 
 	{
 		for (j = i+1 ; j < tlog2.tailleTab ; j++)
@@ -26,7 +26,7 @@ logs agglomeration(logs tlog)
 			}
 		}
 	}
-	detection_agglomerat();
+	//detection_agglomerat();
 	afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
 	return tlog2;
 }
@@ -34,7 +34,7 @@ logs agglomeration(logs tlog)
 logs initialisation_route(logs tlog)
 {
 	int i;
-	logs tlog2=CopieTableau(tlog,tlog.tailleTab);
+	logs tlog2=copie_tableau(tlog,tlog.tailleTab);
 	for (i=0 ; i < tlog2.tailleTab ; i++)
 	{
 		if (tlog2.tableauPoint[i].taillept == 1)
@@ -49,18 +49,18 @@ void detection_agglomerat()
 {
     int i,j;
     int nb_pt_centre_interet=((logGlobal.tailleTab)/10);
-    logs tmp=CopieTableau(logGlobalClean,logGlobalClean.tailleTab);
+    logs tmp=copie_tableau(logGlobalClean,logGlobalClean.tailleTab);
     logs tab_cercle;
     logs tab_cercle2;
     int rayon=100;
     for(i=0;i<tmp.tailleTab;i++)
     {
-        tab_cercle=Detection_circulaire(tmp.tableauPoint[i],rayon,tmp);
+        tab_cercle=detection_circulaire(tmp.tableauPoint[i],rayon,tmp);
         if (tab_cercle.tailleTab >=nb_pt_centre_interet)
         {
             for(j=0;j<tab_cercle.tailleTab;j++)
             {
-                tab_cercle2=Detection_circulaire(tab_cercle.tableauPoint[j],rayon,tmp);
+                tab_cercle2=detection_circulaire(tab_cercle.tableauPoint[j],rayon,tmp);
                 if (tab_cercle2.tailleTab>tab_cercle.tailleTab)
                 {
                     free(tab_cercle.tableauPoint);

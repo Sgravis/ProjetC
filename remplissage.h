@@ -8,15 +8,15 @@
 #include <time.h>
 
 void recuperation_donnees(FILE *fp, int nb_lignes);
-void CopiePoints (point *point1,point *point2);
-void BackupFile (logs tlog);
-logs CopieTableau(logs tlog1, int taille);
+void copie_points(point *point1,point *point2);
+void backup_file (logs tlog);
+logs copie_tableau(logs tlog1, int taille);
 void resurrection_point();
 void recuperation_addr();
 void remise_a_zero();
 
-/*void CopiePoints_base_addr (pointaddr* point1, pointaddr* point2);*/
-/*addr CopieTableau_addr(addr tab,int taille);*/
+/*void copie_points_base_addr (pointaddr* point1, pointaddr* point2);*/
+/*addr copie_tableau_addr(addr tab,int taille);*/
 
 
 

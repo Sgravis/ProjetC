@@ -11,21 +11,21 @@
 #include "interaction.h"
 
 
-logs Detection_circulaire (point centre,int rayon, logs base)
+logs detection_circulaire (point centre,int rayon, logs base)
 {
-    logs tableauCercleIntmp=AllocationTableauPoint(base.tailleTab);
+    logs tableauCercleIntmp=allocation_tableau_point(base.tailleTab);
     logs tableauCercleIn;
     int i;
     int incCercle=1;
-    CopiePoints(&centre,&tableauCercleIntmp.tableauPoint[0]);
+    copie_points(&centre,&tableauCercleIntmp.tableauPoint[0]);
     for(i=1;i<=base.tailleTab;i++)
     {   
         if (sqrt(pow(((base.tableauPoint[i].latitude-centre.latitude)*111*1000),2)+pow(((centre.longitude-base.tableauPoint[i].longitude)*76*1000),2))<rayon)
         {
-            CopiePoints(&base.tableauPoint[i],&tableauCercleIntmp.tableauPoint[incCercle++]);
+            copie_points(&base.tableauPoint[i],&tableauCercleIntmp.tableauPoint[incCercle++]);
         }
     }
-    tableauCercleIn=CopieTableau(tableauCercleIntmp,incCercle);
+    tableauCercleIn=copie_tableau(tableauCercleIntmp,incCercle);
     free(tableauCercleIntmp.tableauPoint);
     return tableauCercleIn;
 }
@@ -34,7 +34,7 @@ void suppression(logs tableauSupp, logs *base)
 {
     int i,j,a;
     int incTabClean=0;
-    logs Logcleantmp=AllocationTableauPoint(base->tailleTab);
+    logs Logcleantmp=allocation_tableau_point(base->tailleTab);
     for(i=0;i<base->tailleTab;i++)
     {
         a=0;
@@ -48,13 +48,13 @@ void suppression(logs tableauSupp, logs *base)
         }
         if (a!=1)
         {
-            CopiePoints(&(base->tableauPoint[i]),&(Logcleantmp.tableauPoint[incTabClean++]));
+            copie_points(&(base->tableauPoint[i]),&(Logcleantmp.tableauPoint[incTabClean++]));
 
         }
     }
     free(base->tableauPoint);
-    *base=CopieTableau(Logcleantmp,incTabClean);
-    BackupFile(tableauSupp);
+    *base=copie_tableau(Logcleantmp,incTabClean);
+    backup_file(tableauSupp);
 
 }
 
@@ -81,18 +81,18 @@ void detection_pt_interet()
 {
     int i,j;
     int nb_pt_centre_interet=((logGlobal.tailleTab)/10);
-    logs tmp=CopieTableau(logGlobalClean,logGlobalClean.tailleTab);
+    logs tmp=copie_tableau(logGlobalClean,logGlobalClean.tailleTab);
     logs tab_cercle;
     logs tab_cercle2;
     int rayon=logGlobalClean.tailleTab/10;
     for(i=0;i<tmp.tailleTab;i++)
     {
-        tab_cercle=Detection_circulaire(tmp.tableauPoint[i],rayon,tmp);
+        tab_cercle=detection_circulaire(tmp.tableauPoint[i],rayon,tmp);
         if (tab_cercle.tailleTab >=nb_pt_centre_interet)
         {
             for(j=0;j<tab_cercle.tailleTab;j++)
             {
-                tab_cercle2=Detection_circulaire(tab_cercle.tableauPoint[j],rayon,tmp);
+                tab_cercle2=detection_circulaire(tab_cercle.tableauPoint[j],rayon,tmp);
                 if (tab_cercle2.tailleTab>tab_cercle.tailleTab)
                 {
                     free(tab_cercle.tableauPoint);
@@ -115,17 +115,17 @@ void detection_pt_interet()
 void redefinition_grosseur_cercle(logs a_supr, int rayon, logs * tmp)
 {
     int reponse;
-    logs tab_pt_interet_ds_cercle=Detection_circulaire(a_supr.tableauPoint[0],rayon,base_adresse);
+    logs tab_pt_interet_ds_cercle=detection_circulaire(a_supr.tableauPoint[0],rayon,base_adresse);
     if(tab_pt_interet_ds_cercle.tailleTab<20)
     {
         do 
         {    
             rayon=rayon+25;
-            tab_pt_interet_ds_cercle=Detection_circulaire(a_supr.tableauPoint[0],rayon,base_adresse);
+            tab_pt_interet_ds_cercle=detection_circulaire(a_supr.tableauPoint[0],rayon,base_adresse);
         }while(tab_pt_interet_ds_cercle.tailleTab<20);
 
     }
-    a_supr=Detection_circulaire(a_supr.tableauPoint[0],rayon,*tmp);
+    a_supr=detection_circulaire(a_supr.tableauPoint[0],rayon,*tmp);
 
     tmp_ano=a_supr.tableauPoint[0];
     tmp_ano.taillept=rayon;
@@ -177,7 +177,7 @@ void afficher_tableau(int taille, logs tab)
 
 /*logs suppression_route (logs tlog)
 {
-    logs tlogcleantmp=CopieTableau(tlog,tlog.tailleTab);
+    logs tlogcleantmp=copie_tableau(tlog,tlog.tailleTab);
     int i;
     for (i=0 ; i<tlog2.tailleTab ; i++)
     {
