@@ -10,25 +10,24 @@
 #include "structure_log.h"
 #include "agglomeration.h"
 
-logs agglomeration(logs tlog)
+void agglomeration(logs tlog)
 {
 	int i,j;
-	logs tlog2=copie_tableau(tlog,tlog.tailleTab);
-	for (i=0 ; i<tlog2.tailleTab ; i++) 
+
+	for (i=0 ; i<logGlobalClean.tailleTab ; i++) 
 	{
-		for (j = i+1 ; j < tlog2.tailleTab ; j++)
+		for (j = i+1 ; j < logGlobalClean.tailleTab ; j++)
 		{
-			if ((tlog2.tableauPoint[i].latitude == tlog2.tableauPoint[j].latitude) && (tlog2.tableauPoint[i].longitude == tlog2.tableauPoint[j].longitude))
+			if ((logGlobalClean.tableauPoint[i].latitude == logGlobalClean.tableauPoint[j].latitude) && (logGlobalClean.tableauPoint[i].longitude == logGlobalClean.tableauPoint[j].longitude))
 			{
-				tlog2.tableauPoint[j].taillept++;
-				tlog2.tableauPoint[i].agglomerat=1;
-				tlog2.tableauPoint[j].agglomerat=1;
+				logGlobalClean.tableauPoint[j].taillept++;
+
 			}
 		}
 	}
-	//detection_agglomerat();
+	detection_agglomerat();
 	afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
-	return tlog2;
+	//return tlog2;
 }
 
 logs initialisation_route(logs tlog)
@@ -70,9 +69,7 @@ void detection_agglomerat()
                 }
 
             }
-
-           ajout_agglomerat(tab_cercle);
-
+           ajout_agglomerat(tab_cercle,rayon,&tmp);
 
             free(tab_cercle.tableauPoint);
         }
@@ -82,9 +79,20 @@ void detection_agglomerat()
 
 }
 
-void ajout_agglomerat(logs tableau_agglomerat)
+void ajout_agglomerat(logs tableau_agglomerat, int rayon, logs *tmp)
 {
-	 int i,j;
+	int i,j;
+    logs tab_agglo_redimension=detection_circulaire(tableau_agglomerat.tableauPoint[0],rayon,base_adresse);
+    if(tab_agglo_redimension.tailleTab<20)
+    {
+        do 
+        {    
+            rayon=rayon+25;
+            tab_agglo_redimension=detection_circulaire(tableau_agglomerat.tableauPoint[0],rayon,base_adresse);
+        }while(tab_agglo_redimension.tailleTab<20);
+
+    }
+    tableau_agglomerat=detection_circulaire(tableau_agglomerat.tableauPoint[0],rayon,*tmp);
     for(i=0;i<logGlobalClean.tailleTab;i++)
     {
         for (j=0;j<tableau_agglomerat.tailleTab;j++)
@@ -92,8 +100,12 @@ void ajout_agglomerat(logs tableau_agglomerat)
            if(comparaison_point(logGlobalClean.tableauPoint[i],tableau_agglomerat.tableauPoint[j])==1)
            {
            		logGlobalClean.tableauPoint[i].agglomerat=1;
+           		logGlobalClean.tableauPoint[i].route=0;
            }
         }
 
     }
+    suppression_sans_backup(tableau_agglomerat,tmp);
+    free(tab_agglo_redimension.tableauPoint);
+
 }

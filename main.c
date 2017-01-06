@@ -31,11 +31,14 @@ int main(int argc, char** argv)
     init_tableau_global(nb_lignes);
     recuperation_donnees(fp,nb_lignes);
     fclose(fp);
+    recuperation_addr();
     logGlobalClean=copie_tableau(logGlobal,logGlobal.tailleTab);
-	logGlobalClean=agglomeration(logGlobal);
     logGlobalClean=initialisation_route(logGlobalClean);
+    agglomeration(logGlobal);
     recuperation_addr();
     afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
+
+
 
     gtk_init_check(&argc, &argv);
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
