@@ -96,7 +96,7 @@ void anonymisation()
 		do_point(pt_tampon);
 		if(anonyme_step==4){
 			if(1){//} popup("anonymiser ce cercle ?")){
-				suppression(detection_circulaire(pt_tampon,sqrt(pow(x-coord_to_pixel_long(pt_tampon.longitude),2)+pow(y-coord_to_pixel_lat(pt_tampon.latitude),2))*6,logGlobalClean),&logGlobalClean);
+				suppression_avec_backup(detection_circulaire(pt_tampon,sqrt(pow(x-coord_to_pixel_long(pt_tampon.longitude),2)+pow(y-coord_to_pixel_lat(pt_tampon.latitude),2))*6,logGlobalClean),&logGlobalClean);
 				//suppression(detection_circulaire(pt_tampon,400,logGlobalClean),&logGlobalClean);
 				reset_anonymisation();
 			}
@@ -270,7 +270,7 @@ void do_route(){
 	cairo_set_line_width(cr,0.5);
 	for(i=1;i<logGlobalClean.tailleTab;i++)
 	{
-		if(logGlobalClean.tableauPoint[i].route==1 && logGlobalClean.tableauPoint[i].agglomerat == 0)
+		if(/*logGlobalClean.tableauPoint[i].route==1 &&*/ logGlobalClean.tableauPoint[i].agglomerat == 0)
 		{
 			if(abs(coord_to_pixel_long(logGlobalClean.tableauPoint[i].longitude)-coord_to_pixel_long(logGlobalClean.tableauPoint[i+1].longitude))<50 && abs(coord_to_pixel_lat(logGlobalClean.tableauPoint[i].latitude)-coord_to_pixel_lat(logGlobalClean.tableauPoint[i+1].latitude))<50)
 			{

@@ -30,7 +30,7 @@ logs detection_circulaire (point centre,int rayon, logs base)
     return tableauCercleIn;
 }
 
-void suppression(logs tableauSupp, logs *base)
+void suppression_avec_backup(logs tableauSupp, logs *base)
 {
     int i,j,a;
     int incTabClean=0;
@@ -57,7 +57,32 @@ void suppression(logs tableauSupp, logs *base)
     backup_file(tableauSupp);
 
 }
+void suppression_sans_backup(logs tableauSupp, logs *base)
+{
+    int i,j,a;
+    int incTabClean=0;
+    logs Logcleantmp=allocation_tableau_point(base->tailleTab);
+    for(i=0;i<base->tailleTab;i++)
+    {
+        a=0;
+        for (j=0; j < tableauSupp.tailleTab;j++)
+        {
+             if (comparaison_point(tableauSupp.tableauPoint[j],base->tableauPoint[i])==1)
+            {
+                a=1;
+            }
+            
+        }
+        if (a!=1)
+        {
+            copie_points(&(base->tableauPoint[i]),&(Logcleantmp.tableauPoint[incTabClean++]));
 
+        }
+    }
+    free(base->tableauPoint);
+    *base=copie_tableau(Logcleantmp,incTabClean);
+
+}
 int comparaison_point(point p1, point p2)
 {
 
@@ -84,7 +109,7 @@ void detection_pt_interet()
     logs tmp=copie_tableau(logGlobalClean,logGlobalClean.tailleTab);
     logs tab_cercle;
     logs tab_cercle2;
-    int rayon=logGlobalClean.tailleTab/10;
+    int rayon=100;
     for(i=0;i<tmp.tailleTab;i++)
     {
         tab_cercle=detection_circulaire(tmp.tableauPoint[i],rayon,tmp);
@@ -133,12 +158,12 @@ void redefinition_grosseur_cercle(logs a_supr, int rayon, logs * tmp)
     reponse=popup("Anonymiser le cercle?");
     if(reponse==1)
     {
-        suppression(a_supr,&logGlobalClean);
-        suppression(a_supr,tmp);
+        suppression_avec_backup(a_supr,&logGlobalClean);
+        suppression_sans_backup(a_supr,tmp);
     }
     else
     {
-        suppression(a_supr,tmp);
+        suppression_sans_backup(a_supr,tmp);
     }
     tmp_ano.longitude=-1;
     tmp_ano.latitude=-1;
@@ -153,16 +178,8 @@ void afficher_tableau(int taille, logs tab)
     int i;
     for(i=0;i<taille;i++)
     {
-
        // printf("date:%ld,lat:%Lf,long:%Lf\n",tab.tableauPoint[i].date,tab.tableauPoint[i].latitude,tab.tableauPoint[i].longitude);
-        if(tab.tableauPoint[i].agglomerat==1)
-        {
-        printf("%d\n",tab.tableauPoint[i].agglomerat);
-        }
-
-
     }
-
 }
 /*void afficher_tableau2()
 {
