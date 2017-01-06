@@ -259,13 +259,13 @@ void mode_statique (){
  * affiche les routes et échange les boutons
  */
 void do_route_maj(){
+	route=1;
 	do_route();
 	maj_map();
 }
 
 void do_route(){
 	int i;
-	route=1;
 	cairo_set_source_rgb(cr,0,0.5,0.5);
 	cairo_set_line_width(cr,0.5);
 	for(i=1;i<logGlobalClean.tailleTab;i++)
@@ -292,4 +292,5 @@ void undo_route(){
 	route=0;
 	gtk_widget_hide(Button_noroad);
 	gtk_widget_show(Button_road);
+	maj_map();
 }
