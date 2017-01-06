@@ -53,7 +53,8 @@ void do_point(point pt)
 {	
 	pt.taillept++;
 	if (pt.taillept!=2)
-		pt.taillept/=3;
+		pt.taillept/=5;
+	pt.taillept/=2;
 
 	cairo_arc(cr,coord_to_pixel_long(pt.longitude),coord_to_pixel_lat(pt.latitude), pt.taillept, 0, 2 * M_PI);
 	cairo_fill(cr);
@@ -257,11 +258,16 @@ void mode_statique (){
 /**
  * affiche les routes et échange les boutons
  */
+void do_route_maj(){
+	do_route();
+	maj_map();
+}
+
 void do_route(){
 	int i;
 	route=1;
 	cairo_set_source_rgb(cr,0,0.5,0.5);
-	cairo_set_line_width(cr,1);
+	cairo_set_line_width(cr,0.5);
 	for(i=1;i<logGlobalClean.tailleTab;i++)
 	{
 		if(logGlobalClean.tableauPoint[i].route==1 && logGlobalClean.tableauPoint[i].agglomerat == 0)
@@ -274,10 +280,9 @@ void do_route(){
 		}
 		cairo_stroke(cr);
 	}
-	route=1;
 	gtk_widget_hide(Button_road);
 	gtk_widget_show(Button_noroad);
-maj_map();
+
 }
 
 /**
