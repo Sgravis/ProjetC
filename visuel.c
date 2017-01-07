@@ -95,9 +95,8 @@ void anonymisation()
 	if(map.zoom==0){
 		do_point(pt_tampon);
 		if(anonyme_step==4){
-			if(1){//} popup("anonymiser ce cercle ?")){
+			if(1){//popup("anonymiser ce cercle ?")){
 				suppression_avec_backup(detection_circulaire(pt_tampon,sqrt(pow(x-coord_to_pixel_long(pt_tampon.longitude),2)+pow(y-coord_to_pixel_lat(pt_tampon.latitude),2))*6,logGlobalClean),&logGlobalClean);
-				//suppression(detection_circulaire(pt_tampon,400,logGlobalClean),&logGlobalClean);
 				reset_anonymisation();
 			}
 			else{
@@ -192,12 +191,14 @@ void do_map()
 /**
  * affiche la carte et les point du log
  */
-gboolean on_draw(GtkWidget *widget, cairo_t *crg,gpointer user_data)
+gboolean on_draw(GtkWidget *widget, cairo_t *crg,gpointer data)
 {
+	logs log=*(logs*)data;
+	//printf("log %Lf\n",log.tableauPoint[0].longitude);
 	cr=crg;
 	do_map(); 				/*affiche la carte*/
 	if(ind_dyn==-1)
-		log_vers_carte(logGlobalClean);		/*affiche le log*/
+		log_vers_carte(log);		/*affiche le log*/
 	else{
 		log_vers_carte_dyn();
 		if(ind_dyn<=logGlobalClean.tailleTab-vitesse_dyn){
@@ -248,7 +249,7 @@ void mode_dynamique (){
  * affiche les log statiquement et échange les boutons
  */
 void mode_statique (){
-    g_signal_connect(G_OBJECT(darea),"draw", G_CALLBACK(on_draw), NULL);
+    g_signal_connect(G_OBJECT(darea),"draw", G_CALLBACK(on_draw),&logGlobalClean);
     gtk_widget_hide(Button_stat);
     gtk_widget_show(Button_dyn);
     ind_dyn=-1;
@@ -267,10 +268,10 @@ void do_route_maj(){
 void do_route(){
 	int i;
 	cairo_set_source_rgb(cr,0,0.5,0.5);
-	cairo_set_line_width(cr,0.5);
+	cairo_set_line_width(cr,1);
 	for(i=1;i<logGlobalClean.tailleTab;i++)
 	{
-		if(/*logGlobalClean.tableauPoint[i].route==1 &&*/ logGlobalClean.tableauPoint[i].agglomerat == 0)
+		if(logGlobalClean.tableauPoint[i].route==1 && logGlobalClean.tableauPoint[i].agglomerat == 0)
 		{
 			if(abs(coord_to_pixel_long(logGlobalClean.tableauPoint[i].longitude)-coord_to_pixel_long(logGlobalClean.tableauPoint[i+1].longitude))<50 && abs(coord_to_pixel_lat(logGlobalClean.tableauPoint[i].latitude)-coord_to_pixel_lat(logGlobalClean.tableauPoint[i+1].latitude))<50)
 			{

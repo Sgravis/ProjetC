@@ -56,6 +56,8 @@ int main(int argc, char** argv)
     logs tlog;
     FILE *fp;
     int nb_lignes;
+    gpointer* data;
+    data=&logGlobalClean;
     fp=fopen("geoloc-logs.txt","r");
     nb_lignes=nombre_lignes(fp);
     init_tableau_global(nb_lignes);
@@ -86,20 +88,13 @@ int main(int argc, char** argv)
 
     darea = gtk_drawing_area_new();
     gtk_container_add(GTK_CONTAINER(pHBox), darea);
-    g_signal_connect(G_OBJECT(darea), "draw", G_CALLBACK(on_draw), NULL);
+    g_signal_connect(G_OBJECT(darea), "draw", G_CALLBACK(on_draw),&logGlobalClean);
     gtk_widget_set_events (darea, GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK);
     g_signal_connect(G_OBJECT(darea), "button_press_event", G_CALLBACK (on_click_map), NULL);
     init_map();
 
     logGlobalClean=initialisation_route(logGlobalClean);
-        //init boutons
 
-    
-    //Voila la fonction pour faire une popup, passe la question en param, retourne 1 si il dit oui, 0 sinon
-    //result =popup("anonymisation ?");
-
-    
-    //detection_pt_interet();
     init_boutton();
 
     gtk_widget_show_all(window); //affichage de la fenetre
