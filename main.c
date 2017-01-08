@@ -30,10 +30,12 @@ void init_boutton(){
     g_signal_connect(G_OBJECT(Button_noroad), "clicked",G_CALLBACK(undo_route),NULL);
     Button_pt_interet = gtk_button_new_with_label("enlever point d'interet");
     g_signal_connect(G_OBJECT(Button_pt_interet), "clicked",G_CALLBACK(detection_pt_interet),NULL);
-    Remise_a_0 = gtk_button_new_with_label("Remise a zero");
-    g_signal_connect(G_OBJECT(Remise_a_0), "clicked",G_CALLBACK(remise_a_zero),NULL);
-    Affichage_pt_supp = gtk_button_new_with_label("Affichage pts supp");
-    g_signal_connect(G_OBJECT(Affichage_pt_supp), "clicked",G_CALLBACK(resurrection_point),NULL);
+    Button_Remise_a_0 = gtk_button_new_with_label("Remise a zero");
+    g_signal_connect(G_OBJECT(Button_Remise_a_0), "clicked",G_CALLBACK(remise_a_zero),NULL);
+    Button_Affichage_pt_supp = gtk_button_new_with_label("Affichage pts supp");
+    g_signal_connect(G_OBJECT(Button_Affichage_pt_supp), "clicked",G_CALLBACK(resurrection_point),NULL);
+    Button_Remise_pt_normal = gtk_button_new_with_label("Remise point normal");
+    g_signal_connect(G_OBJECT(Button_Remise_pt_normal), "clicked",G_CALLBACK(remise_pt_normal),NULL);
 
 
     gtk_box_pack_start(GTK_BOX(pVBox), Button_anonyme, TRUE, FALSE, 0);
@@ -42,8 +44,9 @@ void init_boutton(){
     gtk_box_pack_start(GTK_BOX(pVBox), Button_road, TRUE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pVBox), Button_noroad, TRUE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pVBox), Button_pt_interet, TRUE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(pVBox), Remise_a_0, TRUE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(pVBox), Affichage_pt_supp, TRUE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pVBox), Button_Remise_a_0, TRUE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pVBox), Button_Affichage_pt_supp, TRUE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pVBox), Button_Remise_pt_normal, TRUE, FALSE, 0);
 
     gtk_box_pack_start(GTK_BOX(pHBox), pVBox, FALSE, FALSE, 0); 
 }
@@ -100,6 +103,7 @@ int main(int argc, char** argv)
     gtk_widget_show_all(window); //affichage de la fenetre
     gtk_widget_hide(Button_stat);
     gtk_widget_hide(Button_noroad);
+    gtk_widget_hide(Button_Remise_pt_normal);
     gtk_main();  // fonction de boucle de gtk
   
     return 0;

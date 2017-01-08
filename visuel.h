@@ -38,8 +38,9 @@ GtkWidget *Button_stat;
 GtkWidget *Button_road;
 GtkWidget *Button_noroad;
 GtkWidget *Button_pt_interet;
-GtkWidget *Remise_a_0;
-GtkWidget *Affichage_pt_supp;
+GtkWidget *Button_Remise_a_0;
+GtkWidget *Button_Affichage_pt_supp;
+GtkWidget *Button_Remise_pt_normal;
 
 cairo_t* cr;
 map_position map;

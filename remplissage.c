@@ -201,6 +201,8 @@ void backup_file(logs tlog)
 void resurrection_point()
 {
         FILE *fp;
+        gtk_widget_hide(Button_Affichage_pt_supp);
+        gtk_widget_show(Button_Remise_pt_normal);
 
         fp=fopen("BackupPoints.txt","r");
         if (!fp)
@@ -237,8 +239,15 @@ void resurrection_point()
         }
         logBack.tailleTab=nb_lignes;
 
-        //log_vers_carte(logBack);
+        g_signal_connect(G_OBJECT(darea),"draw",G_CALLBACK(on_draw),&logBack);
+        maj_map();
+}
 
+void remise_pt_normal(){
+    gtk_widget_show(Button_Affichage_pt_supp);
+    gtk_widget_hide(Button_Remise_pt_normal);
+    g_signal_connect(G_OBJECT(darea),"draw",G_CALLBACK(on_draw),&logGlobalClean);
+    maj_map();
 
 }
 
