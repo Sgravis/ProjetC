@@ -237,7 +237,7 @@ void resurrection_point()
         }
         logBack.tailleTab=nb_lignes;
 
-        log_vers_carte(logBack);
+        //log_vers_carte(logBack);
 
 
 }
