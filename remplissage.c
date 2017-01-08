@@ -236,8 +236,8 @@ void resurrection_point()
             logBack.tableauPoint[i].agglomerat=0;
         }
         logBack.tailleTab=nb_lignes;
-
-        log_vers_carte(logBack);
+        g_signal_connect(G_OBJECT(darea),"draw",G_CALLBACK(on_draw),&logBack);
+        maj_map();
 
 
 }
