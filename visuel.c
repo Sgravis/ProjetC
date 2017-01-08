@@ -131,14 +131,14 @@ void log_vers_carte(logs base)
 /**
  * Affiche tout les log globaux sur la carte de manière dynamique
  */
-void log_vers_carte_dyn()
+void log_vers_carte_dyn(logs base)
 {
 	int i;
 	cairo_set_source_rgb(cr,0,1,0);  //couleur des point
     cairo_set_line_width(cr,8);
 	for(i=0;i<ind_dyn;i++)  //parcourt et affiche tout les point des logs
 	{  
-		do_point(logGlobalClean.tableauPoint[i]);
+		do_point(base.tableauPoint[i]);
 	}
 }
 
@@ -198,9 +198,10 @@ gboolean on_draw(GtkWidget *widget, cairo_t *crg,gpointer data)
 	cr=crg;
 	do_map(); 				/*affiche la carte*/
 	if(ind_dyn==-1)
-		log_vers_carte(log);		/*affiche le log*/
+		//log_vers_carte(log);		/*affiche le log*/
+		afficher_logs();
 	else{
-		log_vers_carte_dyn();
+		log_vers_carte_dyn(log);
 		if(ind_dyn<=logGlobalClean.tailleTab-vitesse_dyn){
 			ind_dyn=ind_dyn+vitesse_dyn;
 			maj_map();
@@ -220,6 +221,42 @@ gboolean on_draw(GtkWidget *widget, cairo_t *crg,gpointer data)
 
 	return FALSE;
 }
+
+void afficher_logs()
+{
+	int i;
+	printf("nombre de logs a afficher : %i\n",log_aff.taille);
+	for(i=0;i<log_aff.taille;i++)
+	{
+		printf("for : %i\n",i );
+		log_vers_carte(*log_aff.tableauLogs[0]);
+		printf("for 2\n");
+	}
+}
+
+void ajout_log_aff(logs* log)
+{
+	int i ;
+	log_aff.tableauLogs=(logs**)malloc(sizeof(logs*)*log_aff.taille);
+	for(i=0;i<log_aff.taille;i++)
+	{
+		log_aff.tableauLogs[i]=malloc(sizeof(logs));
+	}
+	log_aff.tableauLogs[log_aff.taille]=log;
+	log_aff.taille ++;
+}
+
+void reset_log_aff()
+{
+	int i;
+	/*for(i=0;i<log_aff.taille;i++)
+	{
+		free(*log_aff.tableauLogs[i]);
+	}
+	free(log_aff.tableauLogs);*/
+	log_aff.taille=0;
+}
+
 
 /**
  * Met la carte a jour en fonction des parametre actuels

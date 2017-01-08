@@ -73,6 +73,9 @@ int main(int argc, char** argv)
     recuperation_addr();
     afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
 
+    log_aff.taille=0;
+    ajout_log_aff(&logGlobalClean);
+
 
 
     gtk_init_check(&argc, &argv);
