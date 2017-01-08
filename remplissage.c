@@ -238,6 +238,7 @@ void resurrection_point()
         logBack.tailleTab=nb_lignes;
         g_signal_connect(G_OBJECT(darea),"draw",G_CALLBACK(on_draw),&logBack);
         maj_map();
+        g_signal_connect(G_OBJECT(darea),"draw",G_CALLBACK(on_draw),&logGlobalClean);
 
 
 }
