@@ -15,6 +15,7 @@ void resurrection_point();
 void remise_pt_normal();
 void recuperation_addr();
 void remise_a_zero();
+void affichage_points_interets();
 
 /*void copie_points_base_addr (pointaddr* point1, pointaddr* point2);*/
 /*addr copie_tableau_addr(addr tab,int taille);*/
