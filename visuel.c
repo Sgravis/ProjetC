@@ -95,9 +95,8 @@ void anonymisation()
 	if(map.zoom==0){
 		do_point(pt_tampon);
 		if(anonyme_step==4){
-			if(1){//} popup("anonymiser ce cercle ?")){
+			if(1){//popup("anonymiser ce cercle ?")){
 				suppression_avec_backup(detection_circulaire(pt_tampon,sqrt(pow(x-coord_to_pixel_long(pt_tampon.longitude),2)+pow(y-coord_to_pixel_lat(pt_tampon.latitude),2))*6,logGlobalClean),&logGlobalClean);
-				//suppression(detection_circulaire(pt_tampon,400,logGlobalClean),&logGlobalClean);
 				reset_anonymisation();
 			}
 			else{
@@ -132,14 +131,14 @@ void log_vers_carte(logs base)
 /**
  * Affiche tout les log globaux sur la carte de manière dynamique
  */
-void log_vers_carte_dyn()
+void log_vers_carte_dyn(logs base)
 {
 	int i;
 	cairo_set_source_rgb(cr,0,1,0);  //couleur des point
     cairo_set_line_width(cr,8);
 	for(i=0;i<ind_dyn;i++)  //parcourt et affiche tout les point des logs
 	{  
-		do_point(logGlobalClean.tableauPoint[i]);
+		do_point(base.tableauPoint[i]);
 	}
 }
 
@@ -192,14 +191,17 @@ void do_map()
 /**
  * affiche la carte et les point du log
  */
-gboolean on_draw(GtkWidget *widget, cairo_t *crg,gpointer user_data)
+gboolean on_draw(GtkWidget *widget, cairo_t *crg,gpointer data)
 {
+	logs log=*(logs*)data;
+	//printf("log %Lf\n",log.tableauPoint[0].longitude);
 	cr=crg;
 	do_map(); 				/*affiche la carte*/
 	if(ind_dyn==-1)
-		log_vers_carte(logGlobalClean);		/*affiche le log*/
+		//log_vers_carte(log);		/*affiche le log*/
+		afficher_logs();
 	else{
-		log_vers_carte_dyn();
+		log_vers_carte_dyn(log);
 		if(ind_dyn<=logGlobalClean.tailleTab-vitesse_dyn){
 			ind_dyn=ind_dyn+vitesse_dyn;
 			maj_map();
@@ -219,6 +221,42 @@ gboolean on_draw(GtkWidget *widget, cairo_t *crg,gpointer user_data)
 
 	return FALSE;
 }
+
+void afficher_logs()
+{
+	int i;
+	printf("nombre de logs a afficher : %i\n",log_aff.taille);
+	for(i=0;i<log_aff.taille;i++)
+	{
+		printf("for : %i\n",i );
+		log_vers_carte(*log_aff.tableauLogs[0]);
+		printf("for 2\n");
+	}
+}
+
+void ajout_log_aff(logs* log)
+{
+	int i ;
+	log_aff.tableauLogs=(logs**)malloc(sizeof(logs*)*log_aff.taille);
+	for(i=0;i<log_aff.taille;i++)
+	{
+		log_aff.tableauLogs[i]=malloc(sizeof(logs));
+	}
+	log_aff.tableauLogs[log_aff.taille]=log;
+	log_aff.taille ++;
+}
+
+void reset_log_aff()
+{
+	int i;
+	/*for(i=0;i<log_aff.taille;i++)
+	{
+		free(*log_aff.tableauLogs[i]);
+	}
+	free(log_aff.tableauLogs);*/
+	log_aff.taille=0;
+}
+
 
 /**
  * Met la carte a jour en fonction des parametre actuels
@@ -248,7 +286,7 @@ void mode_dynamique (){
  * affiche les log statiquement et échange les boutons
  */
 void mode_statique (){
-    g_signal_connect(G_OBJECT(darea),"draw", G_CALLBACK(on_draw), NULL);
+    g_signal_connect(G_OBJECT(darea),"draw", G_CALLBACK(on_draw),&logGlobalClean);
     gtk_widget_hide(Button_stat);
     gtk_widget_show(Button_dyn);
     ind_dyn=-1;
@@ -267,10 +305,10 @@ void do_route_maj(){
 void do_route(){
 	int i;
 	cairo_set_source_rgb(cr,0,0.5,0.5);
-	cairo_set_line_width(cr,0.5);
+	cairo_set_line_width(cr,1);
 	for(i=1;i<logGlobalClean.tailleTab;i++)
 	{
-		if(/*logGlobalClean.tableauPoint[i].route==1 &&*/ logGlobalClean.tableauPoint[i].agglomerat == 0)
+		if(logGlobalClean.tableauPoint[i].route==1 && logGlobalClean.tableauPoint[i].agglomerat == 0)
 		{
 			if(abs(coord_to_pixel_long(logGlobalClean.tableauPoint[i].longitude)-coord_to_pixel_long(logGlobalClean.tableauPoint[i+1].longitude))<50 && abs(coord_to_pixel_lat(logGlobalClean.tableauPoint[i].latitude)-coord_to_pixel_lat(logGlobalClean.tableauPoint[i+1].latitude))<50)
 			{

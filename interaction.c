@@ -29,7 +29,7 @@ void on_click_map(GtkWidget* darea, GdkEventButton* event, void* data)
     {
         pt_tampon.longitude=pixel_to_coord_long(event->x);
         pt_tampon.latitude=pixel_to_coord_lat(event->y);
-        pt_tampon.taillept=5;
+        pt_tampon.taillept=20;
         maj_map();
         anonyme_step=2;
     }

@@ -12,6 +12,7 @@ void copie_points(point *point1,point *point2);
 void backup_file (logs tlog);
 logs copie_tableau(logs tlog1, int taille);
 void resurrection_point();
+void remise_pt_normal();
 void recuperation_addr();
 void remise_a_zero();
 

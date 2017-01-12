@@ -18,6 +18,14 @@ typedef struct
 	int zoom;
 }map_position;
 
+typedef struct 
+{
+	logs** tableauLogs;
+	int taille;
+}tabLogs;
+
+tabLogs log_aff;
+
 long int ind_dyn;
 int vitesse_dyn;
 point tmp_ano;
@@ -38,8 +46,9 @@ GtkWidget *Button_stat;
 GtkWidget *Button_road;
 GtkWidget *Button_noroad;
 GtkWidget *Button_pt_interet;
-GtkWidget *Remise_a_0;
-GtkWidget *Affichage_pt_supp;
+GtkWidget *Button_Remise_a_0;
+GtkWidget *Button_Affichage_pt_supp;
+GtkWidget *Button_Remise_pt_normal;
 
 cairo_t* cr;
 map_position map;
@@ -56,6 +65,9 @@ void do_point( point pt);
 void do_map();
 gboolean on_draw(GtkWidget *widget, cairo_t *cr,gpointer user_data);
 gboolean on_draw_dyn(GtkWidget *widget, cairo_t *cr,gpointer user_data);
+void afficher_logs();
+void ajout_log_aff(logs* log);
+void reset_log_aff();
 void mode_statique ();
 void mode_dynamique ();
 void do_route_maj();
