@@ -303,14 +303,15 @@ void remise_a_zero()
 }
 
 
-void affichage_points_interets(logs base)
+void affichage_points_interets()
 {
     int i,j;
-    int nb_pt_centre_interet=((base.tailleTab)/10);
-    logs tmp=copie_tableau(base,base.tailleTab);
+    int nb_pt_centre_interet=((logGlobalClean.tailleTab)/10);
+    logs tmp=copie_tableau(logGlobalClean,logGlobalClean.tailleTab);
     logs tab_cercle;
     logs tab_cercle2;
-    float rayon=100;
+    int rayon=100;
+    int cpt=1;
     for(i=0;i<tmp.tailleTab;i++)
     {
         tab_cercle=detection_circulaire(tmp.tableauPoint[i],rayon,tmp);
@@ -329,6 +330,10 @@ void affichage_points_interets(logs base)
 
             }
             suppression_sans_backup(tab_cercle,&tmp);
+            tableau_centre_interet[cpt]=tab_cercle.tableauPoint[0];
+            tableau_centre_interet[cpt].taillept=rayon; 
+            cpt++;  
+
             //AFFICHER TAB_CERCLE[0] ET RAYON ICI
 
             free(tab_cercle.tableauPoint);
@@ -336,9 +341,11 @@ void affichage_points_interets(logs base)
 
     }
             free(tmp.tableauPoint);
+            tableau_centre_interet[0].taillept=cpt-1;
+    
 }
 
-char * recherche_adresse_point(point p)
+/* char * recherche_adresse_point(point p)
 {
     char *s;
     float rayon=1;
@@ -358,6 +365,4 @@ char * recherche_adresse_point(point p)
 
 
 
-
-
-}
+}*/

@@ -77,7 +77,7 @@ int main(int argc, char** argv)
     log_aff.taille=0;
     ajout_log_aff(&logGlobalClean);
 
-
+ affichage_points_interets();
 
     gtk_init_check(&argc, &argv);
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
