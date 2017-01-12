@@ -67,3 +67,28 @@ void do_anonymous(GtkWidget* pbutton, GdkEventButton* event, void* data)
     reset_anonymisation();
     anonyme_step=1;
 }
+
+void on_key_press(GtkWidget *widget, GdkEventKey *event)
+{
+   ///printf("%i\n",event->keyval);
+    switch (event->keyval)
+    {
+        case 65361:
+            map.pos_x-=5;
+            maj_map();
+            break;
+        case 65363:
+            map.pos_x+=5;
+            maj_map();
+            break;
+        case 65362:
+            map.pos_y-=5;
+            maj_map();
+            break;
+        case 65364:
+            map.pos_y+=5;
+            maj_map();
+            break;
+    }
+    
+}

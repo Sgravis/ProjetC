@@ -7,6 +7,8 @@
 #include <cairo.h>
 #include <gtk/gtk.h>
 #include <stdio.h>
+#include <gdk/gdkkeysyms.h>
+
 
 int anonyme_step;
 int route;
@@ -17,5 +19,6 @@ void on_click_map(GtkWidget* darea,GdkEventButton* event, void* data);
 int popup(char* nom);
 void popupclose(char* nom);
 void do_anonymous(GtkWidget* pbutton, GdkEventButton* event, void* data);
+void on_key_press(GtkWidget *widget, GdkEventKey *event);
 
 #endif
