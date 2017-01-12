@@ -50,9 +50,6 @@ GtkWidget *Button_Remise_a_0;
 GtkWidget *Button_Affichage_pt_supp;
 GtkWidget *Button_Remise_pt_normal;
 
-cairo_t* cr;
-map_position map;
-
 int coord_to_pixel_long(long double longitude);
 int coord_to_pixel_lat(long double latitude);
 long double pixel_to_coord_long(int longitude);

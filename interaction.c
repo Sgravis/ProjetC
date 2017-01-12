@@ -14,7 +14,7 @@ void on_click_map(GtkWidget* darea, GdkEventButton* event, void* data)
     		map.zoom++;
     	}
     	else{init_map();}
-        reset_anonymisation();
+        //reset_anonymisation();
         maj_map();
     }
     if(anonyme_step==2)

@@ -240,7 +240,7 @@ void resurrection_point()
         }
         logBack.tailleTab=nb_lignes;
 
-        reset_log_aff();
+        //reset_log_aff();
         ajout_log_aff(&logBack);
         //g_signal_connect(G_OBJECT(darea),"draw",G_CALLBACK(on_draw),&logBack);
         maj_map();
@@ -282,7 +282,6 @@ void recuperation_addr() /* au lieu initialiser ici la base adresse, faire une f
         fscanf(fp,"%Lf",&(base_adresse.tableauPoint[i].latitude));
         c=fgetc(fp);
         base_adresse.tableauPoint[i].date=0;
-
     }
  
 }
@@ -297,9 +296,6 @@ void remise_a_zero()
         perror("");
     }
     maj_map();
-
-
-
 }
 
 

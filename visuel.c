@@ -24,7 +24,7 @@ long double pixel_to_coord_long(int longitude)
 	if(map.zoom==0)
 		return (855-longitude)*-0.000088242+2.39869958;
 	if(map.zoom==1)
-		return ((855-map.pos_x+405)-longitude)*-0.000088242+2.39869958;	
+		return ((855-map.pos_x+270)-longitude)*-0.000088242+2.39869958;	
 }
 
 long double pixel_to_coord_lat(int latitude)
@@ -32,7 +32,7 @@ long double pixel_to_coord_lat(int latitude)
 	if(map.zoom==0)
 		return (156-latitude)*0.000055919+47.0821639;
 	if(map.zoom==1)
-		return ((156-map.pos_y+170)-latitude)*0.000055919+47.0821639;
+		return ((156-map.pos_y+113)-latitude)*0.000055919+47.0821639;
 }
 
 /**
@@ -61,7 +61,7 @@ void do_point(point pt)
 }
 
 /**
-*	affiche un cercle sur la carte, en fonction de son centre et de son rayon
+*affiche un cercle sur la carte, en fonction de son centre et de son rayon
 */
 void do_cercle(point centre, int rayon)
 {
@@ -120,7 +120,7 @@ void anonymisation()
 void log_vers_carte(logs base)
 {
 	int i;
-	cairo_set_source_rgb(cr,1,0,0);  //couleur des point
+	cairo_set_source_rgb(cr,0,1,1);  //couleur des point
     cairo_set_line_width(cr,8);
 	for(i=0;i<base.tailleTab;i++)  //parcourt et affiche tout les point des logs
 	{  
@@ -134,9 +134,9 @@ void log_vers_carte(logs base)
 void log_vers_carte_dyn(logs base)
 {
 	int i;
-	cairo_set_source_rgb(cr,0,1,0);  //couleur des point
+	cairo_set_source_rgb(cr,1,0,0);  //couleur des point
     cairo_set_line_width(cr,8);
-	for(i=0;i<ind_dyn;i++)  //parcourt et affiche tout les point des logs
+	for(i=0;i<ind_dyn-1;i++)  //parcourt et affiche tout les point des logs
 	{  
 		do_point(base.tableauPoint[i]);
 	}
@@ -194,7 +194,6 @@ void do_map()
 gboolean on_draw(GtkWidget *widget, cairo_t *crg,gpointer data)
 {
 	logs log=*(logs*)data;
-	//printf("log %Lf\n",log.tableauPoint[0].longitude);
 	cr=crg;
 	do_map(); 				/*affiche la carte*/
 	if(ind_dyn==-1)
@@ -204,7 +203,12 @@ gboolean on_draw(GtkWidget *widget, cairo_t *crg,gpointer data)
 		log_vers_carte_dyn(log);
 		if(ind_dyn<=logGlobalClean.tailleTab-vitesse_dyn){
 			ind_dyn=ind_dyn+vitesse_dyn;
+			sleep(0.1);
 			maj_map();
+		}
+		else
+		{
+			ind_dyn=-1;
 		}
 	}
 	if(route==1)
