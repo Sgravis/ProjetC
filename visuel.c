@@ -8,7 +8,7 @@ int coord_to_pixel_long(long double longitude){
 	if(map.zoom==0)
 		return ((2.39869958-longitude)/-0.000088242)+855;
 	if(map.zoom==1)
-		return ((2.39869958-longitude)/-0.000088242)+(855-map.pos_x+405);
+		return ((2.39869958-longitude)/-0.000088242)+(855-map.pos_x+270);
 }
 
 int coord_to_pixel_lat(long double latitude){
@@ -16,7 +16,7 @@ int coord_to_pixel_lat(long double latitude){
 	if(map.zoom==0)
 		return ((47.0821639-latitude)/0.000055919)+156;
 	if(map.zoom==1)
-		return ((47.0821639-latitude)/0.000055919)+(156-map.pos_y+170);
+		return ((47.0821639-latitude)/0.000055919)+(156-map.pos_y+113);
 	}
 
 long double pixel_to_coord_long(int longitude)
@@ -169,13 +169,13 @@ void do_map()
 		cairo_set_source_surface(cr, image,0,0);
 	}
 	if (map.zoom==1){
-		TailleH = HFENETRE/2;
-		TailleL = LFENETRE/2;
+		TailleH = HFENETRE/3;
+		TailleL = LFENETRE/3;
 		// condition aux éxtrémité de la fenetre
-		if(map.pos_x<=HFENETRE*0.25){map.pos_x=HFENETRE*0.25;}
-		if(map.pos_y<=LFENETRE*0.25){map.pos_y=LFENETRE*0.25;}	
-		if(map.pos_x>=HFENETRE*0.75){map.pos_x=HFENETRE*0.75;}
-		if(map.pos_y>=LFENETRE*0.75){map.pos_y=LFENETRE*0.75;}
+		if(map.pos_x<=HFENETRE*0.17){map.pos_x=HFENETRE*0.17;}
+		if(map.pos_y<=LFENETRE*0.17){map.pos_y=LFENETRE*0.17;}	
+		if(map.pos_x>=HFENETRE*0.666666){map.pos_x=HFENETRE*0.6666666;}
+		if(map.pos_y>=LFENETRE*0.666666){map.pos_y=LFENETRE*0.6666666;}
 		cairo_set_source_surface (cr, image, -(map.pos_x-(TailleH/2)),-(map.pos_y-(TailleL/2)));
 	}
 
