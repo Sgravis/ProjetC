@@ -25,12 +25,10 @@ void agglomeration(logs tlog)
 		}
 		if (logGlobalClean.tableauPoint[i].taillept > 1) {
 			detectmp=detection_circulaire(logGlobalClean.tableauPoint[i],1,logGlobalClean);
-			//printf("%d\n",detectmp.tailleTab);
 			cpt=0;
 			for ( k=0 ; k<detectmp.tailleTab ; k++)
 			{
 				++cpt;
-				//printf("%d\n",cpt );
 			}
 			logGlobalClean.tableauPoint[i].taillept+=cpt;
 		}
