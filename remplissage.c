@@ -301,3 +301,63 @@ void remise_a_zero()
 
 
 }
+
+
+void affichage_points_interets(logs base)
+{
+    int i,j;
+    int nb_pt_centre_interet=((base.tailleTab)/10);
+    logs tmp=copie_tableau(base,base.tailleTab);
+    logs tab_cercle;
+    logs tab_cercle2;
+    float rayon=100;
+    for(i=0;i<tmp.tailleTab;i++)
+    {
+        tab_cercle=detection_circulaire(tmp.tableauPoint[i],rayon,tmp);
+        if (tab_cercle.tailleTab >=nb_pt_centre_interet)
+        {
+            for(j=0;j<tab_cercle.tailleTab;j++)
+            {
+                tab_cercle2=detection_circulaire(tab_cercle.tableauPoint[j],rayon,tmp);
+                if (tab_cercle2.tailleTab>tab_cercle.tailleTab)
+                {
+                    free(tab_cercle.tableauPoint);
+                    tab_cercle.tailleTab=tab_cercle2.tailleTab;
+                    tab_cercle.tableauPoint=tab_cercle2.tableauPoint;
+                    j=0;
+                }
+
+            }
+            suppression_sans_backup(tab_cercle,&tmp);
+            //AFFICHER TAB_CERCLE[0] ET RAYON ICI
+
+            free(tab_cercle.tableauPoint);
+        }
+
+    }
+            free(tmp.tableauPoint);
+}
+
+char * recherche_adresse_point(point p)
+{
+    char *s;
+    float rayon=1;
+    logs adresses_trouves=detection_circulaire(p,rayon,base_adresse);
+    while (adresses_trouves.tailleTab != 1)
+    {
+        if(adresses_trouves.tailleTab < 1)
+        {
+            rayon++;
+        }
+        else{
+            rayon=rayon-0.1;
+        }
+
+    }
+
+
+
+
+
+
+}

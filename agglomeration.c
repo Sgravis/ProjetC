@@ -51,7 +51,7 @@ void detection_agglomerat()
     logs tmp=copie_tableau(logGlobalClean,logGlobalClean.tailleTab);
     logs tab_cercle;
     logs tab_cercle2;
-    int rayon=100;
+    float rayon=100;
     for(i=0;i<tmp.tailleTab;i++)
     {
         tab_cercle=detection_circulaire(tmp.tableauPoint[i],rayon,tmp);
@@ -79,7 +79,7 @@ void detection_agglomerat()
 
 }
 
-void ajout_agglomerat(logs tableau_agglomerat, int rayon, logs *tmp)
+void ajout_agglomerat(logs tableau_agglomerat, float rayon, logs *tmp)
 {
 	int i,j;
     logs tab_agglo_redimension=detection_circulaire(tableau_agglomerat.tableauPoint[0],rayon,base_adresse);
