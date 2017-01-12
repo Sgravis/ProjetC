@@ -11,7 +11,7 @@
 #include "interaction.h"
 
 
-logs detection_circulaire (point centre,int rayon, logs base)
+logs detection_circulaire (point centre,float rayon, logs base)
 {
     logs tableauCercleIntmp=allocation_tableau_point(base.tailleTab);
     logs tableauCercleIn;
@@ -109,7 +109,7 @@ void detection_pt_interet()
     logs tmp=copie_tableau(logGlobalClean,logGlobalClean.tailleTab);
     logs tab_cercle;
     logs tab_cercle2;
-    int rayon=100;
+    float rayon=100;
     for(i=0;i<tmp.tailleTab;i++)
     {
         tab_cercle=detection_circulaire(tmp.tableauPoint[i],rayon,tmp);
@@ -137,7 +137,7 @@ void detection_pt_interet()
 
 
 }
-void redefinition_grosseur_cercle(logs a_supr, int rayon, logs * tmp)
+void redefinition_grosseur_cercle(logs a_supr, float rayon, logs * tmp)
 {
     int reponse;
     logs tab_pt_interet_ds_cercle=detection_circulaire(a_supr.tableauPoint[0],rayon,base_adresse);

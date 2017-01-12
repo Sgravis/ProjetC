@@ -310,7 +310,7 @@ void affichage_points_interets(logs base)
     logs tmp=copie_tableau(base,base.tailleTab);
     logs tab_cercle;
     logs tab_cercle2;
-    int rayon=200;
+    float rayon=100;
     for(i=0;i<tmp.tailleTab;i++)
     {
         tab_cercle=detection_circulaire(tmp.tableauPoint[i],rayon,tmp);
@@ -336,4 +336,28 @@ void affichage_points_interets(logs base)
 
     }
             free(tmp.tableauPoint);
+}
+
+char * recherche_adresse_point(point p)
+{
+    char *s;
+    float rayon=1;
+    logs adresses_trouves=detection_circulaire(p,rayon,base_adresse);
+    while (adresses_trouves.tailleTab != 1)
+    {
+        if(adresses_trouves.tailleTab < 1)
+        {
+            rayon++;
+        }
+        else{
+            rayon=rayon-0.1;
+        }
+
+    }
+
+
+
+
+
+
 }
