@@ -73,11 +73,10 @@ int main(int argc, char** argv)
     agglomeration(logGlobal);
     recuperation_addr();
     afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
+    affichage_points_interets();
 
     log_aff.taille=0;
     ajout_log_aff(&logGlobalClean);
-
- affichage_points_interets();
 
     gtk_init_check(&argc, &argv);
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
