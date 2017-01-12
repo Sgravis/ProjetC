@@ -63,7 +63,7 @@ int main(int argc, char** argv)
     fclose(fp);
     recuperation_addr();
     logGlobalClean=copie_tableau(logGlobal,logGlobal.tailleTab);
-    logGlobalClean=initialisation_route(logGlobalClean);
+    initialisation_route(logGlobalClean);
     agglomeration(logGlobal);
     recuperation_addr();
     afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
@@ -91,13 +91,7 @@ int main(int argc, char** argv)
     g_signal_connect(G_OBJECT(darea), "button_press_event", G_CALLBACK (on_click_map), NULL);
     init_map();
 
-    logGlobalClean=initialisation_route(logGlobalClean);
-        //init boutons
-
-    
-    //Voila la fonction pour faire une popup, passe la question en param, retourne 1 si il dit oui, 0 sinon
-    //result =popup("anonymisation ?");
-
+    //initialisation_route(logGlobalClean);
     
     //detection_pt_interet();
     init_boutton();

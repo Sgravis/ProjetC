@@ -277,7 +277,7 @@ void remise_a_zero()
     free(logGlobalClean.tableauPoint);
     logGlobalClean=copie_tableau(logGlobal,logGlobal.tailleTab);
     agglomeration(logGlobal);
-    logGlobalClean=initialisation_route(logGlobalClean);
+    initialisation_route(logGlobalClean);
     if(remove("BackupPoints.txt")<0)
     {
         perror("");
