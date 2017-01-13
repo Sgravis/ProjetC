@@ -223,7 +223,6 @@ void resurrection_point()
         gtk_widget_show(Button_Remise_pt_normal);
         for(i=0;i<nb_lignes;i++)
         {
-
             fgets(c,6,fp);
             fscanf(fp,"%ld",&date);
             fgets(c,6,fp);
@@ -239,10 +238,9 @@ void resurrection_point()
             logBack.tableauPoint[i].agglomerat=0;
         }
         logBack.tailleTab=nb_lignes;
-
         reset_log_aff();
         ajout_log_aff(&logBack);
-        //g_signal_connect(G_OBJECT(darea),"draw",G_CALLBACK(on_draw),&logBack);
+        g_signal_connect(G_OBJECT(darea),"draw",G_CALLBACK(on_draw),&logBack);
         maj_map();
 }
 
@@ -282,7 +280,6 @@ void recuperation_addr() /* au lieu initialiser ici la base adresse, faire une f
         fscanf(fp,"%Lf",&(base_adresse.tableauPoint[i].latitude));
         c=fgetc(fp);
         base_adresse.tableauPoint[i].date=0;
-
     }
  
 }
@@ -291,26 +288,25 @@ void remise_a_zero()
     free(logGlobalClean.tableauPoint);
     logGlobalClean=copie_tableau(logGlobal,logGlobal.tailleTab);
     agglomeration(logGlobal);
-    logGlobalClean=initialisation_route(logGlobalClean);
+    initialisation_route(logGlobalClean);
     if(remove("BackupPoints.txt")<0)
     {
         perror("");
     }
     maj_map();
-
-
-
 }
 
 
-void affichage_points_interets(logs base)
+void affichage_points_interets()
 {
     int i,j;
-    int nb_pt_centre_interet=((base.tailleTab)/10);
-    logs tmp=copie_tableau(base,base.tailleTab);
+    int nb_pt_centre_interet=((logGlobalClean.tailleTab)/10);
+    logs tmp=copie_tableau(logGlobalClean,logGlobalClean.tailleTab);
     logs tab_cercle;
     logs tab_cercle2;
-    float rayon=100;
+    int rayon=100;
+    int cpt=1;
+    tableau_centre_interet[0].taillept=0;
     for(i=0;i<tmp.tailleTab;i++)
     {
         tab_cercle=detection_circulaire(tmp.tableauPoint[i],rayon,tmp);
@@ -328,22 +324,29 @@ void affichage_points_interets(logs base)
                 }
 
             }
+
             suppression_sans_backup(tab_cercle,&tmp);
-            //AFFICHER TAB_CERCLE[0] ET RAYON ICI
+         //   recherche_adresse_point(tab_cercle.tableauPoint[0]);
+            tableau_centre_interet[cpt]=tab_cercle.tableauPoint[0];
+            tableau_centre_interet[cpt].taillept=rayon; 
+            cpt++;  
+
 
             free(tab_cercle.tableauPoint);
         }
 
     }
             free(tmp.tableauPoint);
+            tableau_centre_interet[0].taillept=cpt-1;
+    
 }
 
-char * recherche_adresse_point(point p)
+/*char * recherche_adresse_point(point p)
 {
     char *s;
     float rayon=1;
     logs adresses_trouves=detection_circulaire(p,rayon,base_adresse);
-    while (adresses_trouves.tailleTab != 1)
+    while (adresses_trouves.tailleTab != 1 && adresses_trouves.tailleTab != 2)
     {
         if(adresses_trouves.tailleTab < 1)
         {
@@ -352,12 +355,14 @@ char * recherche_adresse_point(point p)
         else{
             rayon=rayon-0.1;
         }
-
+        logs adresses_trouves=detection_circulaire(p,rayon,base_adresse);
     }
+   // afficher_tableau(adresses_trouves.tailleTab,adresses_trouves);
+    return "s";
 
 
 
 
 
 
-}
+}*/

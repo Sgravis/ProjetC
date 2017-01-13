@@ -69,15 +69,14 @@ int main(int argc, char** argv)
     fclose(fp);
     recuperation_addr();
     logGlobalClean=copie_tableau(logGlobal,logGlobal.tailleTab);
-    logGlobalClean=initialisation_route(logGlobalClean);
+    initialisation_route(logGlobalClean);
     agglomeration(logGlobal);
     recuperation_addr();
     afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
+    affichage_points_interets();
 
     log_aff.taille=0;
     ajout_log_aff(&logGlobalClean);
-
-
 
     gtk_init_check(&argc, &argv);
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -100,7 +99,10 @@ int main(int argc, char** argv)
     g_signal_connect(G_OBJECT(darea), "button_press_event", G_CALLBACK (on_click_map), NULL);
     init_map();
 
-    logGlobalClean=initialisation_route(logGlobalClean);
+
+    //initialisation_route(logGlobalClean);
+    
+    //logGlobalClean=initialisation_route(logGlobalClean);
 
     init_boutton();
 

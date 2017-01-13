@@ -25,24 +25,46 @@ Vendredi 16 décembre
 
 ***
 
+Jeudi 12 janvier
+--
+
+- [ ] Commencer changement vers structures moins globale
+
 **Pour les vacances**
-- [ ] Finir la gestion des routes (Suppression des routes menant à un point d'intéret)
-- [ ] Doxygene du pré-traitement (en partie)
-- [ ] Test
+- [X] Finir la gestion des routes (Suppression des routes menant à un point d'intéret)
 
 Loïc
 ==
 **Pour les vacances**
 - [ ] Relier les fonctions au rendu graphique
 - [ ] Commencer la visualisation dynamique
+- [ ] Affichage base addresse avec fenêtre message
+- [ ] Menus déroulants
+- [ ] Couleur
+
 
 Élé
 ==
 - [ ] Générer la doxygène et remplir ma partie
 - [ ] Finir la gestion des points interet : cercle de taille réglable
+- [ ] points d'interet plus petits
+- [ ] Affichage base addresse
  
 ==
 **Pour les vacances**
-Yannis
+Yanis
 ==
 **Pour les vacances**
+
+- [ ] Déplacement sur la carte avec les flèches
+- [ ] Anonymisation post affichage routes
+- [ ] affichage dynamique des routes
+
+
+
+A faire
+==
+
+- [ ] Déplacement sur la carte avec les flèches
+- [ ] Convertion base adresse
+- [ ] Carte qui si scale sur la taille de la fenêtre

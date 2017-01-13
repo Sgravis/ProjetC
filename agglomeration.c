@@ -12,8 +12,8 @@
 
 void agglomeration(logs tlog)
 {
-	int i,j;
-
+	int i,j,k,cpt=0;
+	logs detectmp;
 	for (i=0 ; i<logGlobalClean.tailleTab ; i++) 
 	{
 		for (j = i+1 ; j < logGlobalClean.tailleTab ; j++)
@@ -21,27 +21,31 @@ void agglomeration(logs tlog)
 			if ((logGlobalClean.tableauPoint[i].latitude == logGlobalClean.tableauPoint[j].latitude) && (logGlobalClean.tableauPoint[i].longitude == logGlobalClean.tableauPoint[j].longitude))
 			{
 				logGlobalClean.tableauPoint[j].taillept++;
-
 			}
+		}
+		if (logGlobalClean.tableauPoint[i].taillept > 1) {
+			detectmp=detection_circulaire(logGlobalClean.tableauPoint[i],1,logGlobalClean);
+			cpt=0;
+			for ( k=0 ; k<detectmp.tailleTab ; k++)
+			{
+				++cpt;
+			}
+			logGlobalClean.tableauPoint[i].taillept+=cpt;
 		}
 	}
 	detection_agglomerat();
-	afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
-	//return tlog2;
 }
 
-logs initialisation_route(logs tlog)
+void initialisation_route(logs tlog)
 {
 	int i;
-	logs tlog2=copie_tableau(tlog,tlog.tailleTab);
-	for (i=0 ; i < tlog2.tailleTab ; i++)
+	for (i=0 ; i < logGlobalClean.tailleTab ; i++)
 	{
-		if (tlog2.tableauPoint[i].taillept == 1)
+		if (logGlobalClean.tableauPoint[i].taillept == 1)
 		{
-			tlog2.tableauPoint[i].route=1;
+			logGlobalClean.tableauPoint[i].route=1;
 		}
 	}
-	return tlog2;
 }
 
 void detection_agglomerat()

@@ -23,7 +23,7 @@ char * recherche_adresse_point(point p);
 
 
 
-
+point tableau_centre_interet[100];
 
 
 
