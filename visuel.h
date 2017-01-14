@@ -40,6 +40,8 @@ GtkWidget* pt_int_bouton;
 cairo_t* cr;
 map_position map;
 
+cairo_surface_t *image;
+
 GtkWidget *Button_dyn;
 GtkWidget *Button_anonyme;
 GtkWidget *Button_stat;

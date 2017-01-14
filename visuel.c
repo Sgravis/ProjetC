@@ -152,11 +152,14 @@ void do_map()
 	int TailleH,TailleL;
 	
 	//initialisation image
-	cairo_surface_t *image;	
+	
 	cairo_set_source_rgb(cr,0,0,0);
 	cairo_set_line_width(cr,0.5);
 
 	//chargement de la carte
+	if(image!=NULL)
+		cairo_surface_destroy(image);
+
 	image = cairo_image_surface_create_from_png ("Carte_Bourges_complete.png");
 	w = cairo_image_surface_get_width (image);
 	h = cairo_image_surface_get_height (image);
