@@ -72,7 +72,7 @@ int main(int argc, char** argv)
     initialisation_route(logGlobalClean);
     agglomeration(logGlobal);
     recuperation_addr();
-    afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
+    //afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
     affichage_points_interets();
 
     log_aff.taille=0;

@@ -60,7 +60,7 @@ Yanis
 
 - [X] Déplacement sur la carte avec les flèches
 - [X] Anonymisation post affichage routes
-- [ ] affichage dynamique des routes
+- [X] affichage dynamique des routes
 
 A faire
 ==

@@ -200,24 +200,27 @@ gboolean on_draw(GtkWidget *widget, cairo_t *crg,gpointer data)
 	logs log=*(logs*)data;
 	cr=crg;
 	do_map(); 				/*affiche la carte*/
-	if(ind_dyn==-1)
+	if(ind_dyn==-1){
 		//log_vers_carte(log);		/*affiche le log*/
+		if(route==1)
+			do_route();
 		afficher_logs();
+	}
 	else{
+		if (route==1)
+			do_route_dyn(ind_dyn);
 		log_vers_carte_dyn(log);
 		if(ind_dyn<=log.tailleTab-vitesse_dyn){
 			ind_dyn=ind_dyn+vitesse_dyn;
-			if (route==1)
-				do_route_dyn(ind_dyn);
 			maj_map();
 		}
 		else
 		{
 			ind_dyn=-1;
+			route=1;
+			maj_map();
 		}
 	}
-	if(route==1)
-		do_route();
 	if(tableau_centre_interet[0].taillept!=0)
 	{
 		for(i=1;i<=tableau_centre_interet[0].taillept;i++)
@@ -307,8 +310,8 @@ void mode_statique (){
 void do_route_dyn(int ind)
 {
 	int i;
-	cairo_set_source_rgb(cr,0,0.5,0.5);
-	cairo_set_line_width(cr,2);
+	cairo_set_source_rgb(cr,1,0.5,0.5);
+	cairo_set_line_width(cr,1);
 	for(i=0;i<ind;i++)  //parcourt et affiche tout les point des logs
 	{
 		if(logGlobalClean.tableauPoint[i].route==1 && logGlobalClean.tableauPoint[i].agglomerat == 0)
@@ -335,7 +338,7 @@ void do_route_maj(){
 
 void do_route(){
 	int i;
-	cairo_set_source_rgb(cr,0,0.5,0.5);
+	cairo_set_source_rgb(cr,1,0.5,0.5);
 	cairo_set_line_width(cr,1);
 	for(i=1;i<logGlobalClean.tailleTab;i++)
 	{
