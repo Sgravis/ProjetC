@@ -52,19 +52,19 @@ Loïc
  
 ==
 **Pour les vacances**
+
+
 Yanis
 ==
 **Pour les vacances**
 
-- [ ] Déplacement sur la carte avec les flèches
-- [ ] Anonymisation post affichage routes
+- [X] Déplacement sur la carte avec les flèches
+- [X] Anonymisation post affichage routes
 - [ ] affichage dynamique des routes
-
-
 
 A faire
 ==
 
-- [ ] Déplacement sur la carte avec les flèches
+- [X] Déplacement sur la carte avec les flèches
 - [ ] Convertion base adresse
 - [ ] Carte qui si scale sur la taille de la fenêtre

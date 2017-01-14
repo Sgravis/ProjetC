@@ -67,6 +67,7 @@ void ajout_log_aff(logs* log);
 void reset_log_aff();
 void mode_statique ();
 void mode_dynamique ();
+void do_route_dyn();
 void do_route_maj();
 void do_route();
 void undo_route();
