@@ -22,8 +22,6 @@ void init_boutton(){
     g_signal_connect(G_OBJECT(Button_dyn), "clicked",G_CALLBACK(mode_dynamique),NULL);
     Button_anonyme = gtk_button_new_with_label("anonymisation");
     g_signal_connect(G_OBJECT(Button_anonyme), "clicked", G_CALLBACK(do_anonymous), NULL);
-    Button_stat = gtk_button_new_with_label("Mode statique");
-    g_signal_connect(G_OBJECT(Button_stat), "clicked",G_CALLBACK(mode_statique),NULL);
     Button_road = gtk_button_new_with_label("route");
     g_signal_connect(G_OBJECT(Button_road), "clicked",G_CALLBACK(do_route_maj),NULL);
     Button_noroad = gtk_button_new_with_label("retirer route");
@@ -36,6 +34,8 @@ void init_boutton(){
     g_signal_connect(G_OBJECT(Button_Affichage_pt_supp), "clicked",G_CALLBACK(resurrection_point),NULL);
     Button_Remise_pt_normal = gtk_button_new_with_label("Remise point normal");
     g_signal_connect(G_OBJECT(Button_Remise_pt_normal), "clicked",G_CALLBACK(remise_pt_normal),NULL);
+
+    //gtk_widget_no_show_all(Button_noroad,true);
 
     g_signal_connect (G_OBJECT (window), "key_press_event",G_CALLBACK (on_key_press), NULL);
 
@@ -54,14 +54,13 @@ void init_boutton(){
 
 int main(int argc, char** argv)
 {
+    gtk_window_set_resizable(GTK_WINDOW(window), FALSE);
     int result;
     route=0;
     ind_dyn=-1;
     logs tlog;
     FILE *fp;
     int nb_lignes;
-    gpointer* data;
-    data=&logGlobalClean;
     fp=fopen("geoloc-logs.txt","r");
     nb_lignes=nombre_lignes(fp);
     init_tableau_global(nb_lignes);
@@ -69,15 +68,14 @@ int main(int argc, char** argv)
     fclose(fp);
     recuperation_addr();
     logGlobalClean=copie_tableau(logGlobal,logGlobal.tailleTab);
-    initialisation_route(logGlobalClean);
-    agglomeration(logGlobal);
+    initialisation_route();
+    agglomeration();
     recuperation_addr();
-    afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
+    //afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
+    affichage_points_interets();
 
-    log_aff.taille=0;
+    //log_aff.taille=0;
     ajout_log_aff(&logGlobalClean);
-
- affichage_points_interets();
 
     gtk_init_check(&argc, &argv);
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -109,7 +107,6 @@ int main(int argc, char** argv)
     //logGlobalClean=initialisation_route(logGlobalClean);
 
     gtk_widget_show_all(window); //affichage de la fenetre
-    gtk_widget_hide(Button_stat);
     gtk_widget_hide(Button_noroad);
     gtk_widget_hide(Button_Remise_pt_normal);
     gtk_main();  // fonction de boucle de gtk
