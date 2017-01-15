@@ -11,12 +11,17 @@
 #define HFENETRE 1628.0
 #define LFENETRE 680.0
 
+/*
+*position de la map en fonction du zoom
+*/
+
 typedef struct 
 {
 	float pos_x;
 	float pos_y;
 	int zoom;
 }map_position;
+map_position map;
 
 typedef struct 
 {
@@ -26,10 +31,20 @@ typedef struct
 
 tabLogs log_aff;
 
+/*
+*niveau de progression et vitesse du dynamique
+*/
 long int ind_dyn;
 int vitesse_dyn;
+
+/*
+*centre du point à anonymiser
+*/
 point tmp_ano;
 
+/*
+*Element de gestion de la fenetre
+*/
 GtkWidget* window;
 GtkWidget* darea;
 GtkWidget *pVBox;
@@ -38,10 +53,11 @@ GtkWidget *pButton;
 GtkWidget *reset;
 GtkWidget* pt_int_bouton;
 cairo_t* cr;
-map_position map;
-
 cairo_surface_t *image;
 
+/*
+*Bouton de la barre d'outils
+*/
 GtkWidget *Button_dyn;
 GtkWidget *Button_anonyme;
 GtkWidget *Button_stat;
@@ -52,28 +68,73 @@ GtkWidget *Button_Remise_a_0;
 GtkWidget *Button_Affichage_pt_supp;
 GtkWidget *Button_Remise_pt_normal;
 
+/*
+*Fonction de transition entre les echelles de GTK et de Cairo
+*/
 int coord_to_pixel_long(long double longitude);
 int coord_to_pixel_lat(long double latitude);
 long double pixel_to_coord_long(int longitude);
 long double pixel_to_coord_lat(int latitude);
-void do_cercle(point centre, int rayon);
 
-void reset_anonymisation();
-void init_map();
+/*
+*affiche un point sur la carte
+*/
 void do_point( point pt);
+
+/*
+*gère la procédure d'anonymisation par centre et rayon
+*/
+void anonymisation();
+void reset_anonymisation();
+
+/*
+*Recentre la carte
+*/
+void init_map();
+
+/*
+*affiche la carte en fontion de la position
+*/
 void do_map();
-gboolean on_draw(GtkWidget *widget, cairo_t *cr,gpointer user_data);
-gboolean on_draw_dyn(GtkWidget *widget, cairo_t *cr,gpointer user_data);
+
+/*
+*procédure d'affichage
+*/
+void on_draw(GtkWidget *widget, cairo_t *cr,gpointer user_data);
+
+/*
+*affiche un log sur la carte
+*/
 void afficher_logs();
+
+/*
+* modifie la liste des logs à afficher
+*/
 void ajout_log_aff(logs* log);
 void reset_log_aff();
-void mode_statique ();
+
+/*
+* réaffiche la carte de manière dynamique
+*/
 void mode_dynamique ();
+
+/*
+* ajoute ou enlève les route sur a carte
+*/
+void do_route_dyn();
 void do_route_maj();
 void do_route();
 void undo_route();
-void interet();
+
+/*
+* met a jour la carte en fonction des dernière modifications
+*/
 void maj_map();
+
+/*
+*affiche un log sur la carte de manière dynamique ou non
+*/
 void log_vers_carte(logs base);
+void log_vers_carte_dyn(logs base);
 
 #endif
