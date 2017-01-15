@@ -104,7 +104,7 @@ int main(int argc, char** argv)
     init_boutton();
 
     gtk_widget_show_all(window); //affichage de la fenetre
-    //gtk_widget_hide(Button_noroad);
+    gtk_widget_hide(Button_noroad);
     gtk_widget_hide(Button_Remise_pt_normal);
     gtk_main();  // fonction de boucle de gtk
   

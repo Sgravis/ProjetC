@@ -84,7 +84,7 @@ void do_point( point pt);
 /*
 *gère la procédure d'anonymisation par centre et rayon
 */
-void anonymisation()
+void anonymisation();
 void reset_anonymisation();
 
 /*
@@ -135,6 +135,6 @@ void maj_map();
 *affiche un log sur la carte de manière dynamique ou non
 */
 void log_vers_carte(logs base);
-void log_vers_carte_dyn(logs base
+void log_vers_carte_dyn(logs base);
 
 #endif
