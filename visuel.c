@@ -174,7 +174,7 @@ void on_draw(GtkWidget *widget, cairo_t *crg,gpointer data)
 	if(ind_dyn==-1){
 		if(route==1)
 			do_route();
-		log_vers_carte(log);		/*affiche le log*/
+		afficher_logs();		/*affiche le log*/
 	}
 	else{
 		if (route==1)
