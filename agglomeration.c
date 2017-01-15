@@ -10,7 +10,7 @@
 #include "structure_log.h"
 #include "agglomeration.h"
 
-void agglomeration(logs tlog)
+void agglomeration()
 {
 	int i,j,k,cpt=0;
 	logs detectmp;
@@ -36,7 +36,7 @@ void agglomeration(logs tlog)
 	detection_agglomerat();
 }
 
-void initialisation_route(logs tlog)
+void initialisation_route()
 {
 	int i;
 	for (i=0 ; i < logGlobalClean.tailleTab ; i++)

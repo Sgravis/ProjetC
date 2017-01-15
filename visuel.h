@@ -54,6 +54,8 @@ GtkWidget *reset;
 GtkWidget* pt_int_bouton;
 cairo_t* cr;
 cairo_surface_t *image;
+map_position map;
+
 
 /*
 *Bouton de la barre d'outils
