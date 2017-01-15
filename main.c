@@ -39,17 +39,17 @@ void init_boutton(){
 
     g_signal_connect (G_OBJECT (window), "key_press_event",G_CALLBACK (on_key_press), NULL);
 
-    gtk_box_pack_start(GTK_BOX(pVBox), Button_anonyme, TRUE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(pVBox), Button_dyn, TRUE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(pVBox), Button_stat, TRUE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(pVBox), Button_road, TRUE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(pVBox), Button_noroad, TRUE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(pVBox), Button_pt_interet, TRUE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(pVBox), Button_Remise_a_0, TRUE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(pVBox), Button_Affichage_pt_supp, TRUE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(pVBox), Button_Remise_pt_normal, TRUE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pHBox), Button_anonyme, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pHBox), Button_dyn, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pHBox), Button_stat, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pHBox), Button_road, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pHBox), Button_noroad, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pHBox), Button_pt_interet, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pHBox), Button_Remise_a_0, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pHBox), Button_Affichage_pt_supp, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pHBox), Button_Remise_pt_normal, FALSE, FALSE, 0);
 
-    gtk_box_pack_start(GTK_BOX(pHBox), pVBox, FALSE, FALSE, 0); 
+    gtk_box_pack_start(GTK_BOX(pVBox), pHBox, FALSE, FALSE, 0); 
 }
 
 int main(int argc, char** argv)
@@ -86,15 +86,18 @@ int main(int argc, char** argv)
     gtk_window_set_default_size(GTK_WINDOW(window), HFENETRE,LFENETRE);
     gtk_window_set_title(GTK_WINDOW(window), "Bourges");
     gtk_window_set_resizable(GTK_WINDOW(window),TRUE);
+    //gtk_widget_set_state_flags (window,GTK_APP_PAINTABLE,TRUE);
 
         // init box
     pHBox = gtk_hbox_new(FALSE, 0);
-    pVBox = gtk_vbox_new(TRUE, 0);
-    gtk_container_add(GTK_CONTAINER(window), pHBox);
+    pVBox = gtk_vbox_new(FALSE, 0);
+    gtk_container_add(GTK_CONTAINER(window), pVBox);
+    init_boutton();
+
 
 
     darea = gtk_drawing_area_new();
-    gtk_container_add(GTK_CONTAINER(pHBox), darea);
+    gtk_container_add(GTK_CONTAINER(pVBox), darea);
     g_signal_connect(G_OBJECT(darea), "draw", G_CALLBACK(on_draw),&logGlobalClean);
     gtk_widget_set_events (darea, GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK);
     g_signal_connect(G_OBJECT(darea), "button_press_event", G_CALLBACK (on_click_map), NULL);
@@ -104,8 +107,6 @@ int main(int argc, char** argv)
     //initialisation_route(logGlobalClean);
     
     //logGlobalClean=initialisation_route(logGlobalClean);
-
-    init_boutton();
 
     gtk_widget_show_all(window); //affichage de la fenetre
     gtk_widget_hide(Button_stat);

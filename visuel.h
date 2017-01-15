@@ -38,6 +38,7 @@ GtkWidget *pButton;
 GtkWidget *reset;
 GtkWidget* pt_int_bouton;
 cairo_t* cr;
+cairo_surface_t *image;
 map_position map;
 
 GtkWidget *Button_dyn;

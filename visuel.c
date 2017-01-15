@@ -150,9 +150,7 @@ void do_map()
 
 	int w, h;
 	int TailleH,TailleL;
-	
 	//initialisation image
-	cairo_surface_t *image;	
 	cairo_set_source_rgb(cr,0,0,0);
 	cairo_set_line_width(cr,0.5);
 
@@ -273,6 +271,10 @@ void reset_log_aff()
  */
 void maj_map()
 {
+	if (image){
+		cairo_surface_destroy (image);
+		on_draw(&logGlobalClean);
+	}
 	gtk_widget_queue_draw(darea);
 }
 
