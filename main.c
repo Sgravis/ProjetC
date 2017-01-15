@@ -66,8 +66,8 @@ int main(int argc, char** argv)
     fclose(fp);
     recuperation_addr();
     logGlobalClean=copie_tableau(logGlobal,logGlobal.tailleTab);
-    initialisation_route(logGlobalClean);
-    agglomeration(logGlobal);
+    initialisation_route();
+    agglomeration();
     recuperation_addr();
     //afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
     affichage_points_interets();
