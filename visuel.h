@@ -8,6 +8,7 @@
 #include <math.h>
 #include "structure_log.h"
 #include "interaction.h"
+#include "allocation.h"
 #define HFENETRE 1628.0
 #define LFENETRE 680.0
 

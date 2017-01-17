@@ -218,13 +218,14 @@ void afficher_logs()
 void ajout_log_aff(logs* log)
 {
 	int i ;
+	log_aff.taille ++;
 	log_aff.tableauLogs=(logs**)malloc(sizeof(logs*)*log_aff.taille);
 	for(i=0;i<log_aff.taille;i++)
 	{
-		log_aff.tableauLogs[i]=malloc(sizeof(logs));
+		log_aff.tableauLogs[i]=&(allocation_tableau_point(log->tailleTab));
 	}
 	log_aff.tableauLogs[log_aff.taille]=log;
-	log_aff.taille ++;
+
 }
 
 void reset_log_aff()
