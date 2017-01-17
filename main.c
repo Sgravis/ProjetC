@@ -67,14 +67,18 @@ int main(int argc, char** argv)
     recuperation_donnees(fp,nb_lignes);
     fclose(fp);
     recuperation_addr();
+
+
     logGlobalClean=copie_tableau(logGlobal,logGlobal.tailleTab);
     initialisation_route();
     agglomeration();
+    //log_aff.taille=0;
+   // ajout_log_aff(&logGlobalClean);
     recuperation_addr();
     //afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
     affichage_points_interets();
 
-    //log_aff.taille=0;
+    log_aff.taille=0;
     ajout_log_aff(&logGlobalClean);
 
     gtk_init_check(&argc, &argv);
@@ -109,6 +113,7 @@ int main(int argc, char** argv)
     gtk_widget_show_all(window); //affichage de la fenetre
     gtk_widget_hide(Button_noroad);
     gtk_widget_hide(Button_Remise_pt_normal);
+    affichage_points_interets();
     gtk_main();  // fonction de boucle de gtk
   
     return 0;
