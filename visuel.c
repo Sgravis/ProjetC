@@ -101,7 +101,8 @@ void log_vers_carte(logs base)
     cairo_set_line_width(cr,8);
 	for(i=0;i<base.tailleTab;i++)  //parcourt et affiche tout les point des logs
 	{  
-		do_point(base.tableauPoint[i]);
+		if(routeHide==0 || base.tableauPoint[i].route==0)
+			do_point(base.tableauPoint[i]);
 	}
 }
 
@@ -113,7 +114,8 @@ void log_vers_carte_dyn(logs base)
     cairo_set_line_width(cr,8);
 	for(i=0;i<ind_dyn-1;i++)  //parcourt et affiche tout les point des logs
 	{  
-		do_point(base.tableauPoint[i]);
+		if(routeHide==0 || base.tableauPoint[i].route==0)
+			do_point(base.tableauPoint[i]);
 	}
 }
 
@@ -218,14 +220,13 @@ void afficher_logs()
 void ajout_log_aff(logs* log)
 {
 	int i ;
-	log_aff.taille ++;
 	log_aff.tableauLogs=(logs**)malloc(sizeof(logs*)*log_aff.taille);
 	for(i=0;i<log_aff.taille;i++)
 	{
-		log_aff.tableauLogs[i]=&(allocation_tableau_point(log->tailleTab));
+		log_aff.tableauLogs[i]=(logs*)malloc(sizeof(logs*));
 	}
 	log_aff.tableauLogs[log_aff.taille]=log;
-
+	log_aff.taille ++;
 }
 
 void reset_log_aff()
@@ -258,7 +259,6 @@ void mode_dynamique (){
 }
 
 
-
 void do_route_dyn(int ind)
 {
 	int i;
@@ -284,6 +284,7 @@ void do_route_dyn(int ind)
 void do_route_maj(){
 	route=1;
 	do_route();
+	gtk_widget_show(Button_hidePoints);
 	maj_map();
 }
 
@@ -311,7 +312,25 @@ void do_route(){
 
 void undo_route(){
 	route=0;
+	routeHide=0;
 	gtk_widget_hide(Button_noroad);
+	gtk_widget_hide(Button_hidePoints);
+	gtk_widget_hide(Button_showPoints);
 	gtk_widget_show(Button_road);
+	maj_map();
+}
+
+void hidePoints(){
+	gtk_widget_hide(Button_hidePoints);
+	gtk_widget_show(Button_showPoints);
+	routeHide=1;
+	maj_map();
+
+}
+
+void showPoints(){
+	gtk_widget_show(Button_hidePoints);
+	gtk_widget_hide(Button_showPoints);
+	routeHide=0;
 	maj_map();
 }

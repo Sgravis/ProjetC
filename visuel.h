@@ -33,6 +33,10 @@ typedef struct
 tabLogs log_aff;
 
 /*
+* indicateur bouton caché point
+*/
+int routeHide;
+/*
 *niveau de progression et vitesse du dynamique
 */
 long int ind_dyn;
@@ -66,6 +70,8 @@ GtkWidget *Button_anonyme;
 GtkWidget *Button_stat;
 GtkWidget *Button_road;
 GtkWidget *Button_noroad;
+GtkWidget *Button_hidePoints;
+GtkWidget *Button_showPoints;
 GtkWidget *Button_pt_interet;
 GtkWidget *Button_Remise_a_0;
 GtkWidget *Button_Affichage_pt_supp;
@@ -127,6 +133,8 @@ void mode_dynamique ();
 void do_route_dyn();
 void do_route_maj();
 void do_route();
+void hidePoints();
+void showPoints();
 void undo_route();
 
 /*
