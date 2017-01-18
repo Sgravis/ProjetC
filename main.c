@@ -26,6 +26,10 @@ void init_boutton(){
     g_signal_connect(G_OBJECT(Button_road), "clicked",G_CALLBACK(do_route_maj),NULL);
     Button_noroad = gtk_button_new_with_label("retirer route");
     g_signal_connect(G_OBJECT(Button_noroad), "clicked",G_CALLBACK(undo_route),NULL);
+    Button_hidePoints = gtk_button_new_with_label("cacher les points des routes");
+    g_signal_connect(G_OBJECT(Button_hidePoints), "clicked",G_CALLBACK(hidePoints),NULL);
+    Button_showPoints = gtk_button_new_with_label("afficher les points des routes");
+    g_signal_connect(G_OBJECT(Button_showPoints), "clicked",G_CALLBACK(showPoints),NULL);
     Button_pt_interet = gtk_button_new_with_label("enlever point d'interet");
     g_signal_connect(G_OBJECT(Button_pt_interet), "clicked",G_CALLBACK(detection_pt_interet),NULL);
     Button_Remise_a_0 = gtk_button_new_with_label("Remise a zero");
@@ -44,6 +48,8 @@ void init_boutton(){
     //gtk_box_pack_start(GTK_BOX(pHBox), Button_stat, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), Button_road, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), Button_noroad, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pHBox), Button_hidePoints, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pHBox), Button_showPoints, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), Button_pt_interet, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), Button_Remise_a_0, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), Button_Affichage_pt_supp, FALSE, FALSE, 0);
@@ -58,6 +64,7 @@ int main(int argc, char** argv)
     int result;
     route=0;
     ind_dyn=-1;
+    routeHide=0;
     logs tlog;
     FILE *fp;
     int nb_lignes;
@@ -67,14 +74,18 @@ int main(int argc, char** argv)
     recuperation_donnees(fp,nb_lignes);
     fclose(fp);
     recuperation_addr();
+
+
     logGlobalClean=copie_tableau(logGlobal,logGlobal.tailleTab);
     initialisation_route();
     agglomeration();
+    //log_aff.taille=0;
+   // ajout_log_aff(&logGlobalClean);
     recuperation_addr();
     //afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
     affichage_points_interets();
 
-    //log_aff.taille=0;
+    log_aff.taille=0;
     ajout_log_aff(&logGlobalClean);
 
     gtk_init_check(&argc, &argv);
@@ -105,8 +116,11 @@ int main(int argc, char** argv)
     gtk_widget_set_size_request(window, 1628, 680);
     gtk_window_set_resizable(GTK_WINDOW(window),FALSE);
     gtk_widget_show_all(window); //affichage de la fenetre
+    gtk_widget_hide(Button_hidePoints);
+    gtk_widget_hide(Button_showPoints);
     gtk_widget_hide(Button_noroad);
     gtk_widget_hide(Button_Remise_pt_normal);
+    affichage_points_interets();
     gtk_main();  // fonction de boucle de gtk
   
     return 0;

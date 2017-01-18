@@ -112,6 +112,9 @@ void recuperation_donnees(FILE *fp, int nb_lignes)
             logGlobal.tableauPoint[nb_donnees].taillept=1;
             logGlobal.tableauPoint[nb_donnees].route=0;
             logGlobal.tableauPoint[nb_donnees].agglomerat=0;
+            logGlobal.tableauPoint[nb_donnees].numero_rue=0;
+            strcpy(logGlobal.tableauPoint[nb_donnees].adresse," ");
+
             nb_donnees++;
 
 
@@ -238,7 +241,7 @@ void resurrection_point()
             logBack.tableauPoint[i].agglomerat=0;
         }
         logBack.tailleTab=nb_lignes;
-        reset_log_aff();
+        //reset_log_aff();
         ajout_log_aff(&logBack);
         g_signal_connect(G_OBJECT(darea),"draw",G_CALLBACK(on_draw),&logBack);
         maj_map();
@@ -257,31 +260,50 @@ void remise_pt_normal(){
 void recuperation_addr() /* au lieu initialiser ici la base adresse, faire une fonction d'initialisation*/
 {
     FILE *fp;
+    int numero;
     char c;
-    int i,j,nb_lignes;
+    char adresse[40];
+    int i,j,nb_lignes,k=0;
     fp=fopen("AddrConvert.txt","r");
-    
     nb_lignes=nombre_lignes(fp);
     fseek(fp,0,SEEK_SET);
-    base_adresse.tailleTab=nb_lignes;
+    base_adresse.tailleTab=nb_lignes-1;
     base_adresse.tableauPoint=(point*)malloc(nb_lignes*sizeof(point)); /*utiliser la fonction deja etablie*/
-    for(i=0;i<nb_lignes;i++)
+    for(i=0;i<nb_lignes-1;i++)
     {
-        for(j=0;j<4;j++)
-        {
             c=fgetc(fp);
             while(c !=',')
             {
                 c=fgetc(fp);
             }
-        }
+
+            fscanf(fp,"%i",&(base_adresse.tableauPoint[i].numero_rue));
+            c=fgetc(fp);
+            c=fgetc(fp);
+            while(c !=',')
+            {
+                adresse[k]=c;
+                k++;
+                c=fgetc(fp);
+            }
+            strcpy(base_adresse.tableauPoint[i].adresse,adresse);
+                c=fgetc(fp);
+                while(c !=',')
+                {
+                    c=fgetc(fp);
+                }
         fscanf(fp,"%Lf",&(base_adresse.tableauPoint[i].longitude));
         c=fgetc(fp);
         fscanf(fp,"%Lf",&(base_adresse.tableauPoint[i].latitude));
         c=fgetc(fp);
         base_adresse.tableauPoint[i].date=0;
+        for(j=0;j<=k;j++)
+        {
+            adresse[j]=' ';
+        }
+        k=0;
+
     }
- 
 }
 void remise_a_zero()
 {
@@ -324,14 +346,11 @@ void affichage_points_interets()
                 }
 
             }
-
             suppression_sans_backup(tab_cercle,&tmp);
-         //   recherche_adresse_point(tab_cercle.tableauPoint[0]);
+            recherche_adresse_point(tab_cercle.tableauPoint[0]);
             tableau_centre_interet[cpt]=tab_cercle.tableauPoint[0];
             tableau_centre_interet[cpt].taillept=rayon; 
             cpt++;  
-
-
             free(tab_cercle.tableauPoint);
         }
 
@@ -341,28 +360,29 @@ void affichage_points_interets()
     
 }
 
-/*char * recherche_adresse_point(point p)
+char * recherche_adresse_point(point p)
 {
+    int i,ligne;
     char *s;
     float rayon=1;
     logs adresses_trouves=detection_circulaire(p,rayon,base_adresse);
-    while (adresses_trouves.tailleTab != 1 && adresses_trouves.tailleTab != 2)
+    while (adresses_trouves.tailleTab != 2 && adresses_trouves.tailleTab != 3)
     {
-        if(adresses_trouves.tailleTab < 1)
+        if(adresses_trouves.tailleTab < 2)
         {
             rayon++;
         }
         else{
             rayon=rayon-0.1;
         }
-        logs adresses_trouves=detection_circulaire(p,rayon,base_adresse);
+        adresses_trouves=detection_circulaire(p,rayon,base_adresse);
     }
-   // afficher_tableau(adresses_trouves.tailleTab,adresses_trouves);
-    return "s";
+   // printf("adresse : %i %s",adresses_trouves.tableauPoint[1].numero_rue,adresses_trouves.tableauPoint[1].adresse);
+    //afficher_tableau(adresses_trouves.tailleTab,adresses_trouves);
+
+return "s";
 
 
 
 
-
-
-}*/
+}

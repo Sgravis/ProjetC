@@ -8,6 +8,7 @@
 #include <math.h>
 #include "structure_log.h"
 #include "interaction.h"
+#include "allocation.h"
 #define HFENETRE 1628.0
 #define LFENETRE 680.0
 
@@ -31,6 +32,10 @@ typedef struct
 
 tabLogs log_aff;
 
+/*
+* indicateur bouton caché point
+*/
+int routeHide;
 /*
 *niveau de progression et vitesse du dynamique
 */
@@ -65,6 +70,8 @@ GtkWidget *Button_anonyme;
 GtkWidget *Button_stat;
 GtkWidget *Button_road;
 GtkWidget *Button_noroad;
+GtkWidget *Button_hidePoints;
+GtkWidget *Button_showPoints;
 GtkWidget *Button_pt_interet;
 GtkWidget *Button_Remise_a_0;
 GtkWidget *Button_Affichage_pt_supp;
@@ -126,6 +133,8 @@ void mode_dynamique ();
 void do_route_dyn();
 void do_route_maj();
 void do_route();
+void hidePoints();
+void showPoints();
 void undo_route();
 
 /*
