@@ -41,7 +41,7 @@ void init_boutton(){
 
     gtk_box_pack_start(GTK_BOX(pHBox), Button_anonyme, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), Button_dyn, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(pHBox), Button_stat, FALSE, FALSE, 0);
+    //gtk_box_pack_start(GTK_BOX(pHBox), Button_stat, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), Button_road, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), Button_noroad, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), Button_pt_interet, FALSE, FALSE, 0);
@@ -54,7 +54,7 @@ void init_boutton(){
 
 int main(int argc, char** argv)
 {
-    gtk_window_set_resizable(GTK_WINDOW(window), FALSE);
+
     int result;
     route=0;
     ind_dyn=-1;
@@ -83,7 +83,6 @@ int main(int argc, char** argv)
     gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
     gtk_window_set_default_size(GTK_WINDOW(window), HFENETRE,LFENETRE);
     gtk_window_set_title(GTK_WINDOW(window), "Bourges");
-    gtk_window_set_resizable(GTK_WINDOW(window),TRUE);
     //gtk_widget_set_state_flags (window,GTK_APP_PAINTABLE,TRUE);
 
         // init box
@@ -91,8 +90,6 @@ int main(int argc, char** argv)
     pVBox = gtk_vbox_new(FALSE, 0);
     gtk_container_add(GTK_CONTAINER(window), pVBox);
     init_boutton();
-
-
 
     darea = gtk_drawing_area_new();
     gtk_container_add(GTK_CONTAINER(pVBox), darea);
@@ -105,7 +102,8 @@ int main(int argc, char** argv)
     //initialisation_route(logGlobalClean);
     
     //logGlobalClean=initialisation_route(logGlobalClean);
-
+    gtk_widget_set_size_request(window, 1628, 680);
+    gtk_window_set_resizable(GTK_WINDOW(window),FALSE);
     gtk_widget_show_all(window); //affichage de la fenetre
     gtk_widget_hide(Button_noroad);
     gtk_widget_hide(Button_Remise_pt_normal);
