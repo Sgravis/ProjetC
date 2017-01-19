@@ -56,7 +56,7 @@ void do_point(point pt)
 void do_cercle(point centre, int rayon){
 	cairo_set_source_rgb(cr,1,1,0);
 	cairo_set_line_width(cr,1);
-	cairo_arc(cr,coord_to_pixel_long(centre.longitude), coord_to_pixel_lat(centre.latitude),rayon, 0, 2 * M_PI);
+	cairo_arc(cr,coord_to_pixel_long(centre.longitude), coord_to_pixel_lat(centre.latitude),rayon/6, 0, 2 * M_PI);
 	cairo_stroke(cr);
 }
 
@@ -102,7 +102,7 @@ void anonymisation()
 void log_vers_carte(logs base)
 {
 	int i;
-	cairo_set_source_rgb(cr,0,1,1);  //couleur des point
+	//cairo_set_source_rgb(cr,0,1,1);  //couleur des point
     cairo_set_line_width(cr,8);
 	for(i=0;i<base.tailleTab;i++)  //parcourt et affiche tout les point des logs
 	{  
@@ -199,12 +199,12 @@ void on_draw(GtkWidget *widget, cairo_t *crg,gpointer data)
 	{
 		for(i=1;i<=tableau_centre_interet[0].taillept;i++)
 		{
-			do_cercle(tableau_centre_interet[i],tableau_centre_interet[i].taillept/6);
+			do_cercle(tableau_centre_interet[i],tableau_centre_interet[i].taillept);
 		}
 	}	
 
 	if (tmp_ano.taillept!=0){
-    	do_cercle(tmp_ano,tmp_ano.taillept/6);
+    	do_cercle(tmp_ano,tmp_ano.taillept);
     }
 	anonymisation();
 }
@@ -214,8 +214,9 @@ void afficher_logs()
 	int i;
 	for(i=0;i<log_aff.taille;i++)
 	{
-		printf("j'affiche le log %i\n",i );
-		log_vers_carte(*log_aff.tableauLogs[0]);
+		if(i==0){cairo_set_source_rgb(cr,0,1,0);}
+		if(i==1){cairo_set_source_rgb(cr,1,0,0);}
+		log_vers_carte(*log_aff.tableauLogs[i]);
 	}
 }
 
@@ -223,7 +224,7 @@ void ajout_log_aff(logs* log)
 {
 	int i ;
 	logs** tmp=(logs**)malloc(sizeof(logs*)*log_aff.taille+1);
-	printf("taille du nouveau tableau : %i\n",log_aff.taille+1);
+
 	//alloue tmp
 	for(i=0;i<log_aff.taille;i++){
 		tmp[i]=(logs*)malloc(sizeof(logs));
@@ -238,19 +239,11 @@ void ajout_log_aff(logs* log)
 	tmp[log_aff.taille]=log;
 	log_aff.tableauLogs=tmp;
 	log_aff.taille++;
-	printf("taille apres ajout_log : %i\n", log_aff.taille );
-	for(i=0;i<log_aff.tableauLogs[log_aff.taille-1]->tailleTab;i++)
-		printf("test taille du log %i point %i: %i\n",log_aff.taille-1,i,log_aff.tableauLogs[log_aff.taille-1]->tableauPoint[i].taillept );
 }
 
 void reset_log_aff()
 {
-	/*int i;
-	for(i=0;i<log_aff.taille;i++)
-	{
-		free(*log_aff.tableauLogs[i]);
-	}
-	free(log_aff.tableauLogs);*/
+	free(log_aff.tableauLogs);
 	log_aff.taille=0;
 }
 
