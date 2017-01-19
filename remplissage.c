@@ -241,7 +241,7 @@ void resurrection_point()
             logBack.tableauPoint[i].agglomerat=0;
         }
         logBack.tailleTab=nb_lignes;
-        //reset_log_aff();
+        reset_log_aff();
         ajout_log_aff(&logBack);
         g_signal_connect(G_OBJECT(darea),"draw",G_CALLBACK(on_draw),&logBack);
         maj_map();
@@ -252,7 +252,6 @@ void remise_pt_normal(){
     gtk_widget_hide(Button_Remise_pt_normal);
     reset_log_aff();
     ajout_log_aff(&logGlobalClean);
-   //g_signal_connect(G_OBJECT(darea),"draw",G_CALLBACK(on_draw),&logGlobalClean);
     maj_map();
 
 }

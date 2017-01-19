@@ -194,6 +194,8 @@ void on_draw(GtkWidget *widget, cairo_t *crg,gpointer data)
 	{
 		for(i=1;i<=tableau_centre_interet[0].taillept;i++)
 		{
+			printf("yolo\n");
+    		cairo_set_line_width(cr,1);
     		cairo_arc(cr,coord_to_pixel_long(tableau_centre_interet[0].longitude), coord_to_pixel_lat(tableau_centre_interet[0].latitude),tableau_centre_interet[0].taillept/6, 0, 2 * M_PI);
 			cairo_stroke(cr);
 		}
