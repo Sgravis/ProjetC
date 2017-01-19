@@ -334,3 +334,8 @@ void showPoints(){
 	routeHide=0;
 	maj_map();
 }
+
+void showTooltip(GtkWidget*widget){
+
+	gtk_widget_set_tooltip_text (widget,"This is a test2");
+}

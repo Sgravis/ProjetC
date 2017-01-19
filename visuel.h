@@ -57,6 +57,8 @@ GtkWidget *pHBox;
 GtkWidget *pButton;
 GtkWidget *reset;
 GtkWidget* pt_int_bouton;
+GtkWidget* tooltip;
+
 cairo_t* cr;
 cairo_surface_t *image;
 map_position map;
@@ -147,5 +149,6 @@ void maj_map();
 */
 void log_vers_carte(logs base);
 void log_vers_carte_dyn(logs base);
+void showTooltip(GtkWidget*widget);
 
 #endif

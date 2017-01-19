@@ -45,7 +45,6 @@ void init_boutton(){
 
     gtk_box_pack_start(GTK_BOX(pHBox), Button_anonyme, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), Button_dyn, FALSE, FALSE, 0);
-    //gtk_box_pack_start(GTK_BOX(pHBox), Button_stat, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), Button_road, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), Button_noroad, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), Button_hidePoints, FALSE, FALSE, 0);
@@ -109,10 +108,6 @@ int main(int argc, char** argv)
     g_signal_connect(G_OBJECT(darea), "button_press_event", G_CALLBACK (on_click_map), NULL);
     init_map();
 
-
-    //initialisation_route(logGlobalClean);
-    
-    //logGlobalClean=initialisation_route(logGlobalClean);
     gtk_widget_set_size_request(window, 1628, 680);
     gtk_window_set_resizable(GTK_WINDOW(window),FALSE);
     gtk_widget_show_all(window); //affichage de la fenetre
