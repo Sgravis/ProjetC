@@ -33,21 +33,6 @@ typedef struct
 tabLogs log_aff;
 
 /*
-* indicateur bouton caché point
-*/
-int routeHide;
-/*
-*niveau de progression et vitesse du dynamique
-*/
-long int ind_dyn;
-int vitesse_dyn;
-
-/*
-*centre du point à anonymiser
-*/
-point tmp_ano;
-
-/*
 *Element de gestion de la fenetre
 */
 GtkWidget* window;
@@ -63,22 +48,20 @@ map_position map;
 
 
 /*
-*Bouton de la barre d'outils
+* indicateur bouton caché point
 */
-GtkWidget *Button_dyn;
-GtkWidget *Button_anonyme;
-GtkWidget *Button_stat;
-GtkWidget *Button_road;
-GtkWidget *Button_noroad;
-GtkWidget *Button_hidePoints;
-GtkWidget *Button_showPoints;
-GtkWidget *Button_pt_interet;
-GtkWidget *Button_Remise_a_0;
-GtkWidget *Button_Affichage_pt_supp;
-GtkWidget *Button_Remise_pt_normal;
+int routeHide;
+/*
+*niveau de progression et vitesse du dynamique
+*/
+long int ind_dyn;
+int vitesse_dyn;
 
-GtkWidget *Button_Affichage_Points_Interets;
-GtkWidget *Button_DesAffichage_Points_Interets;
+/*
+*centre du point à anonymiser
+*/
+point tmp_ano;
+
 
 /*
 *Fonction de transition entre les echelles de GTK et de Cairo
