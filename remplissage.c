@@ -252,7 +252,6 @@ void remise_pt_normal(){
     gtk_widget_hide(Button_Remise_pt_normal);
     reset_log_aff();
     ajout_log_aff(&logGlobalClean);
-   //g_signal_connect(G_OBJECT(darea),"draw",G_CALLBACK(on_draw),&logGlobalClean);
     maj_map();
 
 }
