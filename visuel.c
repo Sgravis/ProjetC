@@ -53,7 +53,12 @@ void do_point(point pt)
 	cairo_fill(cr);
 }
 
-
+void do_cercle(point centre, int rayon){
+	cairo_set_source_rgb(cr,1,1,0);
+	cairo_set_line_width(cr,1);
+	cairo_arc(cr,coord_to_pixel_long(centre.longitude), coord_to_pixel_lat(centre.latitude),rayon, 0, 2 * M_PI);
+	cairo_stroke(cr);
+}
 
 void reset_anonymisation()
 {
@@ -194,18 +199,12 @@ void on_draw(GtkWidget *widget, cairo_t *crg,gpointer data)
 	{
 		for(i=1;i<=tableau_centre_interet[0].taillept;i++)
 		{
-			printf("yolo\n");
-    		cairo_set_line_width(cr,1);
-    		cairo_arc(cr,coord_to_pixel_long(tableau_centre_interet[0].longitude), coord_to_pixel_lat(tableau_centre_interet[0].latitude),tableau_centre_interet[0].taillept/6, 0, 2 * M_PI);
-			cairo_stroke(cr);
+			do_cercle(tableau_centre_interet[i],tableau_centre_interet[i].taillept/6);
 		}
 	}	
 
 	if (tmp_ano.taillept!=0){
-		cairo_set_source_rgb(cr,1,1,0);
-    	cairo_set_line_width(cr,1);
-    	cairo_arc(cr,coord_to_pixel_long(tmp_ano.longitude), coord_to_pixel_lat(tmp_ano.latitude),tmp_ano.taillept/6, 0, 2 * M_PI);
-    	cairo_stroke(cr);
+    	do_cercle(tmp_ano,tmp_ano.taillept/6);
     }
 	anonymisation();
 }
@@ -298,7 +297,7 @@ void do_route(){
 	{
 		if(logGlobalClean.tableauPoint[i].route==1 && logGlobalClean.tableauPoint[i].agglomerat == 0)
 		{
-			if(abs(coord_to_pixel_long(logGlobalClean.tableauPoint[i].longitude)-coord_to_pixel_long(logGlobalClean.tableauPoint[i+1].longitude))<50 && abs(coord_to_pixel_lat(logGlobalClean.tableauPoint[i].latitude)-coord_to_pixel_lat(logGlobalClean.tableauPoint[i+1].latitude))<50)
+			if(abs(coord_to_pixel_long(logGlobalClean.tableauPoint[i].longitude)-coord_to_pixel_long(logGlobalClean.tableauPoint[i+1].longitude))<55 && abs(coord_to_pixel_lat(logGlobalClean.tableauPoint[i].latitude)-coord_to_pixel_lat(logGlobalClean.tableauPoint[i+1].latitude))<55)
 			{
 				cairo_move_to(cr,coord_to_pixel_long(logGlobalClean.tableauPoint[i].longitude),coord_to_pixel_lat(logGlobalClean.tableauPoint[i].latitude));
 				cairo_line_to(cr,coord_to_pixel_long(logGlobalClean.tableauPoint[i+1].longitude),coord_to_pixel_lat(logGlobalClean.tableauPoint[i+1].latitude));
