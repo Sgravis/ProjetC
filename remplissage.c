@@ -243,7 +243,7 @@ void resurrection_point()
         logBack.tailleTab=nb_lignes;
         reset_log_aff();
         ajout_log_aff(&logBack);
-        g_signal_connect(G_OBJECT(darea),"draw",G_CALLBACK(on_draw),&logBack);
+        //g_signal_connect(G_OBJECT(darea),"draw",G_CALLBACK(on_draw),&logBack);
         maj_map();
 }
 
@@ -314,6 +314,8 @@ void remise_a_zero()
     {
         perror("");
     }
+    reset_log_aff();
+    ajout_log_aff(&logGlobalClean);
     maj_map();
 }
 

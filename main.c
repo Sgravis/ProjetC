@@ -45,7 +45,6 @@ void init_boutton(){
 
     gtk_box_pack_start(GTK_BOX(pHBox), Button_anonyme, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), Button_dyn, FALSE, FALSE, 0);
-    //gtk_box_pack_start(GTK_BOX(pHBox), Button_stat, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), Button_road, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), Button_noroad, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), Button_hidePoints, FALSE, FALSE, 0);
@@ -86,6 +85,7 @@ int main(int argc, char** argv)
     affichage_points_interets();
 
     log_aff.taille=0;
+    reset_log_aff();
     ajout_log_aff(&logGlobalClean);
 
     gtk_init_check(&argc, &argv);

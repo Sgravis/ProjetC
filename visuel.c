@@ -214,6 +214,7 @@ void afficher_logs()
 	int i;
 	for(i=0;i<log_aff.taille;i++)
 	{
+		printf("j'affiche le log %i\n",i );
 		log_vers_carte(*log_aff.tableauLogs[0]);
 	}
 }
@@ -221,19 +222,31 @@ void afficher_logs()
 void ajout_log_aff(logs* log)
 {
 	int i ;
-	log_aff.tableauLogs=(logs**)malloc(sizeof(logs*)*log_aff.taille);
-	for(i=0;i<log_aff.taille;i++)
-	{
-		log_aff.tableauLogs[i]=(logs*)malloc(sizeof(logs*));
+	logs** tmp=(logs**)malloc(sizeof(logs*)*log_aff.taille+1);
+	printf("taille du nouveau tableau : %i\n",log_aff.taille+1);
+	//alloue tmp
+	for(i=0;i<log_aff.taille;i++){
+		tmp[i]=(logs*)malloc(sizeof(logs));
+		*tmp[i]=allocation_tableau_point(log->tailleTab);
 	}
-	log_aff.tableauLogs[log_aff.taille]=log;
-	log_aff.taille ++;
+
+	// copie ancien -> nouveau
+	for(i=0;i<log_aff.taille;i++){
+		tmp[i]=log_aff.tableauLogs[i];
+	}
+
+	tmp[log_aff.taille]=log;
+	log_aff.tableauLogs=tmp;
+	log_aff.taille++;
+	printf("taille apres ajout_log : %i\n", log_aff.taille );
+	for(i=0;i<log_aff.tableauLogs[log_aff.taille-1]->tailleTab;i++)
+		printf("test taille du log %i point %i: %i\n",log_aff.taille-1,i,log_aff.tableauLogs[log_aff.taille-1]->tableauPoint[i].taillept );
 }
 
 void reset_log_aff()
 {
-	int i;
-	/*for(i=0;i<log_aff.taille;i++)
+	/*int i;
+	for(i=0;i<log_aff.taille;i++)
 	{
 		free(*log_aff.tableauLogs[i]);
 	}

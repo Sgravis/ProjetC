@@ -52,13 +52,13 @@ point tmp_ano;
 */
 GtkWidget* window;
 GtkWidget* darea;
-GtkWidget *pVBox;
-GtkWidget *pHBox;
-GtkWidget *pButton;
-GtkWidget *reset;
+GtkWidget* pVBox;
+GtkWidget* pHBox;
+GtkWidget* pButton;
+GtkWidget* reset;
 GtkWidget* pt_int_bouton;
 cairo_t* cr;
-cairo_surface_t *image;
+cairo_surface_t* image;
 map_position map;
 
 
@@ -86,9 +86,10 @@ long double pixel_to_coord_long(int longitude);
 long double pixel_to_coord_lat(int latitude);
 
 /*
-*affiche un point sur la carte
+*affiche un element sur la carte
 */
 void do_point( point pt);
+void do_cercle(point centre, int rayon);
 
 /*
 *gère la procédure d'anonymisation par centre et rayon
