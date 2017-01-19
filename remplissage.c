@@ -319,11 +319,21 @@ void remise_a_zero()
     maj_map();
 }
 
+void cacher_points_interets()
+{
+    tableau_centre_interet[0].taillept=0;
+    gtk_widget_hide(Button_DesAffichage_Points_Interets);
+    gtk_widget_show(Button_Affichage_Points_Interets);
+    maj_map();
+}
+
 
 void affichage_points_interets()
-{
+{   
+    gtk_widget_hide(Button_Affichage_Points_Interets);
+    gtk_widget_show(Button_DesAffichage_Points_Interets);
     int i,j;
-    int nb_pt_centre_interet=((logGlobalClean.tailleTab)/10);
+    int nb_pt_centre_interet=((logGlobalClean.tailleTab)/12);
     logs tmp=copie_tableau(logGlobalClean,logGlobalClean.tailleTab);
     logs tab_cercle;
     logs tab_cercle2;
@@ -348,23 +358,24 @@ void affichage_points_interets()
 
             }
             suppression_sans_backup(tab_cercle,&tmp);
-            recherche_adresse_point(tab_cercle.tableauPoint[0]);
             tableau_centre_interet[cpt]=tab_cercle.tableauPoint[0];
             tableau_centre_interet[cpt].taillept=rayon; 
+            recherche_adresse_point(tab_cercle.tableauPoint[0],cpt);
             cpt++;  
             free(tab_cercle.tableauPoint);
+            
         }
 
     }
+
             free(tmp.tableauPoint);
             tableau_centre_interet[0].taillept=cpt-1;
+            maj_map();
     
 }
 
-char * recherche_adresse_point(point p)
+void recherche_adresse_point(point p,int cpt)
 {
-    int i,ligne;
-    char *s;
     float rayon=1;
     logs adresses_trouves=detection_circulaire(p,rayon,base_adresse);
     while (adresses_trouves.tailleTab != 2 && adresses_trouves.tailleTab != 3)
@@ -378,12 +389,8 @@ char * recherche_adresse_point(point p)
         }
         adresses_trouves=detection_circulaire(p,rayon,base_adresse);
     }
-   // printf("adresse : %i %s",adresses_trouves.tableauPoint[1].numero_rue,adresses_trouves.tableauPoint[1].adresse);
-    //afficher_tableau(adresses_trouves.tailleTab,adresses_trouves);
 
-return "s";
-
-
-
+    tableau_centre_interet[cpt].numero_rue=adresses_trouves.tableauPoint[1].numero_rue;
+    strcpy(tableau_centre_interet[cpt].adresse,adresses_trouves.tableauPoint[1].adresse);
 
 }

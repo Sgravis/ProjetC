@@ -38,6 +38,10 @@ void init_boutton(){
     g_signal_connect(G_OBJECT(Button_Affichage_pt_supp), "clicked",G_CALLBACK(resurrection_point),NULL);
     Button_Remise_pt_normal = gtk_button_new_with_label("Remise point normal");
     g_signal_connect(G_OBJECT(Button_Remise_pt_normal), "clicked",G_CALLBACK(remise_pt_normal),NULL);
+    Button_Affichage_Points_Interets = gtk_button_new_with_label("Affichage points d'interets");
+    g_signal_connect(G_OBJECT(Button_Affichage_Points_Interets), "clicked",G_CALLBACK(affichage_points_interets),NULL);
+    Button_DesAffichage_Points_Interets = gtk_button_new_with_label("Cacher points d'interets");
+    g_signal_connect(G_OBJECT(Button_DesAffichage_Points_Interets), "clicked",G_CALLBACK(cacher_points_interets),NULL);
 
     //gtk_widget_no_show_all(Button_noroad,true);
 
@@ -53,6 +57,9 @@ void init_boutton(){
     gtk_box_pack_start(GTK_BOX(pHBox), Button_Remise_a_0, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), Button_Affichage_pt_supp, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), Button_Remise_pt_normal, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pHBox), Button_Affichage_Points_Interets, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(pHBox), Button_DesAffichage_Points_Interets, FALSE, FALSE, 0);
+
 
     gtk_box_pack_start(GTK_BOX(pVBox), pHBox, FALSE, FALSE, 0); 
 }
@@ -82,7 +89,6 @@ int main(int argc, char** argv)
    // ajout_log_aff(&logGlobalClean);
     recuperation_addr();
     //afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
-    affichage_points_interets();
 
     log_aff.taille=0;
     reset_log_aff();
@@ -120,7 +126,9 @@ int main(int argc, char** argv)
     gtk_widget_hide(Button_showPoints);
     gtk_widget_hide(Button_noroad);
     gtk_widget_hide(Button_Remise_pt_normal);
-    affichage_points_interets();
+    gtk_widget_hide(Button_DesAffichage_Points_Interets);
+
+
     gtk_main();  // fonction de boucle de gtk
   
     return 0;
