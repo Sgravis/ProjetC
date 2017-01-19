@@ -105,7 +105,7 @@ int comparaison_point(point p1, point p2)
 void detection_pt_interet()
 {
     int i,j;
-    int nb_pt_centre_interet=((logGlobal.tailleTab)/10);
+    int nb_pt_centre_interet=((logGlobal.tailleTab)/12);
     logs tmp=copie_tableau(logGlobalClean,logGlobalClean.tailleTab);
     logs tab_cercle;
     logs tab_cercle2;
@@ -178,8 +178,8 @@ void afficher_tableau(int taille, logs tab)
     for(i=0;i<taille;i++)
     {
        printf("date:%ld,lat:%Lf,long:%Lf\n",tab.tableauPoint[i].date,tab.tableauPoint[i].latitude,tab.tableauPoint[i].longitude);
-            printf("taille : %i\n",tab.tableauPoint[i].taillept);
-       //printf("adresse : %i,%s\n",tab.tableauPoint[i].numero_rue,tab.tableauPoint[i].adresse);
+           // printf("taille : %i\n",tab.tableauPoint[i].taillept);
+       printf("adresse : %i,%s\n",tab.tableauPoint[i].numero_rue,tab.tableauPoint[i].adresse);
     }
 }
 /*void afficher_tableau2()

@@ -79,6 +79,9 @@ GtkWidget *Button_Remise_a_0;
 GtkWidget *Button_Affichage_pt_supp;
 GtkWidget *Button_Remise_pt_normal;
 
+GtkWidget *Button_Affichage_Points_Interets;
+GtkWidget *Button_DesAffichage_Points_Interets;
+
 /*
 *Fonction de transition entre les echelles de GTK et de Cairo
 */
