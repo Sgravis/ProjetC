@@ -39,12 +39,9 @@ int main(int argc, char** argv)
     logGlobalClean=copie_tableau(logGlobal,logGlobal.tailleTab);
     initialisation_route();
     agglomeration();
-    //log_aff.taille=0;
-   // ajout_log_aff(&logGlobalClean);
-    recuperation_addr();
-    //afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
 
-    log_aff.taille=0;
+    recuperation_addr();
+
     reset_log_aff();
     ajout_log_aff(&logGlobalClean);
 
@@ -54,6 +51,7 @@ int main(int argc, char** argv)
     gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
     gtk_window_set_default_size(GTK_WINDOW(window), HFENETRE,LFENETRE);
     gtk_window_set_title(GTK_WINDOW(window), "Bourges");
+    gtk_window_set_icon_from_file (window, "icone.jpg",NULL);
     //gtk_widget_set_state_flags (window,GTK_APP_PAINTABLE,TRUE);
 
         // init box
@@ -64,7 +62,7 @@ int main(int argc, char** argv)
 
     darea = gtk_drawing_area_new();
     gtk_container_add(GTK_CONTAINER(pVBox), darea);
-    g_signal_connect(G_OBJECT(darea), "draw", G_CALLBACK(on_draw),&logGlobalClean);
+    g_signal_connect(G_OBJECT(darea), "draw", G_CALLBACK(on_draw),NULL);
     gtk_widget_set_events (darea, GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK);
     g_signal_connect(G_OBJECT(darea), "button_press_event", G_CALLBACK (on_click_map), NULL);
     init_map();
@@ -72,10 +70,9 @@ int main(int argc, char** argv)
 
     //initialisation_route(logGlobalClean);
     
-    //logGlobalClean=initialisation_route(logGlobalClean);
     gtk_widget_set_size_request(window, 1628, 680);
     gtk_window_set_resizable(GTK_WINDOW(window),FALSE);
-    gtk_widget_show_all(window); //affichage de la fenetre
+    gtk_widget_show_all(window); 
     gtk_widget_hide(Button_hidePoints);
     gtk_widget_hide(Button_showPoints);
     gtk_widget_hide(Button_noroad);
@@ -83,7 +80,7 @@ int main(int argc, char** argv)
     gtk_widget_hide(Button_DesAffichage_Points_Interets);
 
 
-    gtk_main();  // fonction de boucle de gtk
+    gtk_main();  
   
     return 0;
 }

@@ -173,19 +173,18 @@ void do_map()
 void on_draw(GtkWidget *widget, cairo_t *crg,gpointer data)
 {
 	int i;
-	logs log=*(logs*)data;
 	cr=crg;
 	do_map(); 				/*affiche la carte*/
 	if(ind_dyn==-1){
 		if(route==1)
-			do_route();
-		afficher_logs();		/*affiche le log*/
+			do_route(logGlobalClean.tailleTab);
+		afficher_logs(0);		/*affiche le log*/
 	}
 	else{
 		if (route==1)
-			do_route_dyn(ind_dyn);
-		log_vers_carte_dyn(log);
-		if(ind_dyn<=log.tailleTab-vitesse_dyn){
+			do_route(ind_dyn);
+		afficher_logs(1);
+		if(ind_dyn<=logGlobalClean.tailleTab-vitesse_dyn){
 			ind_dyn=ind_dyn+vitesse_dyn;
 			maj_map();
 		}
@@ -209,14 +208,17 @@ void on_draw(GtkWidget *widget, cairo_t *crg,gpointer data)
 	anonymisation();
 }
 
-void afficher_logs()
+void afficher_logs(int dynamique)
 {
 	int i;
 	for(i=0;i<log_aff.taille;i++)
 	{
 		if(i==0){cairo_set_source_rgb(cr,0,1,0);}
 		if(i==1){cairo_set_source_rgb(cr,1,0,0);}
-		log_vers_carte(*log_aff.tableauLogs[i]);
+		if (dynamique)
+			log_vers_carte_dyn(*log_aff.tableauLogs[i]);
+		else
+			log_vers_carte(*log_aff.tableauLogs[i]);
 	}
 }
 
@@ -267,7 +269,7 @@ void mode_dynamique (){
 }
 
 
-void do_route_dyn(int ind)
+void do_route(int ind)
 {
 	int i;
 	cairo_set_source_rgb(cr,1,0.5,0.5);
@@ -291,30 +293,9 @@ void do_route_dyn(int ind)
 
 void do_route_maj(){
 	route=1;
-	do_route();
+	do_route(logGlobalClean.tailleTab);
 	gtk_widget_show(Button_hidePoints);
 	maj_map();
-}
-
-void do_route(){
-	int i;
-	cairo_set_source_rgb(cr,1,0.5,0.5);
-	cairo_set_line_width(cr,1);
-	for(i=1;i<logGlobalClean.tailleTab;i++)
-	{
-		if(logGlobalClean.tableauPoint[i].route==1 && logGlobalClean.tableauPoint[i].agglomerat == 0)
-		{
-			if(abs(coord_to_pixel_long(logGlobalClean.tableauPoint[i].longitude)-coord_to_pixel_long(logGlobalClean.tableauPoint[i+1].longitude))<55 && abs(coord_to_pixel_lat(logGlobalClean.tableauPoint[i].latitude)-coord_to_pixel_lat(logGlobalClean.tableauPoint[i+1].latitude))<55)
-			{
-				cairo_move_to(cr,coord_to_pixel_long(logGlobalClean.tableauPoint[i].longitude),coord_to_pixel_lat(logGlobalClean.tableauPoint[i].latitude));
-				cairo_line_to(cr,coord_to_pixel_long(logGlobalClean.tableauPoint[i+1].longitude),coord_to_pixel_lat(logGlobalClean.tableauPoint[i+1].latitude));
-			}
-		}
-		cairo_stroke(cr);
-	}
-	gtk_widget_hide(Button_road);
-	gtk_widget_show(Button_noroad);
-
 }
 
 

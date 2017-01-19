@@ -101,7 +101,7 @@ void on_draw(GtkWidget *widget, cairo_t *cr,gpointer user_data);
 /*
 *affiche un log sur la carte
 */
-void afficher_logs();
+void afficher_logs(int dynamique);
 
 /*
 * modifie la liste des logs à afficher
@@ -117,9 +117,8 @@ void mode_dynamique ();
 /*
 * ajoute ou enlève les route sur a carte
 */
-void do_route_dyn();
 void do_route_maj();
-void do_route();
+void do_route(int ind);
 void hidePoints();
 void showPoints();
 void undo_route();

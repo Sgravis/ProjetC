@@ -28,7 +28,6 @@ void init_boutton(){
     Button_DesAffichage_Points_Interets = gtk_button_new_with_label("Cacher points d'interets");
     g_signal_connect(G_OBJECT(Button_DesAffichage_Points_Interets), "clicked",G_CALLBACK(cacher_points_interets),NULL);
 
-    //gtk_widget_no_show_all(Button_noroad,true);
 
     g_signal_connect (G_OBJECT (window), "key_press_event",G_CALLBACK (on_key_press), NULL);
 

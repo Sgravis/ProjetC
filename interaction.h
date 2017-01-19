@@ -35,6 +35,8 @@ int route;
 point pt_tampon;
 float x;
 float y;
+
+void init_boutton();
 void on_click_map(GtkWidget* darea,GdkEventButton* event, void* data);
 int popup(char* nom);
 void popupclose(char* nom);

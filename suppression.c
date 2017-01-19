@@ -133,8 +133,6 @@ void detection_pt_interet()
 
     }
             free(tmp.tableauPoint);
-
-
 }
 void redefinition_grosseur_cercle(logs a_supr, float rayon, logs * tmp)
 {
