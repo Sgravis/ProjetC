@@ -236,6 +236,7 @@ void ajout_log_aff(logs* log)
 		tmp[i]=log_aff.tableauLogs[i];
 	}
 
+	//ajoute log au nouveau tab et applique le tmp
 	tmp[log_aff.taille]=log;
 	log_aff.tableauLogs=tmp;
 	log_aff.taille++;
