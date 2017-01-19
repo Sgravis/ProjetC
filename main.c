@@ -83,7 +83,6 @@ int main(int argc, char** argv)
    // ajout_log_aff(&logGlobalClean);
     recuperation_addr();
     //afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
-    affichage_points_interets();
 
     log_aff.taille=0;
     ajout_log_aff(&logGlobalClean);
@@ -120,7 +119,13 @@ int main(int argc, char** argv)
     gtk_widget_hide(Button_showPoints);
     gtk_widget_hide(Button_noroad);
     gtk_widget_hide(Button_Remise_pt_normal);
+
+
+
     affichage_points_interets();
+
+
+    
     gtk_main();  // fonction de boucle de gtk
   
     return 0;

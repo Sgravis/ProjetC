@@ -241,7 +241,7 @@ void resurrection_point()
             logBack.tableauPoint[i].agglomerat=0;
         }
         logBack.tailleTab=nb_lignes;
-        //reset_log_aff();
+        reset_log_aff();
         ajout_log_aff(&logBack);
         g_signal_connect(G_OBJECT(darea),"draw",G_CALLBACK(on_draw),&logBack);
         maj_map();
@@ -319,6 +319,8 @@ void remise_a_zero()
 }
 
 
+
+
 void affichage_points_interets()
 {
     int i,j;
@@ -347,11 +349,12 @@ void affichage_points_interets()
 
             }
             suppression_sans_backup(tab_cercle,&tmp);
-            recherche_adresse_point(tab_cercle.tableauPoint[0]);
             tableau_centre_interet[cpt]=tab_cercle.tableauPoint[0];
             tableau_centre_interet[cpt].taillept=rayon; 
+            recherche_adresse_point(tab_cercle.tableauPoint[0],cpt);
             cpt++;  
             free(tab_cercle.tableauPoint);
+            
         }
 
     }
@@ -360,10 +363,8 @@ void affichage_points_interets()
     
 }
 
-char * recherche_adresse_point(point p)
+void recherche_adresse_point(point p,int cpt)
 {
-    int i,ligne;
-    char *s;
     float rayon=1;
     logs adresses_trouves=detection_circulaire(p,rayon,base_adresse);
     while (adresses_trouves.tailleTab != 2 && adresses_trouves.tailleTab != 3)
@@ -377,12 +378,8 @@ char * recherche_adresse_point(point p)
         }
         adresses_trouves=detection_circulaire(p,rayon,base_adresse);
     }
-   // printf("adresse : %i %s",adresses_trouves.tableauPoint[1].numero_rue,adresses_trouves.tableauPoint[1].adresse);
-    //afficher_tableau(adresses_trouves.tailleTab,adresses_trouves);
 
-return "s";
-
-
-
+    tableau_centre_interet[cpt].numero_rue=adresses_trouves.tableauPoint[1].numero_rue;
+    strcpy(tableau_centre_interet[cpt].adresse,adresses_trouves.tableauPoint[1].adresse);
 
 }
