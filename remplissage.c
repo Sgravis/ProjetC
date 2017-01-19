@@ -317,13 +317,21 @@ void remise_a_zero()
     maj_map();
 }
 
-
+void cacher_points_interets()
+{
+    tableau_centre_interet[0].taillept=0;
+    gtk_widget_hide(Button_DesAffichage_Points_Interets);
+    gtk_widget_show(Button_Affichage_Points_Interets);
+    maj_map();
+}
 
 
 void affichage_points_interets()
-{
+{   
+    gtk_widget_hide(Button_Affichage_Points_Interets);
+    gtk_widget_show(Button_DesAffichage_Points_Interets);
     int i,j;
-    int nb_pt_centre_interet=((logGlobalClean.tailleTab)/10);
+    int nb_pt_centre_interet=((logGlobalClean.tailleTab)/12);
     logs tmp=copie_tableau(logGlobalClean,logGlobalClean.tailleTab);
     logs tab_cercle;
     logs tab_cercle2;
@@ -357,8 +365,10 @@ void affichage_points_interets()
         }
 
     }
+
             free(tmp.tableauPoint);
             tableau_centre_interet[0].taillept=cpt-1;
+            maj_map();
     
 }
 

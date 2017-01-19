@@ -105,7 +105,7 @@ int comparaison_point(point p1, point p2)
 void detection_pt_interet()
 {
     int i,j;
-    int nb_pt_centre_interet=((logGlobal.tailleTab)/10);
+    int nb_pt_centre_interet=((logGlobal.tailleTab)/12);
     logs tmp=copie_tableau(logGlobalClean,logGlobalClean.tailleTab);
     logs tab_cercle;
     logs tab_cercle2;
