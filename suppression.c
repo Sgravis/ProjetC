@@ -105,8 +105,8 @@ int comparaison_point(point p1, point p2)
 void detection_pt_interet()
 {
     int i,j;
-    int nb_pt_centre_interet=((logGlobal.tailleTab)/10);
-    logs tmp=copie_tableau(logGlobalClean,logGlobalClean.tailleTab);
+    int nb_pt_centre_interet=((logGlobal.tailleTab)/12);
+    logs tmp=copie_tableau(logGlobalClean[id_en_cours],logGlobalClean[id_en_cours].tailleTab);
     logs tab_cercle;
     logs tab_cercle2;
     float rayon=100;
@@ -158,7 +158,7 @@ void redefinition_grosseur_cercle(logs a_supr, float rayon, logs * tmp)
     reponse=popup("Anonymiser le cercle?");
     if(reponse==1)
     {
-        suppression_avec_backup(a_supr,&logGlobalClean);
+        suppression_avec_backup(a_supr,&logGlobalClean[id_en_cours]);
         suppression_sans_backup(a_supr,tmp);
     }
     else
@@ -178,7 +178,9 @@ void afficher_tableau(int taille, logs tab)
     int i;
     for(i=0;i<taille;i++)
     {
-       // printf("date:%ld,lat:%Lf,long:%Lf\n",tab.tableauPoint[i].date,tab.tableauPoint[i].latitude,tab.tableauPoint[i].longitude);
+       printf("date:%ld,lat:%Lf,long:%Lf\n",tab.tableauPoint[i].date,tab.tableauPoint[i].latitude,tab.tableauPoint[i].longitude);
+       printf("%d\n",i );
+
     }
 }
 /*void afficher_tableau2()

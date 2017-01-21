@@ -13,8 +13,8 @@
 #include "structure_log.h"
 #include "agglomeration.h"
 
-void agglomeration (logs tlog);
-void initialisation_route(logs tlog);
+void agglomeration ();
+void initialisation_route();
 void detection_agglomerat();
 void redefinition_grosseur_agglomerat(logs a_supr, float rayon, logs * tmp);
 void ajout_agglomerat(logs tableau_agglomerat, float rayon, logs *tmp);

@@ -12,12 +12,17 @@
 
 
 
-void recuperation_donnees(FILE *fp, int nb_lignes)
+int * recuperation_donnees(FILE *fp, int * nb_id)
     {
         int i;
+        int id=1;
+        int cpt=0;
+        int * tableau_Nbid;
         int nb_donnees=0;
+        int nb_lignes;
         int erreur=0;
         char c;
+        char end;
         char date[6]="date:";
         char lat[6]=",lat:";
         char longi[7]=",long:";
@@ -27,105 +32,141 @@ void recuperation_donnees(FILE *fp, int nb_lignes)
         time_t test_date;
         long double test_lat;
         long double test_long;
+        nb_lignes=nombre_lignes_geoloc(fp);
+        printf("%d\n",nb_lignes );
+        init_tableau_global(nb_lignes);
         fseek(fp,0,SEEK_SET);
-        for(i=0;i<nb_lignes;i++)
+        fscanf(fp,"%d\n",nb_id);
+        printf("%d\n",*nb_id );
+        tableau_Nbid=malloc((*nb_id)*sizeof(int));
+        c=fgetc(fp);
+        printf("%c\n",c );
+        if( c != '-')
         {
-            erreur=0;
-            fgets(d,6,fp);
-            if (strcmp(d,date)!=0)
-            {
-
-                c=fgetc(fp);
-                while(c != '\n' && c != EOF)
-                {
-                    c=fgetc(fp);
-                }
-                erreur=1;
-            }
-            if(erreur !=1)
-            {
-
-            fscanf(fp,"%ld",&test_date);
-            fgets(l,6,fp);
-            if (strcmp(l,lat)!=0)
-            {
-
-                c=fgetc(fp);
-                while(c != '\n'&& c != EOF)
-                {
-                    c=fgetc(fp);
-                }
-                erreur=1;
-            }
-            }
-            if (erreur !=1)
-            {
-
-            fscanf(fp,"%Lf",&test_lat);
-            fgets(lo,7,fp);
-            if (strcmp(lo,longi)!=0)
-            {
-                c=fgetc(fp);
-                while(c != '\n' && c != EOF )
-                {
-                    c=fgetc(fp);
-                }
-                erreur=1;
-            }
-            }
-            if(erreur !=1)
-            {
-
-            fscanf(fp,"%Lf",&test_long);
-            c=fgetc(fp);
-            if (c != ';')
-            {
-                c=fgetc(fp);
-                while(c != '\n' && c != EOF )
-                {
-                    c=fgetc(fp);
-                }
-
-                erreur=1;
-
-            }
-            }
-            if(erreur != 1)
-            {
-
-            c=fgetc(fp);
-            if (c != '\n' && c != EOF )
-            {
-                c=fgetc(fp);
-                while(c != '\n'&& c != EOF )
-                {
-                    c=fgetc(fp);
-                }
-                erreur=1;
-            }
-            }
-            if (erreur!=1)
-            {
-            logGlobal.tableauPoint[nb_donnees].longitude=test_long;
-            logGlobal.tableauPoint[nb_donnees].latitude=test_lat;
-            logGlobal.tableauPoint[nb_donnees].date=test_date;
-            logGlobal.tableauPoint[nb_donnees].taillept=1;
-            logGlobal.tableauPoint[nb_donnees].route=0;
-            logGlobal.tableauPoint[nb_donnees].agglomerat=0;
-            nb_donnees++;
-
-
-
-            }
+            printf("Erreur dans le fichier de logs\n");
+            exit(EXIT_FAILURE);
         }
-        printf("\nnb donnee:%i\n",nb_donnees);
+        while(end != '%')
+        {
+            fscanf(fp,"%d\n",&nb_lignes);
+            printf("%d\n",nb_lignes );
+            tableau_Nbid[cpt++]=nb_lignes;
+            printf("%d\n",cpt );
+            printf("%d\n",tableau_Nbid[cpt]);
+            for(i=0;i<nb_lignes;i++)
+            {
+                erreur=0;
+                fgets(d,6,fp);
+                if (strcmp(d,date)!=0)
+                {
 
+                    c=fgetc(fp);
+                    while(c != '\n' && c != EOF)
+                    {
+                        c=fgetc(fp);
+                    }
+                    erreur=1;
+                }
+                if(erreur !=1)
+                {
+
+                fscanf(fp,"%ld",&test_date);
+                fgets(l,6,fp);
+                if (strcmp(l,lat)!=0)
+                {
+
+                    c=fgetc(fp);
+                    while(c != '\n'&& c != EOF)
+                    {
+                        c=fgetc(fp);
+                    }
+                    erreur=1;
+                }
+                }
+                if (erreur !=1)
+                {
+
+                fscanf(fp,"%Lf",&test_lat);
+                fgets(lo,7,fp);
+                if (strcmp(lo,longi)!=0)
+                {
+                    c=fgetc(fp);
+                    while(c != '\n' && c != EOF )
+                    {
+                        c=fgetc(fp);
+                    }
+                    erreur=1;
+                }
+                }
+                if(erreur !=1)
+                {
+
+                fscanf(fp,"%Lf",&test_long);
+                c=fgetc(fp);
+                if (c != ';')
+                {
+                    c=fgetc(fp);
+                    while(c != '\n' && c != EOF )
+                    {
+                        c=fgetc(fp);
+                    }
+
+                    erreur=1;
+
+                }
+                }
+                if(erreur != 1)
+                {
+
+                c=fgetc(fp);
+                if (c != '\n' && c != EOF )
+                {
+                    c=fgetc(fp);
+                    while(c != '\n'&& c != EOF )
+                    {
+                        c=fgetc(fp);
+                    }
+                    erreur=1;
+                }
+                }
+                if (erreur!=1)
+                {
+                    logGlobal.tableauPoint[nb_donnees].longitude=test_long;
+                    logGlobal.tableauPoint[nb_donnees].latitude=test_lat;
+                    logGlobal.tableauPoint[nb_donnees].date=test_date;
+                    logGlobal.tableauPoint[nb_donnees].id_user=id;
+                    logGlobal.tableauPoint[nb_donnees].taillept=1;
+                    logGlobal.tableauPoint[nb_donnees].route=0;
+                    logGlobal.tableauPoint[nb_donnees].agglomerat=0;
+                    nb_donnees++;
+                }
+            }
+            c=fgetc(fp);
+            printf("%c\n",c );
+            if (c=='%')
+            {
+                end='%';
+            }
+            id++;
+        }
+
+        printf("\nnb donnee:%i\n Lecture du fichier s'est bien déroulée\n",nb_donnees);
         logGlobal.tailleTab=nb_donnees;
-
+        return tableau_Nbid;
     }
 
 
-
+void init_log_clean_id (int nbid, int * tableid)
+{
+    int i,j;
+    for (i=0 ; i<nbid ; i++)
+    {
+        for(j=0 ; j < tableid[i] ; j++)
+        {
+            copie_points(&logGlobal.tableauPoint[j], &logGlobalClean[i].tableauPoint[j]);
+        }
+    }
+}
 
 
 void copie_points (point* point1, point* point2)
@@ -152,6 +193,7 @@ logs copie_tableau(logs tlog,int taille)
     }
     return tableauCopie;
 }
+
 
 /*addr copie_tableau_addr(addr tab,int taille)
 {
@@ -250,37 +292,37 @@ void remise_pt_normal(){
     gtk_widget_show(Button_Affichage_pt_supp);
     gtk_widget_hide(Button_Remise_pt_normal);
     reset_log_aff();
-    ajout_log_aff(&logGlobalClean);
-   //g_signal_connect(G_OBJECT(darea),"draw",G_CALLBACK(on_draw),&logGlobalClean);
+    ajout_log_aff(&logGlobalClean[id_en_cours]);
+   //g_signal_connect(G_OBJECT(darea),"draw",G_CALLBACK(on_draw),&logGlobalClean[id_en_cours]);
     maj_map();
 
 }
 
 void recuperation_addr() /* au lieu initialiser ici la base adresse, faire une fonction d'initialisation*/
 {
-    FILE *fp;
+    FILE *f;
     char c;
     int i,j,nb_lignes;
-    fp=fopen("AddrConvert.txt","r");
+    f=fopen("AddrConvert.txt","r");
     
-    nb_lignes=nombre_lignes(fp);
-    fseek(fp,0,SEEK_SET);
+    nb_lignes=nombre_lignes(f);
+    fseek(f,0,SEEK_SET);
     base_adresse.tailleTab=nb_lignes;
     base_adresse.tableauPoint=(point*)malloc(nb_lignes*sizeof(point)); /*utiliser la fonction deja etablie*/
     for(i=0;i<nb_lignes;i++)
     {
         for(j=0;j<4;j++)
         {
-            c=fgetc(fp);
+            c=fgetc(f);
             while(c !=',')
             {
-                c=fgetc(fp);
+                c=fgetc(f);
             }
         }
-        fscanf(fp,"%Lf",&(base_adresse.tableauPoint[i].longitude));
-        c=fgetc(fp);
-        fscanf(fp,"%Lf",&(base_adresse.tableauPoint[i].latitude));
-        c=fgetc(fp);
+        fscanf(f,"%Lf",&(base_adresse.tableauPoint[i].longitude));
+        c=fgetc(f);
+        fscanf(f,"%Lf",&(base_adresse.tableauPoint[i].latitude));
+        c=fgetc(f);
         base_adresse.tableauPoint[i].date=0;
 
     }
@@ -288,10 +330,10 @@ void recuperation_addr() /* au lieu initialiser ici la base adresse, faire une f
 }
 void remise_a_zero()
 {
-    free(logGlobalClean.tableauPoint);
-    logGlobalClean=copie_tableau(logGlobal,logGlobal.tailleTab);
+    free(logGlobalClean[id_en_cours].tableauPoint);
+    logGlobalClean[id_en_cours]=copie_tableau(logGlobal,logGlobal.tailleTab);
     agglomeration(logGlobal);
-    initialisation_route(logGlobalClean);
+    initialisation_route(logGlobalClean[id_en_cours]);
     if(remove("BackupPoints.txt")<0)
     {
         perror("");
@@ -338,7 +380,7 @@ void affichage_points_interets(logs base)
             free(tmp.tableauPoint);
 }
 
-char * recherche_adresse_point(point p)
+/*char * recherche_adresse_point(point p)
 {
     char *s;
     float rayon=1;
@@ -354,10 +396,4 @@ char * recherche_adresse_point(point p)
         }
 
     }
-
-
-
-
-
-
-}
+}*/

@@ -5,6 +5,25 @@
 #include <string.h>
 #include "structure_log.h"
 #include "allocation.h"
+#include "suppression.h"
+
+ int nombre_lignes_geoloc(FILE * fp)
+ {
+    fseek(fp,0,SEEK_SET);
+    char c;
+    int cpt=0;
+    int nblignes;
+    while((c=fgetc(fp))!='%')
+    {
+        cpt++;
+    }
+    c=fgetc(fp);
+    if (c == '\n')
+    {
+        fscanf(fp,"%d",&nblignes);
+    }
+    return nblignes;
+ }
 
  int nombre_lignes(FILE * fp)
  {
@@ -32,10 +51,23 @@ void init_tableau_global(int taille)
 logs allocation_tableau_point(int taille)
 {   
     logs tlog;
-    tlog.tableauPoint=(point*)malloc(taille*sizeof(point));
+    tlog.tableauPoint=(point*)calloc(taille,sizeof(point));
     tlog.tailleTab=taille;
     return tlog;
 }
+
+void init_logparid( int nbid,int * tableid)
+{
+    int i;
+    logGlobalClean=(logs *)calloc(nbid,sizeof(logs));
+    for (i = 0 ; i<nbid ; i++)
+    {
+        logGlobalClean[i]=allocation_tableau_point(tableid[i]);
+        //afficher_tableau(tableid[i],logGlobalClean[i]);
+
+    }
+}
+
 
 /*void liberer(logs tlog)
 {

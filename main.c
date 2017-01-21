@@ -55,27 +55,34 @@ void init_boutton(){
 int main(int argc, char** argv)
 {
     int result;
+    int i;
+    int nb_id;
+    int * tableid;
+    id_en_cours=1;
     route=0;
     ind_dyn=-1;
     logs tlog;
     FILE *fp;
-    int nb_lignes;
     gpointer* data;
-    data=&logGlobalClean;
+    data=&logGlobalClean[id_en_cours];
+    //system("integration_logs.sh");
     fp=fopen("geoloc-logs.txt","r");
-    nb_lignes=nombre_lignes(fp);
-    init_tableau_global(nb_lignes);
-    recuperation_donnees(fp,nb_lignes);
+    tableid=recuperation_donnees(fp,&nb_id);
     fclose(fp);
+    for (i=0 ; i<nb_id ; i++){printf("%d\n",tableid[i] );}
+    init_logparid(nb_id,tableid);
+    init_log_clean_id(nb_id,tableid);
+
+
     recuperation_addr();
-    logGlobalClean=copie_tableau(logGlobal,logGlobal.tailleTab);
-    initialisation_route(logGlobalClean);
-    agglomeration(logGlobal);
-    recuperation_addr();
-    afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
+    initialisation_route();
+    //afficher_tableau(logGlobalClean[id_en_cours].tailleTab,logGlobalClean[id_en_cours]);
+    agglomeration();
+    //recuperation_addr();
+
 
     log_aff.taille=0;
-    ajout_log_aff(&logGlobalClean);
+    ajout_log_aff(&logGlobalClean[id_en_cours]);
 
 
 
@@ -95,15 +102,15 @@ int main(int argc, char** argv)
 
     darea = gtk_drawing_area_new();
     gtk_container_add(GTK_CONTAINER(pHBox), darea);
-    g_signal_connect(G_OBJECT(darea), "draw", G_CALLBACK(on_draw),&logGlobalClean);
+    g_signal_connect(G_OBJECT(darea), "draw", G_CALLBACK(on_draw),&logGlobalClean[id_en_cours]);
     gtk_widget_set_events (darea, GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK);
     g_signal_connect(G_OBJECT(darea), "button_press_event", G_CALLBACK (on_click_map), NULL);
     init_map();
 
 
-    //initialisation_route(logGlobalClean);
+    //initialisation_route(logGlobalClean[id_en_cours]);
     
-    //logGlobalClean=initialisation_route(logGlobalClean);
+    //logGlobalClean[id_en_cours]=initialisation_route(logGlobalClean[id_en_cours]);
 
     init_boutton();
 
@@ -111,8 +118,7 @@ int main(int argc, char** argv)
     gtk_widget_hide(Button_stat);
     gtk_widget_hide(Button_noroad);
     gtk_widget_hide(Button_Remise_pt_normal);
-    gtk_main();  // fonction de boucle de gtk
-  
+    gtk_main();  // fonction de boucle de gtk*/
     return 0;
 }
 

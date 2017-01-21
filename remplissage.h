@@ -7,7 +7,8 @@
 #include <stdlib.h>
 #include <time.h>
 
-void recuperation_donnees(FILE *fp, int nb_lignes);
+int * recuperation_donnees(FILE *fp, int * nb_id);
+void init_log_clean_id (int nbid, int * tableid);
 void copie_points(point *point1,point *point2);
 void backup_file (logs tlog);
 logs copie_tableau(logs tlog1, int taille);
