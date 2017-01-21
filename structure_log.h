@@ -11,6 +11,8 @@ typedef struct {
 	int taillept;
 	int route;
 	int agglomerat;
+	char adresse[40];
+	int numero_rue;
 }point;
 
 typedef struct

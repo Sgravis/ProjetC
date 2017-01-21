@@ -127,15 +127,12 @@ void detection_pt_interet()
                 }
 
             }
-
             redefinition_grosseur_cercle(tab_cercle,rayon,&tmp);
             free(tab_cercle.tableauPoint);
         }
 
     }
             free(tmp.tableauPoint);
-
-
 }
 void redefinition_grosseur_cercle(logs a_supr, float rayon, logs * tmp)
 {
@@ -178,9 +175,10 @@ void afficher_tableau(int taille, logs tab)
     int i;
     for(i=0;i<taille;i++)
     {
-       printf("date:%ld,lat:%Lf,long:%Lf\n",tab.tableauPoint[i].date,tab.tableauPoint[i].latitude,tab.tableauPoint[i].longitude);
-       printf("%d\n",i );
-
+       //printf("date:%ld,lat:%Lf,long:%Lf\n",tab.tableauPoint[i].date,tab.tableauPoint[i].latitude,tab.tableauPoint[i].longitude);
+       printf("\nici :%d\n",i );
+       printf("taille : %i\n",tab.tableauPoint[i].taillept);
+       //printf("adresse : %i,%s\n",tab.tableauPoint[i].numero_rue,tab.tableauPoint[i].adresse);
     }
 }
 /*void afficher_tableau2()

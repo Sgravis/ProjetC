@@ -6,7 +6,7 @@ Pour pouvoir partager les données avec d’autres groupes du projet, il est imp
 Les algorithmes proposés sont les suivants:
 - [X] suppression de points dans un cercle donné (typiquement le domicile de l’utilisateur ou son bar favori)
 - [X] suggestion de points d’intérêts à supprimer: il faut calculer des points pour lesquels on repère une fréquentation régulière et qui peut servir de centre pour un cercle
-- [ ] suppression des points se rendant à un point d’intérêt c’est-à-dire une “route”
+- [X] suppression des points se rendant à un point d’intérêt c’est-à-dire une “route”
 - [X] calcul automatique du rayon d’un cercle à partir de la densité de population (en rase campagne, on imagine que les cercles ont des rayons de plusieurs kilomètres, en ville des centaines de mètres suffisent) en exploitant la base ADRESSE.
 
 
@@ -21,11 +21,11 @@ Les algorithmes proposés sont:
 	- [X] Vue d’une carte et de points représentants les mesures.
 	- [X] Aggrégation de points: les points redondants peuvent être fusionnés graphiquement pour représenter un taux de présence
 	- [X] Vue de routes en liant les points
-	- [ ] Vue des points d’intérêts
+	- [X] Vue des points d’intérêts
 	- [X] Vue des cercles de protection de la vie privée
-- [ ] Visualisation dynamique:
+- [X] Visualisation dynamique:
 	- [X] animation des points avec le temps; contrôle de la vitesse de rejeu
-	- [ ] animation des routes, etc.
+	- [X] animation des routes, etc.
 - [ ] Visualisation d’information contextuelle: la base ADRESSE peut permettre d’afficher l’adresse des points d’intérêt
 - [ ] Visualisation multiple de traces: ce mode est particulièrement utile pour comparer les traces avant et après traitement et pouvoir se rendre compte visuellement de l’effet de protection de la vie privée apportée
 
