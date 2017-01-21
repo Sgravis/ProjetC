@@ -56,7 +56,7 @@ void on_click_map(GtkWidget* darea, GdkEventButton* event, void* data)
     if (event->type==GDK_2BUTTON_PRESS )
     {
     	if(map.zoom==0){
-    		map.pos_x=event->x;
+            map.pos_x=event->x;
     		map.pos_y=event->y;
     		map.zoom++;
     	}
@@ -74,6 +74,8 @@ void on_click_map(GtkWidget* darea, GdkEventButton* event, void* data)
 
     if(anonyme_step==1)
     {
+        printf("event->x = %f  event->y =%f\n",event->x,event->y);
+        
         pt_tampon.longitude=pixel_to_coord_long(event->x);
         pt_tampon.latitude=pixel_to_coord_lat(event->y);
         pt_tampon.taillept=20;

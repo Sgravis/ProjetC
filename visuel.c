@@ -17,7 +17,7 @@ int coord_to_pixel_lat(long double latitude){
 		return ((47.0821639-latitude)/0.000055919)+(156-map.pos_y+113);
 	}
 
-long double pixel_to_coord_long(int longitude)
+long double pixel_to_coord_long(float longitude)
 {
 	if(map.zoom==0)
 		return (855-longitude)*-0.000088242+2.39869958;
@@ -25,7 +25,7 @@ long double pixel_to_coord_long(int longitude)
 		return ((855-map.pos_x+270)-longitude)*-0.000088242+2.39869958;	
 }
 
-long double pixel_to_coord_lat(int latitude)
+long double pixel_to_coord_lat(float latitude)
 {
 	if(map.zoom==0)
 		return (156-latitude)*0.000055919+47.0821639;
@@ -48,8 +48,9 @@ void do_point(point pt)
 	if (pt.taillept!=2)
 		pt.taillept/=5;
 	pt.taillept/=2;
-
-	cairo_arc(cr,coord_to_pixel_long(pt.longitude),coord_to_pixel_lat(pt.latitude), pt.taillept, 0, 2 * M_PI);
+	int lon=coord_to_pixel_long(pt.longitude);
+	int lat=coord_to_pixel_lat(pt.latitude);
+	cairo_arc(cr,lon/*-0.08*(lat-150)*/,lat, pt.taillept, 0, 2 * M_PI);
 	cairo_fill(cr);
 }
 
@@ -76,7 +77,7 @@ void anonymisation()
 {
 	//appartition des cercles d'anonymisation
 	cairo_set_source_rgb(cr,1,1,0);
-	if(map.zoom==0){
+	//if(map.zoom==0){
 		do_point(pt_tampon);
 		if(anonyme_step==4){
 			if(1){//popup("anonymiser ce cercle ?")){
@@ -95,7 +96,7 @@ void anonymisation()
 			maj_map();
 		}
 	
-	}
+	//}
 }
 
 
