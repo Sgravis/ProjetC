@@ -48,9 +48,11 @@ void do_point(point pt)
 	if (pt.taillept!=2)
 		pt.taillept/=5;
 	pt.taillept/=2;
+
 	int lon=coord_to_pixel_long(pt.longitude);
 	int lat=coord_to_pixel_lat(pt.latitude);
 	cairo_arc(cr,lon/*-0.08*(lat-150)*/,lat, pt.taillept, 0, 2 * M_PI);
+
 	cairo_fill(cr);
 }
 
@@ -81,7 +83,7 @@ void anonymisation()
 		do_point(pt_tampon);
 		if(anonyme_step==4){
 			if(1){//popup("anonymiser ce cercle ?")){
-				suppression_avec_backup(detection_circulaire(pt_tampon,sqrt(pow(x-coord_to_pixel_long(pt_tampon.longitude),2)+pow(y-coord_to_pixel_lat(pt_tampon.latitude),2))*6,logGlobalClean),&logGlobalClean);
+				suppression_avec_backup(detection_circulaire(pt_tampon,sqrt(pow(x-coord_to_pixel_long(pt_tampon.longitude),2)+pow(y-coord_to_pixel_lat(pt_tampon.latitude),2))*6,logGlobalClean[id_en_cours]),&logGlobalClean[id_en_cours]);
 				reset_anonymisation();
 			}
 			else{
@@ -176,16 +178,19 @@ void on_draw(GtkWidget *widget, cairo_t *crg,gpointer data)
 	int i;
 	cr=crg;
 	do_map(); 				/*affiche la carte*/
-	if(ind_dyn==-1){
+	if(ind_dyn==-1)
+	{
 		if(route==1)
-			do_route(logGlobalClean.tailleTab);
+			do_route(logGlobalClean[id_en_cours].tailleTab);
 		afficher_logs(0);		/*affiche le log*/
 	}
-	else{
+	else
+	{
 		if (route==1)
 			do_route(ind_dyn);
 		afficher_logs(1);
-		if(ind_dyn<=logGlobalClean.tailleTab-vitesse_dyn){
+		if(ind_dyn<=logGlobalClean[id_en_cours].tailleTab-vitesse_dyn)
+		{
 			ind_dyn=ind_dyn+vitesse_dyn;
 			maj_map();
 		}
@@ -203,7 +208,8 @@ void on_draw(GtkWidget *widget, cairo_t *crg,gpointer data)
 		}
 	}	
 
-	if (tmp_ano.taillept!=0){
+	if (tmp_ano.taillept!=0)
+	{
     	do_cercle(tmp_ano,tmp_ano.taillept);
     }
 	anonymisation();
@@ -269,7 +275,6 @@ void mode_dynamique (){
     maj_map();
 }
 
-
 void do_route(int ind)
 {
 	int i;
@@ -277,12 +282,12 @@ void do_route(int ind)
 	cairo_set_line_width(cr,1);
 	for(i=0;i<ind;i++)  //parcourt et affiche tout les point des logs
 	{
-		if(logGlobalClean.tableauPoint[i].route==1 && logGlobalClean.tableauPoint[i].agglomerat == 0)
+		if(logGlobalClean[id_en_cours].tableauPoint[i].route==1 && logGlobalClean[id_en_cours].tableauPoint[i].agglomerat == 0)
 		{
-			if(abs(coord_to_pixel_long(logGlobalClean.tableauPoint[i].longitude)-coord_to_pixel_long(logGlobalClean.tableauPoint[i+1].longitude))<50 && abs(coord_to_pixel_lat(logGlobalClean.tableauPoint[i].latitude)-coord_to_pixel_lat(logGlobalClean.tableauPoint[i+1].latitude))<50)
+			if(abs(coord_to_pixel_long(logGlobalClean[id_en_cours].tableauPoint[i].longitude)-coord_to_pixel_long(logGlobalClean[id_en_cours].tableauPoint[i+1].longitude))<50 && abs(coord_to_pixel_lat(logGlobalClean[id_en_cours].tableauPoint[i].latitude)-coord_to_pixel_lat(logGlobalClean[id_en_cours].tableauPoint[i+1].latitude))<50)
 			{
-				cairo_move_to(cr,coord_to_pixel_long(logGlobalClean.tableauPoint[i].longitude),coord_to_pixel_lat(logGlobalClean.tableauPoint[i].latitude));
-				cairo_line_to(cr,coord_to_pixel_long(logGlobalClean.tableauPoint[i+1].longitude),coord_to_pixel_lat(logGlobalClean.tableauPoint[i+1].latitude));
+				cairo_move_to(cr,coord_to_pixel_long(logGlobalClean[id_en_cours].tableauPoint[i].longitude),coord_to_pixel_lat(logGlobalClean[id_en_cours].tableauPoint[i].latitude));
+				cairo_line_to(cr,coord_to_pixel_long(logGlobalClean[id_en_cours].tableauPoint[i+1].longitude),coord_to_pixel_lat(logGlobalClean[id_en_cours].tableauPoint[i+1].latitude));
 			}
 		}
 		cairo_stroke(cr);
@@ -294,7 +299,7 @@ void do_route(int ind)
 
 void do_route_maj(){
 	route=1;
-	do_route(logGlobalClean.tailleTab);
+	do_route(logGlobalClean[id_en_cours].tailleTab);
 	gtk_widget_show(Button_hidePoints);
 	maj_map();
 }
