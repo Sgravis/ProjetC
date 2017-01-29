@@ -28,6 +28,10 @@ void init_boutton(){
     Button_DesAffichage_Points_Interets = gtk_button_new_with_label("Cacher points d'interets");
     g_signal_connect(G_OBJECT(Button_DesAffichage_Points_Interets), "clicked",G_CALLBACK(cacher_points_interets),NULL);
 
+    Button_Ouverture_Logs = gtk_button_new_with_label("ouvrir un logs");
+    g_signal_connect(G_OBJECT(Button_Ouverture_Logs), "clicked",G_CALLBACK(ouverture_logs),NULL);
+    gtk_box_pack_start(GTK_BOX(pHBox), Button_Ouverture_Logs, FALSE, FALSE, 0);
+
 
     g_signal_connect (G_OBJECT (window), "key_press_event",G_CALLBACK (on_key_press), NULL);
 
@@ -119,7 +123,6 @@ void do_anonymous(GtkWidget* pbutton, GdkEventButton* event, void* data)
 
 void on_key_press(GtkWidget *widget, GdkEventKey *event)
 {
-   ///printf("%i\n",event->keyval);
     switch (event->keyval)
     {
         case 65361:
@@ -140,4 +143,34 @@ void on_key_press(GtkWidget *widget, GdkEventKey *event)
             break;
     }
     
+}
+
+void ouverture_logs()
+{
+    GtkWidget *nav;
+    int res;
+    GSList* list_logs;
+    //GtkFileFilter* filtre;
+    //filtre=gtk_file_filter_new();
+
+    nav = gtk_file_chooser_dialog_new ("Ouvrir logs",GTK_WINDOW(window),GTK_FILE_CHOOSER_ACTION_OPEN,"Cancel",GTK_RESPONSE_CANCEL,"Open",GTK_RESPONSE_ACCEPT,NULL);
+    GtkFileChooser *chooser = GTK_FILE_CHOOSER (nav);
+    //gtk_file_filter_add_pattern(filtre, );
+    //gtk_file_chooser_add_filter (chooser,filtre);
+    gtk_file_chooser_set_select_multiple (chooser,TRUE);
+
+
+    res = gtk_dialog_run (GTK_DIALOG (nav));
+    if (res == GTK_RESPONSE_ACCEPT)
+      {
+        char *filename;
+        list_logs = gtk_file_chooser_get_filenames (chooser);
+      }
+    while (list_logs != NULL){
+        printf("location du fichier : %s\n",(char*)list_logs->data);
+        list_logs=list_logs->next;
+    }
+    g_slist_free(list_logs);
+
+    gtk_widget_destroy (nav);
 }

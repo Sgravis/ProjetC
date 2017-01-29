@@ -12,7 +12,7 @@
 
 
 
-int * drecuperation_donnees(FILE *fp, int * nb_id)
+int * recuperation_donnees(FILE *fp, int * nb_id)
     {
         int i;
         int id=1;
@@ -366,7 +366,7 @@ void affichage_points_interets()
     gtk_widget_hide(Button_Affichage_Points_Interets);
     gtk_widget_show(Button_DesAffichage_Points_Interets);
     int i,j;
-    int nb_pt_centre_interet=((logGlobalClean[id_en_cours].tailleTab)/12);
+    int nb_pt_centre_interet=((logGlobalClean[id_en_cours].tailleTab)/17);
     logs tmp=copie_tableau(logGlobalClean[id_en_cours],logGlobalClean[id_en_cours].tailleTab);
     logs tab_cercle;
     logs tab_cercle2;

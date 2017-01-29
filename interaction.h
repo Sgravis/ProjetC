@@ -25,6 +25,8 @@ GtkWidget *Button_pt_interet;
 GtkWidget *Button_Remise_a_0;
 GtkWidget *Button_Affichage_pt_supp;
 GtkWidget *Button_Remise_pt_normal;
+GtkWidget *Button_Ouverture_Logs;
+
 
 GtkWidget *Button_Affichage_Points_Interets;
 GtkWidget *Button_DesAffichage_Points_Interets;
@@ -42,5 +44,6 @@ int popup(char* nom);
 void popupclose(char* nom);
 void do_anonymous(GtkWidget* pbutton, GdkEventButton* event, void* data);
 void on_key_press(GtkWidget *widget, GdkEventKey *event);
+void ouverture_logs();
 
 #endif

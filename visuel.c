@@ -91,9 +91,10 @@ void anonymisation()
 			}
 		}
 		if (anonyme_step==3){
-			cairo_set_line_width(cr,1);
+			do_cercle(pt_tampon,sqrt(pow(x-coord_to_pixel_long(pt_tampon.longitude),2)+pow(y-coord_to_pixel_lat(pt_tampon.latitude),2))*6);
+			/*cairo_set_line_width(cr,1);
 			cairo_arc(cr,coord_to_pixel_long(pt_tampon.longitude),coord_to_pixel_lat(pt_tampon.latitude),sqrt(pow(x-coord_to_pixel_long(pt_tampon.longitude),2)+pow(y-coord_to_pixel_lat(pt_tampon.latitude),2)), 0, 2 * M_PI);
-			cairo_stroke(cr);
+			cairo_stroke(cr);*/
 			anonyme_step=4;
 			maj_map();
 		}
@@ -105,7 +106,6 @@ void anonymisation()
 void log_vers_carte(logs base)
 {
 	int i;
-	//cairo_set_source_rgb(cr,0,1,1);  //couleur des point
     cairo_set_line_width(cr,8);
 	for(i=0;i<base.tailleTab;i++)  //parcourt et affiche tout les point des logs
 	{  
