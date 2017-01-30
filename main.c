@@ -23,15 +23,13 @@ int main(int argc, char** argv)
 
     int result;
     int i;
-    id_en_cours=1;
+    id_en_cours=0;
     route=0;
     ind_dyn=-1;
     routeHide=0;
     logs tlog;
     FILE *fp;
-    //gpointer* data;
-    //data=&logGlobalClean[id_en_cours];
-    //system("integration_logs.sh");
+
     fp=fopen("geoloc-logs.txt","r");
     recuperation_donnees(fp);
     fclose(fp);
@@ -41,9 +39,15 @@ int main(int argc, char** argv)
     init_logparid();
     init_log_clean_id();
 
-    recuperation_addr();    
-    initialisation_route();
-    agglomeration();
+    recuperation_addr(); 
+    printf("nb_id %i\n",nb_id );
+    for(id_en_cours=0;id_en_cours<nb_id;id_en_cours++){   
+        printf("id_en_cours %i\n",id_en_cours );
+        initialisation_route();
+        agglomeration();
+    }
+    
+    id_en_cours=0;
 
     reset_log_aff();
     ajout_log_aff(&logGlobalClean[id_en_cours]);

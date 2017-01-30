@@ -8,6 +8,7 @@
 #include <gtk/gtk.h>
 #include <stdio.h>
 #include <gdk/gdkkeysyms.h>
+#include "agglomeration.h"
 
 
 
@@ -28,6 +29,13 @@ GtkWidget *Button_Remise_pt_normal;
 GtkWidget *Button_Ouverture_Logs;
 
 
+GtkWidget *Button_log2;
+GtkWidget *Button_log1;
+GtkWidget *Button_log3;
+GtkWidget *Button_choix_logs1;
+GtkWidget *Button_choix_logs2;
+GtkWidget *Button_choix_logs3;
+
 GtkWidget *Button_Affichage_Points_Interets;
 GtkWidget *Button_DesAffichage_Points_Interets;
 
@@ -45,5 +53,9 @@ void popupclose(char* nom);
 void do_anonymous(GtkWidget* pbutton, GdkEventButton* event, void* data);
 void on_key_press(GtkWidget *widget, GdkEventKey *event);
 void ouverture_logs();
+void choix_logs(GtkButton* boutton,gpointer data);
+//void choix_logs1();
+//void choix_logs2();
+//void choix_logs3();
 
 #endif
