@@ -56,14 +56,13 @@ logs allocation_tableau_point(int taille)
     return tlog;
 }
 
-void init_logparid( int nbid,int * tableid)
+void init_logparid()
 {
     int i;
-    logGlobalClean=(logs *)calloc(nbid,sizeof(logs));
-    for (i = 0 ; i<nbid ; i++)
+    logGlobalClean=(logs *)calloc(nb_id,sizeof(logs));
+    for (i = 0 ; i<nb_id ; i++)
     {
         logGlobalClean[i]=allocation_tableau_point(tableid[i]);
-        //afficher_tableau(tableid[i],logGlobalClean[i]);
 
     }
 }

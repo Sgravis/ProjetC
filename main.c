@@ -23,8 +23,6 @@ int main(int argc, char** argv)
 
     int result;
     int i;
-    int nb_id;
-    int * tableid;
     id_en_cours=1;
     route=0;
     ind_dyn=-1;
@@ -35,13 +33,13 @@ int main(int argc, char** argv)
     //data=&logGlobalClean[id_en_cours];
     //system("integration_logs.sh");
     fp=fopen("geoloc-logs.txt","r");
-    tableid=recuperation_donnees(fp,&nb_id);
+    recuperation_donnees(fp);
     fclose(fp);
 
 
         
-    init_logparid(nb_id,tableid);
-    init_log_clean_id(nb_id,tableid);
+    init_logparid();
+    init_log_clean_id();
 
     recuperation_addr();    
     initialisation_route();
@@ -84,7 +82,13 @@ int main(int argc, char** argv)
     gtk_widget_hide(Button_DesAffichage_Points_Interets);
 
 
-    gtk_main();  
+    gtk_main();
+    fopen("un","w");
+    remove("un");
+    fopen("deux","w");
+    remove("deux");
+    fopen("trois","w");
+    remove("trois");
     return 0;
 }
 
