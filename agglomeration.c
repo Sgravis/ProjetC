@@ -51,7 +51,7 @@ void initialisation_route()
 void detection_agglomerat()
 {
     int i,j;
-    int nb_pt_centre_interet=((logGlobal.tailleTab)/12);
+    int nb_pt_centre_interet=((logGlobal.tailleTab)/17);
     logs tmp=copie_tableau(logGlobalClean[id_en_cours],logGlobalClean[id_en_cours].tailleTab);
     logs tab_cercle;
     logs tab_cercle2;

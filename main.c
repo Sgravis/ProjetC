@@ -31,21 +31,21 @@ int main(int argc, char** argv)
     routeHide=0;
     logs tlog;
     FILE *fp;
-    gpointer* data;
-    data=&logGlobalClean[id_en_cours];
+    //gpointer* data;
+    //data=&logGlobalClean[id_en_cours];
     //system("integration_logs.sh");
     fp=fopen("geoloc-logs.txt","r");
     tableid=recuperation_donnees(fp,&nb_id);
     fclose(fp);
+
+
         
     init_logparid(nb_id,tableid);
     init_log_clean_id(nb_id,tableid);
+
     recuperation_addr();    
     initialisation_route();
     agglomeration();
-    //afficher_tableau(logGlobalClean[id_en_cours].tailleTab,logGlobalClean[id_en_cours]);
-
-
 
     reset_log_aff();
     ajout_log_aff(&logGlobalClean[id_en_cours]);
@@ -56,8 +56,7 @@ int main(int argc, char** argv)
     gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
     gtk_window_set_default_size(GTK_WINDOW(window), HFENETRE,LFENETRE);
     gtk_window_set_title(GTK_WINDOW(window), "Bourges");
-    gtk_window_set_icon_from_file (window, "icone.jpg",NULL);
-    //gtk_widget_set_state_flags (window,GTK_APP_PAINTABLE,TRUE);
+    gtk_window_set_icon_from_file (GTK_WINDOW(window), "icone.jpg",NULL);
 
         // init box
     pHBox = gtk_hbox_new(FALSE, 0);
@@ -75,7 +74,6 @@ int main(int argc, char** argv)
 
     //initialisation_route(logGlobalClean[id_en_cours]);
     
-
     gtk_widget_set_size_request(window, 1628, 680);
     gtk_window_set_resizable(GTK_WINDOW(window),FALSE);
     gtk_widget_show_all(window); 
