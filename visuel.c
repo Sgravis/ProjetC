@@ -277,15 +277,15 @@ void do_route_dyn(int ind)
 		}
 		cairo_stroke(cr);
 	}
-	gtk_widget_hide(Button_road);
-	gtk_widget_show(Button_noroad);
+	gtk_widget_hide(Item_route);
+	gtk_widget_show(Item_retirer_routes);
 }
 
 
 void do_route_maj(){
 	route=1;
 	do_route();
-	gtk_widget_show(Button_hidePoints);
+	gtk_widget_show(Item_cacher_pt_route);
 	maj_map();
 }
 
@@ -305,8 +305,8 @@ void do_route(){
 		}
 		cairo_stroke(cr);
 	}
-	gtk_widget_hide(Button_road);
-	gtk_widget_show(Button_noroad);
+	gtk_widget_hide(Item_route);
+	gtk_widget_show(Item_retirer_routes);
 
 }
 
@@ -314,29 +314,103 @@ void do_route(){
 void undo_route(){
 	route=0;
 	routeHide=0;
-	gtk_widget_hide(Button_noroad);
-	gtk_widget_hide(Button_hidePoints);
-	gtk_widget_hide(Button_showPoints);
-	gtk_widget_show(Button_road);
+	gtk_widget_hide(Item_retirer_routes);
+	gtk_widget_hide(Item_cacher_pt_route);
+	gtk_widget_hide(Item_afficher_pt_route);
+	gtk_widget_show(Item_route);
 	maj_map();
 }
 
 void hidePoints(){
-	gtk_widget_hide(Button_hidePoints);
-	gtk_widget_show(Button_showPoints);
+	gtk_widget_hide(Item_cacher_pt_route);
+	gtk_widget_show(Item_afficher_pt_route);
 	routeHide=1;
 	maj_map();
 
 }
 
 void showPoints(){
-	gtk_widget_show(Button_hidePoints);
-	gtk_widget_hide(Button_showPoints);
+	gtk_widget_show(Item_cacher_pt_route);
+	gtk_widget_hide(Item_afficher_pt_route);
 	routeHide=0;
 	maj_map();
 }
 
-void showTooltip(GtkWidget*widget){
 
-	gtk_widget_set_tooltip_text (widget,"This is a test2");
+void menu_bar(GtkWidget* widget){
+	/******************************************************************/
+
+    pMenuBar = gtk_menu_bar_new();
+    /*Construction du menu route*/
+    pMenu = gtk_menu_new();
+
+    Item_route = gtk_menu_item_new_with_label("Routes");
+    gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), Item_route);
+    g_signal_connect(G_OBJECT(Item_route), "activate", G_CALLBACK(do_route_maj),NULL);
+
+    Item_retirer_routes = gtk_menu_item_new_with_label("Retirer route");
+    gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), Item_retirer_routes);
+    g_signal_connect(G_OBJECT(Item_retirer_routes), "activate", G_CALLBACK(undo_route),NULL);
+
+    Item_cacher_pt_route = gtk_menu_item_new_with_label("Cacher les points des routes");
+    gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), Item_cacher_pt_route);
+    g_signal_connect(G_OBJECT(Item_cacher_pt_route), "activate", G_CALLBACK(hidePoints),NULL);
+
+    Item_afficher_pt_route = gtk_menu_item_new_with_label("Afficher les points des routes");
+    gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), Item_afficher_pt_route);
+    g_signal_connect(G_OBJECT(Item_afficher_pt_route), "activate", G_CALLBACK(showPoints),NULL);
+
+    Menu_route = gtk_menu_item_new_with_label("Routes");
+
+    gtk_menu_item_set_submenu(GTK_MENU_ITEM(Menu_route), pMenu);
+    gtk_menu_shell_append(GTK_MENU_SHELL(pMenuBar), Menu_route);
+
+    /*Construction menu point d'intêret*/
+    pMenu = gtk_menu_new();
+
+    Item_afficher_pt_interet = gtk_menu_item_new_with_label("Affichage points d'interets");
+    gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), Item_afficher_pt_interet);
+    g_signal_connect(G_OBJECT(Item_afficher_pt_interet), "activate", G_CALLBACK(affichage_points_interets),NULL);
+
+    Item_cacher_pt_interet = gtk_menu_item_new_with_label("Cacher points d'interets");
+    gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), Item_cacher_pt_interet);
+    g_signal_connect(G_OBJECT(Item_cacher_pt_interet), "activate", G_CALLBACK(cacher_points_interets),NULL);
+
+    Menu_pt_interet = gtk_menu_item_new_with_label("Points d'interets");
+
+    gtk_menu_item_set_submenu(GTK_MENU_ITEM(Menu_pt_interet), pMenu);
+    gtk_menu_shell_append(GTK_MENU_SHELL(pMenuBar), Menu_pt_interet);
+
+    /*Construction menu gestion*/
+    pMenu = gtk_menu_new();
+
+    Item_remise_a_zero = gtk_menu_item_new_with_label("Remise a zero");
+    gtk_menu_shell_append(GTK_MENU_SHELL(pMenu),Item_remise_a_zero);
+    g_signal_connect(G_OBJECT(Item_remise_a_zero), "activate", G_CALLBACK(remise_a_zero),NULL);
+
+    Item_retour_pt_normaux = gtk_menu_item_new_with_label("Retour points normaux");
+    gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), Item_retour_pt_normaux);
+    g_signal_connect(G_OBJECT(Item_retour_pt_normaux), "activate", G_CALLBACK(remise_pt_normal),NULL);
+
+    Item_afficher_pt_suppr = gtk_menu_item_new_with_label("Afficher points supprimé");
+    gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), Item_afficher_pt_suppr);
+    g_signal_connect(G_OBJECT(Item_afficher_pt_suppr), "activate", G_CALLBACK(resurrection_point),NULL);
+
+    Item_anonym_auto = gtk_menu_item_new_with_label("Anonymisation auto");
+    gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), Item_anonym_auto);
+    g_signal_connect(G_OBJECT(Item_anonym_auto), "activate", G_CALLBACK(detection_pt_interet),NULL);
+
+    Item_mode_dynam = gtk_menu_item_new_with_label("Mode dynamique");
+    gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), Item_mode_dynam);
+    g_signal_connect(G_OBJECT(Item_mode_dynam), "activate", G_CALLBACK(mode_dynamique),NULL);
+
+    Menu_gestion = gtk_menu_item_new_with_label("Gestion");
+
+    gtk_menu_item_set_submenu(GTK_MENU_ITEM(Menu_gestion), pMenu);
+    gtk_menu_shell_append(GTK_MENU_SHELL(pMenuBar), Menu_gestion);
+
+    /*Ajout a la fenetre*/
+
+    gtk_box_pack_start(GTK_BOX(widget), pMenuBar, FALSE, FALSE, 0);
+
 }

@@ -53,34 +53,26 @@ point tmp_ano;
 GtkWidget* window;
 GtkWidget* darea;
 GtkWidget *pVBox;
-GtkWidget *pHBox;
-GtkWidget *pButton;
-GtkWidget *reset;
-GtkWidget* pt_int_bouton;
-GtkWidget* tooltip;
-
 cairo_t* cr;
 cairo_surface_t *image;
 map_position map;
 
-
-/*
-*Bouton de la barre d'outils
-*/
-GtkWidget *Button_dyn;
-GtkWidget *Button_anonyme;
-GtkWidget *Button_stat;
-GtkWidget *Button_road;
-GtkWidget *Button_noroad;
-GtkWidget *Button_hidePoints;
-GtkWidget *Button_showPoints;
-GtkWidget *Button_pt_interet;
-GtkWidget *Button_Remise_a_0;
-GtkWidget *Button_Affichage_pt_supp;
-GtkWidget *Button_Remise_pt_normal;
-
-GtkWidget *Button_Affichage_Points_Interets;
-GtkWidget *Button_DesAffichage_Points_Interets;
+GtkWidget *pMenuBar;
+GtkWidget *pMenu;
+GtkWidget *Item_route;
+GtkWidget *Item_retirer_routes;
+GtkWidget *Item_cacher_pt_route;
+GtkWidget *Item_afficher_pt_route;
+GtkWidget *Menu_route;
+GtkWidget *Item_afficher_pt_interet;
+GtkWidget *Item_cacher_pt_interet;
+GtkWidget *Menu_pt_interet;
+GtkWidget *Item_remise_a_zero;
+GtkWidget *Item_retour_pt_normaux;
+GtkWidget *Item_afficher_pt_suppr;
+GtkWidget *Item_anonym_auto;
+GtkWidget *Item_mode_dynam;
+GtkWidget *Menu_gestion;
 
 /*
 *Fonction de transition entre les echelles de GTK et de Cairo
