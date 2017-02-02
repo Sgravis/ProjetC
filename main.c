@@ -23,8 +23,6 @@ int main(int argc, char** argv)
 
     int result;
     int i;
-    int nb_id;
-    int * tableid;
     id_en_cours=0;
     route=0;
     ind_dyn=-1;
@@ -33,13 +31,13 @@ int main(int argc, char** argv)
     FILE *fp;
 
     fp=fopen("geoloc-logs.txt","r");
-    tableid=recuperation_donnees(fp,&nb_id);
+    recuperation_donnees(fp);
     fclose(fp);
 
 
         
-    init_logparid(nb_id,tableid);
-    init_log_clean_id(nb_id,tableid);
+    init_logparid();
+    init_log_clean_id();
 
     recuperation_addr(); 
     printf("nb_id %i\n",nb_id );
@@ -88,7 +86,13 @@ int main(int argc, char** argv)
     gtk_widget_hide(Button_DesAffichage_Points_Interets);
 
 
-    gtk_main();  
+    gtk_main();
+    fopen("un","w");
+    remove("un");
+    fopen("deux","w");
+    remove("deux");
+    fopen("trois","w");
+    remove("trois");
     return 0;
 }
 

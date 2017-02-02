@@ -23,6 +23,8 @@ typedef struct
 
 
 int id_en_cours;
+int nb_id;
+int * tableid;
 logs logGlobal;
 logs *logGlobalClean;
 logs logBack;

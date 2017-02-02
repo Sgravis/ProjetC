@@ -32,6 +32,7 @@ logs detection_circulaire (point centre,float rayon, logs base)
 
 void suppression_avec_backup(logs tableauSupp, logs *base)
 {
+
     int i,j,a;
     int incTabClean=0;
     logs Logcleantmp=allocation_tableau_point(base->tailleTab);
