@@ -259,7 +259,6 @@ void remise_pt_normal(){
 void recuperation_addr() /* au lieu initialiser ici la base adresse, faire une fonction d'initialisation*/
 {
     FILE *fp;
-    int numero;
     char c;
     char adresse[40];
     int i,j,nb_lignes,k=0;
