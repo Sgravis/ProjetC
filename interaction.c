@@ -29,18 +29,20 @@ void init_boutton(){
     Button_DesAffichage_Points_Interets = gtk_button_new_with_label("Cacher points d'interets");
     g_signal_connect(G_OBJECT(Button_DesAffichage_Points_Interets), "clicked",G_CALLBACK(cacher_points_interets),NULL);
 
-    int nb_log;
+    Button_Quitter = gtk_button_new_with_label("Quitter");
+    g_signal_connect(G_OBJECT(Button_Quitter), "clicked",G_CALLBACK(gtk_main_quit),NULL);
+
 
     Button_log1 = gtk_toggle_button_new_with_label("log 1");
-    g_signal_connect(G_OBJECT(Button_log1), "clicked",G_CALLBACK(choix_logs),GINT_TO_POINTER(nb_log=0));
+    g_signal_connect(G_OBJECT(Button_log1), "clicked",G_CALLBACK(choix_logs),NULL);
     gtk_box_pack_start(GTK_BOX (pHBox), Button_log1, FALSE, FALSE, 0);
  
     Button_log2 = gtk_toggle_button_new_with_label("Log 2");
-    g_signal_connect(G_OBJECT(Button_log2), "clicked",G_CALLBACK(choix_logs),GINT_TO_POINTER(nb_log=1));
+    g_signal_connect(G_OBJECT(Button_log2), "clicked",G_CALLBACK(choix_logs),NULL);
     gtk_box_pack_start(GTK_BOX (pHBox), Button_log2, FALSE, FALSE, 0);
 
     Button_log3 = gtk_toggle_button_new_with_label("Log 3");
-    g_signal_connect(G_OBJECT(Button_log3), "clicked",G_CALLBACK(choix_logs),GINT_TO_POINTER(nb_log=2));
+    g_signal_connect(G_OBJECT(Button_log3), "clicked",G_CALLBACK(choix_logs),NULL);
     gtk_box_pack_start(GTK_BOX (pHBox), Button_log3, FALSE, FALSE, 0);
     
     
@@ -70,6 +72,8 @@ void init_boutton(){
     gtk_box_pack_start(GTK_BOX(pHBox), Button_Remise_pt_normal, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), Button_Affichage_Points_Interets, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), Button_DesAffichage_Points_Interets, FALSE, FALSE, 0);
+    gtk_box_pack_end(GTK_BOX(pHBox), Button_Quitter, FALSE, FALSE, 0);
+
 
 
     gtk_box_pack_start(GTK_BOX(pVBox), pHBox, FALSE, FALSE, 0); 
@@ -198,22 +202,17 @@ void ouverture_logs()
 void choix_logs()
 {
     reset_log_aff();
-    printf("j'ai reset\n");
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button_log1))){
-        printf("bouton 1 appuye\n");
         id_en_cours=0;
         ajout_log_aff(&logGlobalClean[0]);
     }
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button_log2))){
-        printf("bouton 2 appuye\n");
         id_en_cours=1;
         ajout_log_aff(&logGlobalClean[1]);
     }
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button_log3))){
-        printf("bouton 3 appuye\n");
         id_en_cours=2;
         ajout_log_aff(&logGlobalClean[2]);
     }
-    printf("=======================================\n");
     maj_map();
 }

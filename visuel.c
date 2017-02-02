@@ -81,7 +81,6 @@ void anonymisation()
 	cairo_set_source_rgb(cr,1,1,0);
 	//if(map.zoom==0){
 		do_point(pt_tampon);
-		printf("etape : %i  ID : %i\n",anonyme_step,id_en_cours);
 		if(anonyme_step==4){
 			if(1){
 				suppression_avec_backup(detection_circulaire(pt_tampon,sqrt(pow(x-coord_to_pixel_long(pt_tampon.longitude),2)+pow(y-coord_to_pixel_lat(pt_tampon.latitude),2))*6,logGlobalClean[id_en_cours]),&logGlobalClean[id_en_cours]);

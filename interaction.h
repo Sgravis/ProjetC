@@ -27,6 +27,7 @@ GtkWidget *Button_Remise_a_0;
 GtkWidget *Button_Affichage_pt_supp;
 GtkWidget *Button_Remise_pt_normal;
 GtkWidget *Button_Ouverture_Logs;
+GtkWidget *Button_Quitter;
 
 
 GtkWidget *Button_log2;
