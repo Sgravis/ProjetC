@@ -31,25 +31,18 @@ void init_boutton(){
 
     int nb_log;
 
-    Button_log1 = gtk_radio_button_new_with_label(NULL, "log 1");
+    Button_log1 = gtk_toggle_button_new_with_label("log 1");
     g_signal_connect(G_OBJECT(Button_log1), "clicked",G_CALLBACK(choix_logs),GINT_TO_POINTER(nb_log=0));
-    gtk_box_pack_start(GTK_BOX (pVBox), Button_log1, FALSE, FALSE, 0);
-    /* Ajout du deuxieme*/
-    Button_log2 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON (Button_log1), "Log 2");
+    gtk_box_pack_start(GTK_BOX (pHBox), Button_log1, FALSE, FALSE, 0);
+ 
+    Button_log2 = gtk_toggle_button_new_with_label("Log 2");
     g_signal_connect(G_OBJECT(Button_log2), "clicked",G_CALLBACK(choix_logs),GINT_TO_POINTER(nb_log=1));
-    gtk_box_pack_start(GTK_BOX (pVBox), Button_log2, FALSE, FALSE, 0);
-    /* Ajout du troisième*/
-    Button_log3 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON (Button_log1), "log 3");
+    gtk_box_pack_start(GTK_BOX (pHBox), Button_log2, FALSE, FALSE, 0);
+
+    Button_log3 = gtk_toggle_button_new_with_label("Log 3");
     g_signal_connect(G_OBJECT(Button_log3), "clicked",G_CALLBACK(choix_logs),GINT_TO_POINTER(nb_log=2));
-    gtk_box_pack_start(GTK_BOX (pVBox), Button_log3, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX (pHBox), Button_log3, FALSE, FALSE, 0);
     
-    /*
-    Button_choix_logs1 = gtk_check_button_new_with_label("test 1");
-    g_signal_connect(G_OBJECT(Button_choix_logs1), "clicked",G_CALLBACK(choix_logs),GINT_TO_POINTER(nb_log));
-    Button_choix_logs2 = gtk_check_button_new_with_label("test 2");
-    g_signal_connect(G_OBJECT(Button_choix_logs2), "clicked",G_CALLBACK(choix_logs),GINT_TO_POINTER(nb_log2));
-    Button_choix_logs3 = gtk_check_button_new_with_label("test 3");
-    g_signal_connect(G_OBJECT(Button_choix_logs3), "clicked",G_CALLBACK(choix_logs),GINT_TO_POINTER(nb_log3));*/
     
     Button_Ouverture_Logs = gtk_button_new_with_label("ouvrir un logs");
     g_signal_connect(G_OBJECT(Button_Ouverture_Logs), "clicked",G_CALLBACK(ouverture_logs),NULL);
@@ -205,12 +198,26 @@ void ouverture_logs()
     gtk_widget_destroy (nav);
 }
 
-void choix_logs(GtkButton* bouton, gpointer data)
+void choix_logs()
 {
-    id_en_cours=GPOINTER_TO_INT(data);
     reset_log_aff();
-    ajout_log_aff(&logGlobalClean[id_en_cours]);
-
-
+    printf("j'ai reset\n");
+    if (gtk_toggle_button_get_active(Button_log1)){
+        printf("bouton 1 appuye\n");
+        ajout_log_aff(&logGlobalClean[0]);
+    }
+    if (gtk_toggle_button_get_active(Button_log2)){
+        printf("bouton 2 appuye\n");
+        ajout_log_aff(&logGlobalClean[1]);
+    }
+    if (gtk_toggle_button_get_active(Button_log3)){
+        printf("bouton 3 appuye\n");
+        ajout_log_aff(&logGlobalClean[2]);
+    }
+    printf("=======================================\n");
+    
+    //id_en_cours=GPOINTER_TO_INT(data);
+    //reset_log_aff();
+    //ajout_log_aff(&logGlobalClean[id_en_cours]);
     maj_map();
 }

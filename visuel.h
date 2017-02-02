@@ -26,7 +26,7 @@ map_position map;
 
 typedef struct 
 {
-	logs** tableauLogs;
+	logs* tableauLogs[10];
 	int taille;
 }tabLogs;
 

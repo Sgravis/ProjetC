@@ -52,7 +52,7 @@ int main(int argc, char** argv)
     id_en_cours=0;
 
     reset_log_aff();
-    ajout_log_aff(&logGlobalClean[id_en_cours]);
+    //ajout_log_aff(&logGlobalClean[id_en_cours]);
 
     gtk_init_check(&argc, &argv);
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);

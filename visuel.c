@@ -222,6 +222,8 @@ void afficher_logs(int dynamique)
 	{
 		if(i==0){cairo_set_source_rgb(cr,0,1,0);}
 		if(i==1){cairo_set_source_rgb(cr,1,0,0);}
+		if(i==2){cairo_set_source_rgb(cr,0,0,1);}
+
 		if (dynamique)
 			log_vers_carte_dyn(*log_aff.tableauLogs[i]);
 		else
@@ -232,10 +234,10 @@ void afficher_logs(int dynamique)
 void ajout_log_aff(logs* log)
 {
 	int i ;
-	logs** tmp=(logs**)malloc(sizeof(logs*)*log_aff.taille+1);
+	//logs** tmp=(logs**)malloc(sizeof(logs*)*log_aff.taille+1);
 
 	//alloue tmp
-	for(i=0;i<log_aff.taille;i++){
+	/*for(i=0;i<log_aff.taille;i++){
 		tmp[i]=(logs*)malloc(sizeof(logs));
 		*tmp[i]=allocation_tableau_point(log->tailleTab);
 	}
@@ -243,17 +245,19 @@ void ajout_log_aff(logs* log)
 	// copie ancien -> nouveau
 	for(i=0;i<log_aff.taille;i++){
 		tmp[i]=log_aff.tableauLogs[i];
-	}
+	}*/
 
 	//ajoute log au nouveau tab et applique le tmp
-	tmp[log_aff.taille]=log;
-	log_aff.tableauLogs=tmp;
+	//tmp[log_aff.taille]=log;
+	//logs p=allocation_tableau_point(log->tailleTab);
+	//log_aff.tableauLogs[log_aff.taille]=&p;
+	log_aff.tableauLogs[log_aff.taille]=log;
 	log_aff.taille++;
 }
 
 void reset_log_aff()
 {
-	free(log_aff.tableauLogs);
+	//free(log_aff.tableauLogs);
 	log_aff.taille=0;
 }
 
@@ -283,7 +287,7 @@ void do_route(int ind)
 	for(i=0;i<ind;i++)  //parcourt et affiche tout les point des logs
 	{
 		if(logGlobalClean[id_en_cours].tableauPoint[i].route==1 && logGlobalClean[id_en_cours].tableauPoint[i].agglomerat == 0)
-		{
+		{ 
 			if(abs(coord_to_pixel_long(logGlobalClean[id_en_cours].tableauPoint[i].longitude)-coord_to_pixel_long(logGlobalClean[id_en_cours].tableauPoint[i+1].longitude))<50 && abs(coord_to_pixel_lat(logGlobalClean[id_en_cours].tableauPoint[i].latitude)-coord_to_pixel_lat(logGlobalClean[id_en_cours].tableauPoint[i+1].latitude))<50)
 			{
 				cairo_move_to(cr,coord_to_pixel_long(logGlobalClean[id_en_cours].tableauPoint[i].longitude),coord_to_pixel_lat(logGlobalClean[id_en_cours].tableauPoint[i].latitude));
