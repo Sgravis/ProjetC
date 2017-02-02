@@ -26,11 +26,26 @@ map_position map;
 
 typedef struct 
 {
-	logs** tableauLogs;
+	logs* tableauLogs[10];
 	int taille;
 }tabLogs;
 
 tabLogs log_aff;
+
+/*
+*Element de gestion de la fenetre
+*/
+GtkWidget* window;
+GtkWidget* darea;
+GtkWidget* pVBox;
+GtkWidget* pHBox;
+GtkWidget* pButton;
+GtkWidget* reset;
+GtkWidget* pt_int_bouton;
+cairo_t* cr;
+cairo_surface_t* image;
+map_position map;
+
 
 /*
 * indicateur bouton caché point
@@ -47,51 +62,20 @@ int vitesse_dyn;
 */
 point tmp_ano;
 
-/*
-*Element de gestion de la fenetre
-*/
-GtkWidget* window;
-GtkWidget* darea;
-GtkWidget *pVBox;
-GtkWidget *pHBox;
-GtkWidget *pButton;
-GtkWidget *reset;
-GtkWidget* pt_int_bouton;
-cairo_t* cr;
-cairo_surface_t *image;
-map_position map;
-
-
-/*
-*Bouton de la barre d'outils
-*/
-GtkWidget *Button_dyn;
-GtkWidget *Button_anonyme;
-GtkWidget *Button_stat;
-GtkWidget *Button_road;
-GtkWidget *Button_noroad;
-GtkWidget *Button_hidePoints;
-GtkWidget *Button_showPoints;
-GtkWidget *Button_pt_interet;
-GtkWidget *Button_Remise_a_0;
-GtkWidget *Button_Affichage_pt_supp;
-GtkWidget *Button_Remise_pt_normal;
-
-GtkWidget *Button_Affichage_Points_Interets;
-GtkWidget *Button_DesAffichage_Points_Interets;
 
 /*
 *Fonction de transition entre les echelles de GTK et de Cairo
 */
 int coord_to_pixel_long(long double longitude);
 int coord_to_pixel_lat(long double latitude);
-long double pixel_to_coord_long(int longitude);
-long double pixel_to_coord_lat(int latitude);
+long double pixel_to_coord_long(float longitude);
+long double pixel_to_coord_lat(float latitude);
 
 /*
-*affiche un point sur la carte
+*affiche un element sur la carte
 */
 void do_point( point pt);
+void do_cercle(point centre, int rayon);
 
 /*
 *gère la procédure d'anonymisation par centre et rayon
@@ -117,7 +101,7 @@ void on_draw(GtkWidget *widget, cairo_t *cr,gpointer user_data);
 /*
 *affiche un log sur la carte
 */
-void afficher_logs();
+void afficher_logs(int dynamique);
 
 /*
 * modifie la liste des logs à afficher
@@ -133,9 +117,8 @@ void mode_dynamique ();
 /*
 * ajoute ou enlève les route sur a carte
 */
-void do_route_dyn();
 void do_route_maj();
-void do_route();
+void do_route(int ind);
 void hidePoints();
 void showPoints();
 void undo_route();

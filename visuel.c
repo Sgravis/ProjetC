@@ -17,7 +17,7 @@ int coord_to_pixel_lat(long double latitude){
 		return ((47.0821639-latitude)/0.000055919)+(156-map.pos_y+113);
 	}
 
-long double pixel_to_coord_long(int longitude)
+long double pixel_to_coord_long(float longitude)
 {
 	if(map.zoom==0)
 		return (855-longitude)*-0.000088242+2.39869958;
@@ -25,7 +25,7 @@ long double pixel_to_coord_long(int longitude)
 		return ((855-map.pos_x+270)-longitude)*-0.000088242+2.39869958;	
 }
 
-long double pixel_to_coord_lat(int latitude)
+long double pixel_to_coord_lat(float latitude)
 {
 	if(map.zoom==0)
 		return (156-latitude)*0.000055919+47.0821639;
@@ -49,14 +49,17 @@ void do_point(point pt)
 		pt.taillept/=5;
 	pt.taillept/=2;
 
-	cairo_arc(cr,coord_to_pixel_long(pt.longitude),coord_to_pixel_lat(pt.latitude), pt.taillept, 0, 2 * M_PI);
+	int lon=coord_to_pixel_long(pt.longitude);
+	int lat=coord_to_pixel_lat(pt.latitude);
+	cairo_arc(cr,lon/*-0.08*(lat-150)*/,lat, pt.taillept, 0, 2 * M_PI);
+
 	cairo_fill(cr);
 }
 
 void do_cercle(point centre, int rayon){
 	cairo_set_source_rgb(cr,1,1,0);
 	cairo_set_line_width(cr,1);
-	cairo_arc(cr,coord_to_pixel_long(centre.longitude), coord_to_pixel_lat(centre.latitude),rayon, 0, 2 * M_PI);
+	cairo_arc(cr,coord_to_pixel_long(centre.longitude), coord_to_pixel_lat(centre.latitude),rayon/6, 0, 2 * M_PI);
 	cairo_stroke(cr);
 }
 
@@ -76,11 +79,11 @@ void anonymisation()
 {
 	//appartition des cercles d'anonymisation
 	cairo_set_source_rgb(cr,1,1,0);
-	if(map.zoom==0){
+	//if(map.zoom==0){
 		do_point(pt_tampon);
 		if(anonyme_step==4){
 			if(1){//popup("anonymiser ce cercle ?")){
-				suppression_avec_backup(detection_circulaire(pt_tampon,sqrt(pow(x-coord_to_pixel_long(pt_tampon.longitude),2)+pow(y-coord_to_pixel_lat(pt_tampon.latitude),2))*6,logGlobalClean),&logGlobalClean);
+				suppression_avec_backup(detection_circulaire(pt_tampon,sqrt(pow(x-coord_to_pixel_long(pt_tampon.longitude),2)+pow(y-coord_to_pixel_lat(pt_tampon.latitude),2))*6,logGlobalClean[id_en_cours]),&logGlobalClean[id_en_cours]);
 				reset_anonymisation();
 			}
 			else{
@@ -88,21 +91,21 @@ void anonymisation()
 			}
 		}
 		if (anonyme_step==3){
-			cairo_set_line_width(cr,1);
+			do_cercle(pt_tampon,sqrt(pow(x-coord_to_pixel_long(pt_tampon.longitude),2)+pow(y-coord_to_pixel_lat(pt_tampon.latitude),2))*6);
+			/*cairo_set_line_width(cr,1);
 			cairo_arc(cr,coord_to_pixel_long(pt_tampon.longitude),coord_to_pixel_lat(pt_tampon.latitude),sqrt(pow(x-coord_to_pixel_long(pt_tampon.longitude),2)+pow(y-coord_to_pixel_lat(pt_tampon.latitude),2)), 0, 2 * M_PI);
-			cairo_stroke(cr);
+			cairo_stroke(cr);*/
 			anonyme_step=4;
 			maj_map();
 		}
 	
-	}
+	//}
 }
 
 
 void log_vers_carte(logs base)
 {
 	int i;
-	cairo_set_source_rgb(cr,0,1,1);  //couleur des point
     cairo_set_line_width(cr,8);
 	for(i=0;i<base.tailleTab;i++)  //parcourt et affiche tout les point des logs
 	{  
@@ -173,19 +176,21 @@ void do_map()
 void on_draw(GtkWidget *widget, cairo_t *crg,gpointer data)
 {
 	int i;
-	logs log=*(logs*)data;
 	cr=crg;
 	do_map(); 				/*affiche la carte*/
-	if(ind_dyn==-1){
+	if(ind_dyn==-1)
+	{
 		if(route==1)
-			do_route();
-		afficher_logs();		/*affiche le log*/
+			do_route(logGlobalClean[id_en_cours].tailleTab);
+		afficher_logs(0);		/*affiche le log*/
 	}
-	else{
+	else
+	{
 		if (route==1)
-			do_route_dyn(ind_dyn);
-		log_vers_carte_dyn(log);
-		if(ind_dyn<=log.tailleTab-vitesse_dyn){
+			do_route(ind_dyn);
+		afficher_logs(1);
+		if(ind_dyn<=logGlobalClean[id_en_cours].tailleTab-vitesse_dyn)
+		{
 			ind_dyn=ind_dyn+vitesse_dyn;
 			maj_map();
 		}
@@ -199,45 +204,60 @@ void on_draw(GtkWidget *widget, cairo_t *crg,gpointer data)
 	{
 		for(i=1;i<=tableau_centre_interet[0].taillept;i++)
 		{
-			do_cercle(tableau_centre_interet[i],tableau_centre_interet[i].taillept/6);
+			do_cercle(tableau_centre_interet[i],tableau_centre_interet[i].taillept);
 		}
 	}	
 
-	if (tmp_ano.taillept!=0){
-    	do_cercle(tmp_ano,tmp_ano.taillept/6);
+	if (tmp_ano.taillept!=0)
+	{
+    	do_cercle(tmp_ano,tmp_ano.taillept);
     }
 	anonymisation();
 }
 
-void afficher_logs()
+void afficher_logs(int dynamique)
 {
 	int i;
 	for(i=0;i<log_aff.taille;i++)
 	{
-		log_vers_carte(*log_aff.tableauLogs[0]);
+		if(i==0){cairo_set_source_rgb(cr,0,1,0);}
+		if(i==1){cairo_set_source_rgb(cr,1,0,0);}
+		if(i==2){cairo_set_source_rgb(cr,0,0,1);}
+
+		if (dynamique)
+			log_vers_carte_dyn(*log_aff.tableauLogs[i]);
+		else
+			log_vers_carte(*log_aff.tableauLogs[i]);
 	}
 }
 
 void ajout_log_aff(logs* log)
 {
 	int i ;
-	log_aff.tableauLogs=(logs**)malloc(sizeof(logs*)*log_aff.taille);
-	for(i=0;i<log_aff.taille;i++)
-	{
-		log_aff.tableauLogs[i]=(logs*)malloc(sizeof(logs*));
+	//logs** tmp=(logs**)malloc(sizeof(logs*)*log_aff.taille+1);
+
+	//alloue tmp
+	/*for(i=0;i<log_aff.taille;i++){
+		tmp[i]=(logs*)malloc(sizeof(logs));
+		*tmp[i]=allocation_tableau_point(log->tailleTab);
 	}
+
+	// copie ancien -> nouveau
+	for(i=0;i<log_aff.taille;i++){
+		tmp[i]=log_aff.tableauLogs[i];
+	}*/
+
+	//ajoute log au nouveau tab et applique le tmp
+	//tmp[log_aff.taille]=log;
+	//logs p=allocation_tableau_point(log->tailleTab);
+	//log_aff.tableauLogs[log_aff.taille]=&p;
 	log_aff.tableauLogs[log_aff.taille]=log;
-	log_aff.taille ++;
+	log_aff.taille++;
 }
 
 void reset_log_aff()
 {
-	int i;
-	/*for(i=0;i<log_aff.taille;i++)
-	{
-		free(*log_aff.tableauLogs[i]);
-	}
-	free(log_aff.tableauLogs);*/
+	//free(log_aff.tableauLogs);
 	log_aff.taille=0;
 }
 
@@ -259,20 +279,19 @@ void mode_dynamique (){
     maj_map();
 }
 
-
-void do_route_dyn(int ind)
+void do_route(int ind)
 {
 	int i;
 	cairo_set_source_rgb(cr,1,0.5,0.5);
 	cairo_set_line_width(cr,1);
 	for(i=0;i<ind;i++)  //parcourt et affiche tout les point des logs
 	{
-		if(logGlobalClean.tableauPoint[i].route==1 && logGlobalClean.tableauPoint[i].agglomerat == 0)
-		{
-			if(abs(coord_to_pixel_long(logGlobalClean.tableauPoint[i].longitude)-coord_to_pixel_long(logGlobalClean.tableauPoint[i+1].longitude))<50 && abs(coord_to_pixel_lat(logGlobalClean.tableauPoint[i].latitude)-coord_to_pixel_lat(logGlobalClean.tableauPoint[i+1].latitude))<50)
+		if(logGlobalClean[id_en_cours].tableauPoint[i].route==1 && logGlobalClean[id_en_cours].tableauPoint[i].agglomerat == 0)
+		{ 
+			if(abs(coord_to_pixel_long(logGlobalClean[id_en_cours].tableauPoint[i].longitude)-coord_to_pixel_long(logGlobalClean[id_en_cours].tableauPoint[i+1].longitude))<50 && abs(coord_to_pixel_lat(logGlobalClean[id_en_cours].tableauPoint[i].latitude)-coord_to_pixel_lat(logGlobalClean[id_en_cours].tableauPoint[i+1].latitude))<50)
 			{
-				cairo_move_to(cr,coord_to_pixel_long(logGlobalClean.tableauPoint[i].longitude),coord_to_pixel_lat(logGlobalClean.tableauPoint[i].latitude));
-				cairo_line_to(cr,coord_to_pixel_long(logGlobalClean.tableauPoint[i+1].longitude),coord_to_pixel_lat(logGlobalClean.tableauPoint[i+1].latitude));
+				cairo_move_to(cr,coord_to_pixel_long(logGlobalClean[id_en_cours].tableauPoint[i].longitude),coord_to_pixel_lat(logGlobalClean[id_en_cours].tableauPoint[i].latitude));
+				cairo_line_to(cr,coord_to_pixel_long(logGlobalClean[id_en_cours].tableauPoint[i+1].longitude),coord_to_pixel_lat(logGlobalClean[id_en_cours].tableauPoint[i+1].latitude));
 			}
 		}
 		cairo_stroke(cr);
@@ -284,30 +303,9 @@ void do_route_dyn(int ind)
 
 void do_route_maj(){
 	route=1;
-	do_route();
+	do_route(logGlobalClean[id_en_cours].tailleTab);
 	gtk_widget_show(Button_hidePoints);
 	maj_map();
-}
-
-void do_route(){
-	int i;
-	cairo_set_source_rgb(cr,1,0.5,0.5);
-	cairo_set_line_width(cr,1);
-	for(i=1;i<logGlobalClean.tailleTab;i++)
-	{
-		if(logGlobalClean.tableauPoint[i].route==1 && logGlobalClean.tableauPoint[i].agglomerat == 0)
-		{
-			if(abs(coord_to_pixel_long(logGlobalClean.tableauPoint[i].longitude)-coord_to_pixel_long(logGlobalClean.tableauPoint[i+1].longitude))<55 && abs(coord_to_pixel_lat(logGlobalClean.tableauPoint[i].latitude)-coord_to_pixel_lat(logGlobalClean.tableauPoint[i+1].latitude))<55)
-			{
-				cairo_move_to(cr,coord_to_pixel_long(logGlobalClean.tableauPoint[i].longitude),coord_to_pixel_lat(logGlobalClean.tableauPoint[i].latitude));
-				cairo_line_to(cr,coord_to_pixel_long(logGlobalClean.tableauPoint[i+1].longitude),coord_to_pixel_lat(logGlobalClean.tableauPoint[i+1].latitude));
-			}
-		}
-		cairo_stroke(cr);
-	}
-	gtk_widget_hide(Button_road);
-	gtk_widget_show(Button_noroad);
-
 }
 
 

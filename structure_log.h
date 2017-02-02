@@ -4,7 +4,7 @@
 #include <time.h>
 
 typedef struct {
-	int ID_user;
+	int id_user;
 	long double longitude;
 	long double latitude;
 	time_t date;
@@ -19,15 +19,18 @@ typedef struct
 {
 	point * tableauPoint;
 	int tailleTab;
+	int tailleAvantSup;
 }logs;
 
 
-
+int id_en_cours;
+int nb_id;
+int * tableid;
 logs logGlobal;
-logs logGlobalClean;
+logs *logGlobalClean;
 logs logBack;
 logs base_adresse;
 
-char tableauID[100][15];
+//char tableau_id[100][15];
 
 #endif

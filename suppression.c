@@ -32,9 +32,12 @@ logs detection_circulaire (point centre,float rayon, logs base)
 
 void suppression_avec_backup(logs tableauSupp, logs *base)
 {
+
     int i,j,a;
     int incTabClean=0;
+    int tmp;
     logs Logcleantmp=allocation_tableau_point(base->tailleTab);
+    tmp=base->tailleAvantSup;
     for(i=0;i<base->tailleTab;i++)
     {
         a=0;
@@ -54,6 +57,7 @@ void suppression_avec_backup(logs tableauSupp, logs *base)
     }
     free(base->tableauPoint);
     *base=copie_tableau(Logcleantmp,incTabClean);
+    base->tailleAvantSup=tmp;
     backup_file(tableauSupp);
 
 }
@@ -61,6 +65,8 @@ void suppression_sans_backup(logs tableauSupp, logs *base)
 {
     int i,j,a;
     int incTabClean=0;
+    int tmp;
+    tmp=base->tailleAvantSup;
     logs Logcleantmp=allocation_tableau_point(base->tailleTab);
     for(i=0;i<base->tailleTab;i++)
     {
@@ -81,6 +87,7 @@ void suppression_sans_backup(logs tableauSupp, logs *base)
     }
     free(base->tableauPoint);
     *base=copie_tableau(Logcleantmp,incTabClean);
+    base->tailleAvantSup=tmp;
 
 }
 int comparaison_point(point p1, point p2)
@@ -105,8 +112,9 @@ int comparaison_point(point p1, point p2)
 void detection_pt_interet()
 {
     int i,j;
-    int nb_pt_centre_interet=((logGlobal.tailleTab)/12);
-    logs tmp=copie_tableau(logGlobalClean,logGlobalClean.tailleTab);
+    int nb_pt_centre_interet=((logGlobalClean[id_en_cours].tailleAvantSup)/17);
+    printf("%i\n",nb_pt_centre_interet);
+    logs tmp=copie_tableau(logGlobalClean[id_en_cours],logGlobalClean[id_en_cours].tailleTab);
     logs tab_cercle;
     logs tab_cercle2;
     float rayon=100;
@@ -133,8 +141,6 @@ void detection_pt_interet()
 
     }
             free(tmp.tableauPoint);
-
-
 }
 void redefinition_grosseur_cercle(logs a_supr, float rayon, logs * tmp)
 {
@@ -157,7 +163,7 @@ void redefinition_grosseur_cercle(logs a_supr, float rayon, logs * tmp)
     reponse=popup("Anonymiser le cercle?");
     if(reponse==1)
     {
-        suppression_avec_backup(a_supr,&logGlobalClean);
+        suppression_avec_backup(a_supr,&logGlobalClean[id_en_cours]);
         suppression_sans_backup(a_supr,tmp);
     }
     else
@@ -177,9 +183,10 @@ void afficher_tableau(int taille, logs tab)
     int i;
     for(i=0;i<taille;i++)
     {
-       printf("date:%ld,lat:%Lf,long:%Lf\n",tab.tableauPoint[i].date,tab.tableauPoint[i].latitude,tab.tableauPoint[i].longitude);
-           // printf("taille : %i\n",tab.tableauPoint[i].taillept);
-       printf("adresse : %i,%s\n",tab.tableauPoint[i].numero_rue,tab.tableauPoint[i].adresse);
+       //printf("date:%ld,lat:%Lf,long:%Lf\n",tab.tableauPoint[i].date,tab.tableauPoint[i].latitude,tab.tableauPoint[i].longitude);
+       printf("\nici :%d\n",i );
+       printf("taille : %i\n",tab.tableauPoint[i].taillept);
+       //printf("adresse : %i,%s\n",tab.tableauPoint[i].numero_rue,tab.tableauPoint[i].adresse);
     }
 }
 /*void afficher_tableau2()

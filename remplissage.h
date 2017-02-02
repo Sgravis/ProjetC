@@ -7,7 +7,8 @@
 #include <stdlib.h>
 #include <time.h>
 
-void recuperation_donnees(FILE *fp, int nb_lignes);
+void recuperation_donnees(FILE * fp);
+void init_log_clean_id ();
 void copie_points(point *point1,point *point2);
 void backup_file (logs tlog);
 logs copie_tableau(logs tlog1, int taille);
@@ -18,6 +19,7 @@ void remise_a_zero();
 void affichage_points_interets();
 void recherche_adresse_point(point p,int cpt);
 void cacher_points_interets();
+int recherche_seuil(point p);
 
 /*void copie_points_base_addr (pointaddr* point1, pointaddr* point2);*/
 /*addr copie_tableau_addr(addr tab,int taille);*/

@@ -14,23 +14,23 @@ void agglomeration()
 {
 	int i,j,k,cpt=0;
 	logs detectmp;
-	for (i=0 ; i<logGlobalClean.tailleTab ; i++) 
+	for (i=0 ; i<logGlobalClean[id_en_cours].tailleTab ; i++) 
 	{
-		for (j = i+1 ; j < logGlobalClean.tailleTab ; j++)
+		for (j = i+1 ; j < logGlobalClean[id_en_cours].tailleTab ; j++)
 		{
-			if ((logGlobalClean.tableauPoint[i].latitude == logGlobalClean.tableauPoint[j].latitude) && (logGlobalClean.tableauPoint[i].longitude == logGlobalClean.tableauPoint[j].longitude))
+			if ((logGlobalClean[id_en_cours].tableauPoint[i].latitude == logGlobalClean[id_en_cours].tableauPoint[j].latitude) && (logGlobalClean[id_en_cours].tableauPoint[i].longitude == logGlobalClean[id_en_cours].tableauPoint[j].longitude))
 			{
-				logGlobalClean.tableauPoint[j].taillept++;
+				logGlobalClean[id_en_cours].tableauPoint[j].taillept++;
 			}
 		}
-		if (logGlobalClean.tableauPoint[i].taillept > 1) {
-			detectmp=detection_circulaire(logGlobalClean.tableauPoint[i],1,logGlobalClean);
+		if (logGlobalClean[id_en_cours].tableauPoint[i].taillept > 1) {
+			detectmp=detection_circulaire(logGlobalClean[id_en_cours].tableauPoint[i],1,logGlobalClean[id_en_cours]);
 			cpt=0;
 			for ( k=0 ; k<detectmp.tailleTab ; k++)
 			{
 				++cpt;
 			}
-			logGlobalClean.tableauPoint[i].taillept+=cpt;
+			logGlobalClean[id_en_cours].tableauPoint[i].taillept+=cpt;
 		}
 	}
 	detection_agglomerat();
@@ -39,11 +39,11 @@ void agglomeration()
 void initialisation_route()
 {
 	int i;
-	for (i=0 ; i < logGlobalClean.tailleTab ; i++)
+	for (i=0 ; i < logGlobalClean[id_en_cours].tailleTab ; i++)
 	{
-		if (logGlobalClean.tableauPoint[i].taillept == 1)
+		if (logGlobalClean[id_en_cours].tableauPoint[i].taillept == 1)
 		{
-			logGlobalClean.tableauPoint[i].route=1;
+			logGlobalClean[id_en_cours].tableauPoint[i].route=1;
 		}
 	}
 }
@@ -51,8 +51,8 @@ void initialisation_route()
 void detection_agglomerat()
 {
     int i,j;
-    int nb_pt_centre_interet=((logGlobal.tailleTab)/12);
-    logs tmp=copie_tableau(logGlobalClean,logGlobalClean.tailleTab);
+    int nb_pt_centre_interet=((logGlobalClean[id_en_cours].tailleAvantSup)/17);
+    logs tmp=copie_tableau(logGlobalClean[id_en_cours],logGlobalClean[id_en_cours].tailleTab);
     logs tab_cercle;
     logs tab_cercle2;
     float rayon=100;
@@ -97,19 +97,123 @@ void ajout_agglomerat(logs tableau_agglomerat, float rayon, logs *tmp)
 
     }
     tableau_agglomerat=detection_circulaire(tableau_agglomerat.tableauPoint[0],rayon,*tmp);
-    for(i=0;i<logGlobalClean.tailleTab;i++)
+    for(i=0;i<logGlobalClean[id_en_cours].tailleTab;i++)
     {
         for (j=0;j<tableau_agglomerat.tailleTab;j++)
         {
-           if(comparaison_point(logGlobalClean.tableauPoint[i],tableau_agglomerat.tableauPoint[j])==1)
+           if(comparaison_point(logGlobalClean[id_en_cours].tableauPoint[i],tableau_agglomerat.tableauPoint[j])==1)
            {
-           		logGlobalClean.tableauPoint[i].agglomerat=1;
-           		logGlobalClean.tableauPoint[i].route=0;
+           		logGlobalClean[id_en_cours].tableauPoint[i].agglomerat=1;
+           		logGlobalClean[id_en_cours].tableauPoint[i].route=0;
            }
         }
 
     }
     suppression_sans_backup(tableau_agglomerat,tmp);
     free(tab_agglo_redimension.tableauPoint);
+
+}
+
+void agglomeration_logBack()
+{
+    int i,j,k,cpt=0;
+    logs detectmp;
+    for (i=0 ; i<logBack.tailleTab ; i++) 
+    {
+        for (j = i+1 ; j < logBack.tailleTab ; j++)
+        {
+            if ((logBack.tableauPoint[i].latitude == logBack.tableauPoint[j].latitude) && (logBack.tableauPoint[i].longitude == logBack.tableauPoint[j].longitude))
+            {
+                logBack.tableauPoint[j].taillept++;
+            }
+        }
+        if (logBack.tableauPoint[i].taillept > 1) {
+            detectmp=detection_circulaire(logBack.tableauPoint[i],1,logBack);
+            cpt=0;
+            for ( k=0 ; k<detectmp.tailleTab ; k++)
+            {
+                ++cpt;
+            }
+            logBack.tableauPoint[i].taillept+=cpt;
+        }
+    }
+    detection_agglomerat_logBack();
+}
+
+void ajout_agglomerat_logBack(logs tableau_agglomerat, float rayon, logs *tmp)
+{
+    int i,j;
+    logs tab_agglo_redimension=detection_circulaire(tableau_agglomerat.tableauPoint[0],rayon,base_adresse);
+    if(tab_agglo_redimension.tailleTab<20)
+    {
+        do 
+        {    
+            rayon=rayon+25;
+            tab_agglo_redimension=detection_circulaire(tableau_agglomerat.tableauPoint[0],rayon,base_adresse);
+        }while(tab_agglo_redimension.tailleTab<20);
+
+    }
+    tableau_agglomerat=detection_circulaire(tableau_agglomerat.tableauPoint[0],rayon,*tmp);
+    for(i=0;i<logBack.tailleTab;i++)
+    {
+        for (j=0;j<tableau_agglomerat.tailleTab;j++)
+        {
+           if(comparaison_point(logBack.tableauPoint[i],tableau_agglomerat.tableauPoint[j])==1)
+           {
+                logBack.tableauPoint[i].agglomerat=1;
+                logBack.tableauPoint[i].route=0;
+           }
+        }
+
+    }
+    suppression_sans_backup(tableau_agglomerat,tmp);
+    free(tab_agglo_redimension.tableauPoint);
+
+}
+
+void initialisation_route_logBack()
+{
+    int i;
+    for (i=0 ; i < logBack.tailleTab ; i++)
+    {
+        if (logBack.tableauPoint[i].taillept == 1)
+        {
+            logBack.tableauPoint[i].route=1;
+        }
+    }
+}
+
+void detection_agglomerat_logBack()
+{
+    int i,j;
+    int nb_pt_centre_interet=((logBack.tailleTab)/17);
+    logs tmp=copie_tableau(logBack,logBack.tailleTab);
+    logs tab_cercle;
+    logs tab_cercle2;
+    float rayon=100;
+    for(i=0;i<tmp.tailleTab;i++)
+    {
+        tab_cercle=detection_circulaire(tmp.tableauPoint[i],rayon,tmp);
+        if (tab_cercle.tailleTab >=nb_pt_centre_interet)
+        {
+            for(j=0;j<tab_cercle.tailleTab;j++)
+            {
+                tab_cercle2=detection_circulaire(tab_cercle.tableauPoint[j],rayon,tmp);
+                if (tab_cercle2.tailleTab>tab_cercle.tailleTab)
+                {
+                    free(tab_cercle.tableauPoint);
+                    tab_cercle.tailleTab=tab_cercle2.tailleTab;
+                    tab_cercle.tableauPoint=tab_cercle2.tableauPoint;
+                    j=0;
+                }
+
+            }
+           ajout_agglomerat_logBack(tab_cercle,rayon,&tmp);
+
+            free(tab_cercle.tableauPoint);
+        }
+
+    }
+            free(tmp.tableauPoint);
 
 }

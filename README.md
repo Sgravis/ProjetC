@@ -35,7 +35,7 @@ Partie 3: Etude des données d’une population
 
 Dans cette partie, on souhaite combiner un ensemble de traces de mobilités afin d’alimenter l’outil de visualisation avec des données de synthèse. Pour simplifier, une solution est de traiter n traces et d’en sortir différents fichiers contenant des informations agrégées. Les informations agrégées peuvent être:
 
-- [ ] point d’intérêt avec un seuil (k personnes ont ce point parmi n)
+- [X] point d’intérêt avec un seuil (k personnes ont ce point parmi n)
 - [ ] route fréquentées: des “zones” de type route sont fréquemment empruntées (par exemple Lahitolle)
 
 Toutes ces données sont temporisées, c’est-à-dire que les points d’intérêt communs n’ont d’existence que sur certains laps de temps. Par exemple, il est douteux que l’INSA soit un point d’intérêt de 2h à 3h du matin… Il faut donc penser à toujours préciser le temps afin que l’outil de visualisation puisse faire des affichages dépendant du temps (faire disparaitre les “vieux” point d’intérêts).
