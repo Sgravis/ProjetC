@@ -98,13 +98,11 @@ void on_click_map(GtkWidget* darea, GdkEventButton* event, void* data)
         anonyme_step=3;
         maj_map();
     }
-        printf("x : %f  y : %f\n",event->x,event->y );
 
 
     if(anonyme_step==1)
     {
-        printf("event->x = %f  event->y =%f\n",event->x,event->y);
-        
+       
         pt_tampon.longitude=pixel_to_coord_long(event->x);
         pt_tampon.latitude=pixel_to_coord_lat(event->y);
         pt_tampon.taillept=20;
@@ -203,14 +201,17 @@ void choix_logs()
     printf("j'ai reset\n");
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button_log1))){
         printf("bouton 1 appuye\n");
+        id_en_cours=0;
         ajout_log_aff(&logGlobalClean[0]);
     }
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button_log2))){
         printf("bouton 2 appuye\n");
+        id_en_cours=1;
         ajout_log_aff(&logGlobalClean[1]);
     }
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button_log3))){
         printf("bouton 3 appuye\n");
+        id_en_cours=2;
         ajout_log_aff(&logGlobalClean[2]);
     }
     printf("=======================================\n");
