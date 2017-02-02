@@ -98,6 +98,8 @@ void on_click_map(GtkWidget* darea, GdkEventButton* event, void* data)
         anonyme_step=3;
         maj_map();
     }
+        printf("x : %f  y : %f\n",event->x,event->y );
+
 
     if(anonyme_step==1)
     {
@@ -173,8 +175,6 @@ void ouverture_logs()
     GtkWidget *nav;
     int res;
     GSList* list_logs;
-    //GtkFileFilter* filtre;
-    //filtre=gtk_file_filter_new();
 
     nav = gtk_file_chooser_dialog_new ("Ouvrir logs",GTK_WINDOW(window),GTK_FILE_CHOOSER_ACTION_OPEN,"Cancel",GTK_RESPONSE_CANCEL,"Open",GTK_RESPONSE_ACCEPT,NULL);
     GtkFileChooser *chooser = GTK_FILE_CHOOSER (nav);
@@ -194,9 +194,6 @@ void ouverture_logs()
         }
         g_slist_free(list_logs);
     }
-
-
-
     gtk_widget_destroy (nav);
 }
 
@@ -204,22 +201,18 @@ void choix_logs()
 {
     reset_log_aff();
     printf("j'ai reset\n");
-    if (gtk_toggle_button_get_active(Button_log1)){
+    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button_log1))){
         printf("bouton 1 appuye\n");
         ajout_log_aff(&logGlobalClean[0]);
     }
-    if (gtk_toggle_button_get_active(Button_log2)){
+    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button_log2))){
         printf("bouton 2 appuye\n");
         ajout_log_aff(&logGlobalClean[1]);
     }
-    if (gtk_toggle_button_get_active(Button_log3)){
+    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button_log3))){
         printf("bouton 3 appuye\n");
         ajout_log_aff(&logGlobalClean[2]);
     }
     printf("=======================================\n");
-    
-    //id_en_cours=GPOINTER_TO_INT(data);
-    //reset_log_aff();
-    //ajout_log_aff(&logGlobalClean[id_en_cours]);
     maj_map();
 }
