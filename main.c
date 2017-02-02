@@ -89,6 +89,8 @@ int main(int argc, char** argv)
 
 
     gtk_main();
+    fopen("zero","w");
+    remove("zero");
     fopen("un","w");
     remove("un");
     fopen("deux","w");

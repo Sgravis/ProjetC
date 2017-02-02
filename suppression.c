@@ -35,7 +35,9 @@ void suppression_avec_backup(logs tableauSupp, logs *base)
 
     int i,j,a;
     int incTabClean=0;
+    int tmp;
     logs Logcleantmp=allocation_tableau_point(base->tailleTab);
+    tmp=base->tailleAvantSup;
     for(i=0;i<base->tailleTab;i++)
     {
         a=0;
@@ -55,6 +57,7 @@ void suppression_avec_backup(logs tableauSupp, logs *base)
     }
     free(base->tableauPoint);
     *base=copie_tableau(Logcleantmp,incTabClean);
+    base->tailleAvantSup=tmp;
     backup_file(tableauSupp);
 
 }
@@ -62,6 +65,8 @@ void suppression_sans_backup(logs tableauSupp, logs *base)
 {
     int i,j,a;
     int incTabClean=0;
+    int tmp;
+    tmp=base->tailleAvantSup;
     logs Logcleantmp=allocation_tableau_point(base->tailleTab);
     for(i=0;i<base->tailleTab;i++)
     {
@@ -82,6 +87,7 @@ void suppression_sans_backup(logs tableauSupp, logs *base)
     }
     free(base->tableauPoint);
     *base=copie_tableau(Logcleantmp,incTabClean);
+    base->tailleAvantSup=tmp;
 
 }
 int comparaison_point(point p1, point p2)
@@ -106,7 +112,8 @@ int comparaison_point(point p1, point p2)
 void detection_pt_interet()
 {
     int i,j;
-    int nb_pt_centre_interet=((logGlobalClean[id_en_cours].tailleTab)/18);
+    int nb_pt_centre_interet=((logGlobalClean[id_en_cours].tailleAvantSup)/17);
+    printf("%i\n",nb_pt_centre_interet);
     logs tmp=copie_tableau(logGlobalClean[id_en_cours],logGlobalClean[id_en_cours].tailleTab);
     logs tab_cercle;
     logs tab_cercle2;
