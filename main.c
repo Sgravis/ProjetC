@@ -85,7 +85,7 @@ int main(int argc, char** argv)
     gtk_widget_hide(Button_Remise_pt_normal);
     gtk_widget_hide(Button_DesAffichage_Points_Interets);
     
-    gtk_toggle_button_set_active(Button_log1,TRUE);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(Button_log1),TRUE);
 
 
     gtk_main();
