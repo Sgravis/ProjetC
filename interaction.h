@@ -53,9 +53,7 @@ void popupclose(char* nom);
 void do_anonymous(GtkWidget* pbutton, GdkEventButton* event, void* data);
 void on_key_press(GtkWidget *widget, GdkEventKey *event);
 void ouverture_logs();
-void choix_logs(GtkButton* boutton,gpointer data);
-//void choix_logs1();
-//void choix_logs2();
-//void choix_logs3();
+void choix_logs();
+
 
 #endif
