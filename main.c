@@ -21,30 +21,38 @@ int main(int argc, char** argv)
 {
 
     int result;
+    int i;
+    int nb_id;
+    int * tableid;
+    id_en_cours=0;
     route=0;
     ind_dyn=-1;
     routeHide=0;
     logs tlog;
     FILE *fp;
-    int nb_lignes;
+    info_pt_inte=0;
+
     fp=fopen("geoloc-logs.txt","r");
-    nb_lignes=nombre_lignes(fp);
-    init_tableau_global(nb_lignes);
-    recuperation_donnees(fp,nb_lignes);
+    tableid=recuperation_donnees(fp,&nb_id);
     fclose(fp);
-    recuperation_addr();
 
 
-    logGlobalClean=copie_tableau(logGlobal,logGlobal.tailleTab);
-    initialisation_route();
-    agglomeration();
-    //log_aff.taille=0;
-   // ajout_log_aff(&logGlobalClean);
-    recuperation_addr();
-    //afficher_tableau(logGlobalClean.tailleTab,logGlobalClean);
+        
+    init_logparid(nb_id,tableid);
+    init_log_clean_id(nb_id,tableid);
 
-    log_aff.taille=0;
-    ajout_log_aff(&logGlobalClean);
+    recuperation_addr(); 
+    printf("nb_id %i\n",nb_id );
+    for(id_en_cours=0;id_en_cours<nb_id;id_en_cours++){   
+        printf("id_en_cours %i\n",id_en_cours );
+        initialisation_route();
+        agglomeration();
+    }
+    
+    id_en_cours=0;
+
+    reset_log_aff();
+    ajout_log_aff(&logGlobalClean[id_en_cours]);
 
     gtk_init_check(&argc, &argv);
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -52,6 +60,8 @@ int main(int argc, char** argv)
     gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
     gtk_window_set_default_size(GTK_WINDOW(window), HFENETRE,LFENETRE);
     gtk_window_set_title(GTK_WINDOW(window), "Bourges");
+    gtk_window_set_icon_from_file (GTK_WINDOW(window), "icone.jpg",NULL);
+
 
 
     pVBox = gtk_vbox_new(FALSE, 0);
@@ -62,7 +72,7 @@ int main(int argc, char** argv)
 
     darea = gtk_drawing_area_new();
     gtk_container_add(GTK_CONTAINER(pVBox), darea);
-    g_signal_connect(G_OBJECT(darea), "draw", G_CALLBACK(on_draw),&logGlobalClean);
+    g_signal_connect(G_OBJECT(darea), "draw", G_CALLBACK(on_draw),NULL);
     gtk_widget_set_events (darea, GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK);
     g_signal_connect(G_OBJECT(darea), "button_press_event", G_CALLBACK (on_click_map), NULL);
     init_map();
@@ -77,8 +87,7 @@ int main(int argc, char** argv)
     gtk_widget_hide(Item_retour_pt_normaux);
     gtk_widget_hide(Item_cacher_pt_interet);
 
-    gtk_main();  // fonction de boucle de gtk
-  
+    gtk_main();  
     return 0;
 }
 
