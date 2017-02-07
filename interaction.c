@@ -44,20 +44,9 @@ void init_boutton(){
     Button_log3 = gtk_toggle_button_new_with_label("Log 3");
     g_signal_connect(G_OBJECT(Button_log3), "clicked",G_CALLBACK(choix_logs),NULL);
     gtk_box_pack_start(GTK_BOX (pHBox), Button_log3, FALSE, FALSE, 0);
-    
-    
-    Button_Ouverture_Logs = gtk_button_new_with_label("ouvrir un logs");
-    g_signal_connect(G_OBJECT(Button_Ouverture_Logs), "clicked",G_CALLBACK(ouverture_logs),NULL);
-    
-    gtk_box_pack_start(GTK_BOX(pHBox), Button_Ouverture_Logs, FALSE, FALSE, 0);
 
 
     g_signal_connect (G_OBJECT (window), "key_press_event",G_CALLBACK (on_key_press), NULL);
-
-    gtk_box_pack_start(GTK_BOX(pHBox), Button_choix_logs3, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(pHBox), Button_choix_logs2, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(pHBox), Button_choix_logs1, FALSE, FALSE, 0);
-
 
 
     gtk_box_pack_start(GTK_BOX(pHBox), Button_anonyme, FALSE, FALSE, 0);
@@ -201,6 +190,14 @@ void ouverture_logs()
 
 void choix_logs()
 {
+    GdkRGBA color;
+    color.red=1;
+    color.alpha=1;
+    gtk_widget_override_color(GTK_WIDGET(Button_log1),GTK_STATE_NORMAL, NULL);
+    gtk_widget_override_color(GTK_WIDGET(Button_log2),GTK_STATE_NORMAL, NULL);
+    gtk_widget_override_color(GTK_WIDGET(Button_log3),GTK_STATE_NORMAL, NULL);
+
+
     reset_log_aff();
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button_log1))){
         id_en_cours=0;
@@ -214,5 +211,22 @@ void choix_logs()
         id_en_cours=2;
         ajout_log_aff(&logGlobalClean[2]);
     }
+    if (!gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button_log1))&&!gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button_log2))&&!gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button_log3))){
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(Button_log1),TRUE);
+        id_en_cours=0;
+
+    }   
+    switch(id_en_cours){
+        case 0:
+            gtk_widget_override_color(GTK_WIDGET(Button_log1),GTK_STATE_NORMAL, &color);
+            break;
+        case 1 :
+            gtk_widget_override_color(GTK_WIDGET(Button_log2),GTK_STATE_NORMAL, &color);
+            break;
+        case 2 :
+            gtk_widget_override_color(GTK_WIDGET(Button_log3),GTK_STATE_NORMAL, &color);
+    }
+
+
     maj_map();
 }
