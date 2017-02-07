@@ -28,10 +28,12 @@ void init_boutton(){
     g_signal_connect(G_OBJECT(Button_Affichage_Points_Interets), "clicked",G_CALLBACK(affichage_points_interets),NULL);
     Button_DesAffichage_Points_Interets = gtk_button_new_with_label("Cacher points d'interets");
     g_signal_connect(G_OBJECT(Button_DesAffichage_Points_Interets), "clicked",G_CALLBACK(cacher_points_interets),NULL);
-
     Button_Quitter = gtk_button_new_with_label("Quitter");
     g_signal_connect(G_OBJECT(Button_Quitter), "clicked",G_CALLBACK(gtk_main_quit),NULL);
 
+    Button_Ouverture_Logs = gtk_button_new_with_label("ouvrir un logs");
+    g_signal_connect(G_OBJECT(Button_Ouverture_Logs), "clicked",G_CALLBACK(ouverture_logs),NULL);
+    
 
     Button_log1 = gtk_toggle_button_new_with_label("log 1");
     g_signal_connect(G_OBJECT(Button_log1), "clicked",G_CALLBACK(choix_logs),NULL);
@@ -46,8 +48,10 @@ void init_boutton(){
     gtk_box_pack_start(GTK_BOX (pHBox), Button_log3, FALSE, FALSE, 0);
 
 
+    
     g_signal_connect (G_OBJECT (window), "key_press_event",G_CALLBACK (on_key_press), NULL);
 
+    gtk_box_pack_start(GTK_BOX(pHBox), Button_Ouverture_Logs, FALSE, FALSE, 0);
 
     gtk_box_pack_start(GTK_BOX(pHBox), Button_anonyme, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(pHBox), Button_dyn, FALSE, FALSE, 0);
