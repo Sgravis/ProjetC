@@ -9,8 +9,8 @@
 #include "structure_log.h"
 #include "interaction.h"
 #include "allocation.h"
-#define HFENETRE 1628.0
-#define LFENETRE 680.0
+#define HFENETRE 1628
+#define LFENETRE 680
 
 /*
 *position de la map en fonction du zoom
@@ -26,7 +26,7 @@ map_position map;
 
 typedef struct 
 {
-	logs** tableauLogs;
+	logs* tableauLogs[10];
 	int taille;
 }tabLogs;
 
@@ -67,6 +67,7 @@ point tmp_ano;
 GtkWidget* window;
 GtkWidget* darea;
 GtkWidget *pVBox;
+GtkWidget *pHBox;
 cairo_t* cr;
 cairo_surface_t *image;
 map_position map;
@@ -144,6 +145,6 @@ void log_vers_carte(logs base);
 void log_vers_carte_dyn(logs base);
 
 /*
-*affiche les adresses des points d'interets
+*faire un popup
 */
 #endif

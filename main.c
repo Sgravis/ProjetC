@@ -14,16 +14,13 @@
 #include "structure_log.h"
 #include "interaction.h"
 #include "agglomeration.h"
-#define HFENETRE 1628.0
-#define LFENETRE 680.0
+
 
 int main(int argc, char** argv)
 {
 
     int result;
     int i;
-    int nb_id;
-    int * tableid;
     id_en_cours=0;
     route=0;
     ind_dyn=-1;
@@ -33,13 +30,13 @@ int main(int argc, char** argv)
     info_pt_inte=0;
 
     fp=fopen("geoloc-logs.txt","r");
-    tableid=recuperation_donnees(fp,&nb_id);
+    recuperation_donnees(fp);
     fclose(fp);
 
 
         
-    init_logparid(nb_id,tableid);
-    init_log_clean_id(nb_id,tableid);
+    init_logparid();
+    init_log_clean_id();
 
     recuperation_addr(); 
     printf("nb_id %i\n",nb_id );
@@ -52,7 +49,7 @@ int main(int argc, char** argv)
     id_en_cours=0;
 
     reset_log_aff();
-    ajout_log_aff(&logGlobalClean[id_en_cours]);
+    //ajout_log_aff(&logGlobalClean[id_en_cours]);
 
     gtk_init_check(&argc, &argv);
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -65,10 +62,16 @@ int main(int argc, char** argv)
 
 
     pVBox = gtk_vbox_new(FALSE, 0);
+    pHBox = gtk_box_new(FALSE, 0);
 
     menu_bar(pVBox);
+    
+    init_boutton();
+
 
     gtk_container_add(GTK_CONTAINER(window), pVBox);
+
+
 
     darea = gtk_drawing_area_new();
     gtk_container_add(GTK_CONTAINER(pVBox), darea);
@@ -76,6 +79,7 @@ int main(int argc, char** argv)
     gtk_widget_set_events (darea, GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK);
     g_signal_connect(G_OBJECT(darea), "button_press_event", G_CALLBACK (on_click_map), NULL);
     init_map();
+
 
     gtk_widget_set_size_request(window, 1628, 680);
     gtk_window_set_resizable(GTK_WINDOW(window),FALSE);
@@ -87,7 +91,20 @@ int main(int argc, char** argv)
     gtk_widget_hide(Item_retour_pt_normaux);
     gtk_widget_hide(Item_cacher_pt_interet);
 
-    gtk_main();  
+    
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(Button_log1),TRUE);
+
+
+    gtk_main();
+    fopen("zero","w");
+    remove("zero");
+    fopen("un","w");
+    remove("un");
+    fopen("deux","w");
+    remove("deux");
+    fopen("trois","w");
+    remove("trois");
+
     return 0;
 }
 

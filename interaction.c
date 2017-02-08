@@ -1,5 +1,26 @@
 #include "interaction.h"
 
+void init_boutton(){
+
+
+    Button_log1 = gtk_toggle_button_new_with_label("log 1");
+    g_signal_connect(G_OBJECT(Button_log1), "clicked",G_CALLBACK(choix_logs),NULL);
+    gtk_box_pack_start(GTK_BOX (pHBox), Button_log1, FALSE, FALSE, 0);
+ 
+    Button_log2 = gtk_toggle_button_new_with_label("Log 2");
+    g_signal_connect(G_OBJECT(Button_log2), "clicked",G_CALLBACK(choix_logs),NULL);
+    gtk_box_pack_start(GTK_BOX (pHBox), Button_log2, FALSE, FALSE, 0);
+
+    Button_log3 = gtk_toggle_button_new_with_label("Log 3");
+    g_signal_connect(G_OBJECT(Button_log3), "clicked",G_CALLBACK(choix_logs),NULL);
+    gtk_box_pack_start(GTK_BOX (pHBox), Button_log3, FALSE, FALSE, 0);
+
+
+    g_signal_connect (G_OBJECT (window), "key_press_event",G_CALLBACK (on_key_press), NULL);
+
+    gtk_box_pack_start(GTK_BOX(pVBox), pHBox, FALSE, FALSE, 0); 
+}
+
 /**
  * detection du double clique pour l'actualisation du zoom
  */
@@ -24,10 +45,10 @@ void on_click_map(GtkWidget* darea, GdkEventButton* event, void* data)
         maj_map();
     }
 
+
     if(anonyme_step==1)
     {
-        printf("event->x = %f  event->y =%f\n",event->x,event->y);
-        
+       
         pt_tampon.longitude=pixel_to_coord_long(event->x);
         pt_tampon.latitude=pixel_to_coord_lat(event->y);
 
@@ -37,25 +58,32 @@ void on_click_map(GtkWidget* darea, GdkEventButton* event, void* data)
     }
     if(info_pt_inte==1)
     {   
-        pt_tampon.longitude=pixel_to_coord_long(event->x);
-        pt_tampon.latitude=pixel_to_coord_lat(event->y);
-        x=event->x;
-        y=event->y;
-        int i=1;
+        pt_x=event->x;
+        pt_y=event->y;
+
+        int i=0;
         int rue = NULL;
         char string[40] = "Aucun point d'interets trouvés";
-        while (i<tableau_centre_interet[0].taillept){
-                if (x >= (tableau_centre_interet[i].longitude-100) && x <= (tableau_centre_interet[i].longitude+100) && y >= (tableau_centre_interet[i].latitude-100) && y <= (tableau_centre_interet[i].longitude+100))
+        char string2[40]= "tempon";
+        while (i<tableau_centre_interet[0].taillept+1){
+
+                if (pt_x<coord_to_pixel_long(tableau_centre_interet[i].longitude)+(100/6) && pt_x>coord_to_pixel_long(tableau_centre_interet[i].longitude)-(100/6) && pt_y>coord_to_pixel_lat(tableau_centre_interet[i].latitude)-(100/6) && pt_y<coord_to_pixel_lat(tableau_centre_interet[i].latitude)+(100/6))
                 {
-                    strcpy(string,tableau_centre_interet[i].adresse);
-                     strcpy(string,"ok");
+        
                     rue = tableau_centre_interet[i].numero_rue ;
+                    sprintf(string,"%d ",rue);
+                    strcat(string,tableau_centre_interet[i].adresse);
+                    sprintf(string2,"%d ",tableau_centre_interet[i].agglomerat);
+                    strcat(string,"\n Le seuil est de : ");
+                    strcat(string,string2);
+
                     break;
                 }
                 i++;
             }
-        printf("L'adresse est: %i %s\n",rue,string);
 
+
+        popup2(string);
         info_pt_inte=0;
     }
 
@@ -75,6 +103,16 @@ int popup(char* nom)
 	return result;
 }
 
+void popup2(char* nom)
+{
+    GtkWidget *pDialog;
+    gchar *sDialogText;
+    sDialogText = g_strdup_printf(nom);
+    pDialog = gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_INFO,GTK_BUTTONS_OK,sDialogText);
+    gtk_dialog_run(GTK_DIALOG(pDialog));
+    gtk_widget_destroy(pDialog);
+    g_free(sDialogText);
+}
 void popupclose(char* nom)
 {
     GtkWidget *dialog;
@@ -123,8 +161,6 @@ void ouverture_logs()
     GtkWidget *nav;
     int res;
     GSList* list_logs;
-    //GtkFileFilter* filtre;
-    //filtre=gtk_file_filter_new();
 
     nav = gtk_file_chooser_dialog_new ("Ouvrir logs",GTK_WINDOW(window),GTK_FILE_CHOOSER_ACTION_OPEN,"Cancel",GTK_RESPONSE_CANCEL,"Open",GTK_RESPONSE_ACCEPT,NULL);
     GtkFileChooser *chooser = GTK_FILE_CHOOSER (nav);
@@ -135,26 +171,33 @@ void ouverture_logs()
 
     res = gtk_dialog_run (GTK_DIALOG (nav));
     if (res == GTK_RESPONSE_ACCEPT)
-      {
+    {
         char *filename;
         list_logs = gtk_file_chooser_get_filenames (chooser);
-      }
-    while (list_logs != NULL){
-        printf("location du fichier : %s\n",(char*)list_logs->data);
-        list_logs=list_logs->next;
+        while (list_logs != NULL){
+            printf("location du fichier : %s\n",(char*)list_logs->data);
+            list_logs=list_logs->next;
+        }
+        g_slist_free(list_logs);
     }
-    g_slist_free(list_logs);
-
     gtk_widget_destroy (nav);
 }
 
-void choix_logs(GtkButton* bouton, gpointer data)
+void choix_logs()
 {
-    id_en_cours=GPOINTER_TO_INT(data);
     reset_log_aff();
-    ajout_log_aff(&logGlobalClean[id_en_cours]);
-
-
+    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button_log1))){
+        id_en_cours=0;
+        ajout_log_aff(&logGlobalClean[0]);
+    }
+    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button_log2))){
+        id_en_cours=1;
+        ajout_log_aff(&logGlobalClean[1]);
+    }
+    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button_log3))){
+        id_en_cours=2;
+        ajout_log_aff(&logGlobalClean[2]);
+    }
     maj_map();
 }
 
@@ -223,6 +266,10 @@ void menu_bar(GtkWidget* widget){
     gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), Item_afficher_pt_suppr);
     g_signal_connect(G_OBJECT(Item_afficher_pt_suppr), "activate", G_CALLBACK(resurrection_point),NULL);
 
+    Item_anonym_manu = gtk_menu_item_new_with_label("Anonymisation manuel");
+    gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), Item_anonym_manu);
+    g_signal_connect(G_OBJECT(Item_anonym_manu), "activate", G_CALLBACK(do_anonymous),NULL);
+
     Item_anonym_auto = gtk_menu_item_new_with_label("Anonymisation auto");
     gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), Item_anonym_auto);
     g_signal_connect(G_OBJECT(Item_anonym_auto), "activate", G_CALLBACK(detection_pt_interet),NULL);
@@ -236,30 +283,6 @@ void menu_bar(GtkWidget* widget){
     gtk_menu_item_set_submenu(GTK_MENU_ITEM(Menu_gestion), pMenu);
     gtk_menu_shell_append(GTK_MENU_SHELL(pMenuBar), Menu_gestion);
 
-    /*Menu logd*/
-/*
-    pMenu = gtk_menu_new();
-
-    Menu_Ouverture_Logs = gtk_menu_item_new_with_label("Ouverture logs");
-    gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), Menu_Ouverture_Logs);
-    g_signal_connect(G_OBJECT(Menu_Ouverture_Logs), "activate",G_CALLBACK(ouverture_logs),NULL);
-
-    Menu_log1 = gtk_radio_menu_item_new_with_label(NULL, "log 1");
-    gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), Menu_log1);
-    g_signal_connect(G_OBJECT(Menu_log1), "activate",G_CALLBACK(choix_logs),GINT_TO_POINTER(nb_log=0));
-
-    Menu_log2 = gtk_radio_menu_item_new_with_label_from_widget(GTK_MENU_RADIO_ITEM(Menu_log1), "Log 2");
-    gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), Menu_log1);
-    g_signal_connect(G_OBJECT(Menu_log2), "activate",G_CALLBACK(choix_logs),GINT_TO_POINTER(nb_log=1));
-
-    Menu_log3 = gtk_radio_menu_item_new_with_label_from_widget(GTK_MENU_RADIO_ITEM(Menu_log1), "log 3");
-    gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), Menu_log1);
-    g_signal_connect(G_OBJECT(Menu_log3), "activate",G_CALLBACK(choix_logs),GINT_TO_POINTER(nb_log=2));
-
-    Menu_logs = gtk_menu_item_new_with_label("Logs");
-
-    gtk_menu_item_set_submenu(GTK_MENU_ITEM(Menu_logs), pMenu);
-    gtk_menu_shell_append(GTK_MENU_SHELL(pMenuBar), Menu_logs);
 
     /*Ajout a la fenetre*/
 

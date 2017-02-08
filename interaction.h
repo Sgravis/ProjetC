@@ -12,9 +12,17 @@
 
 
 
+
 /*
 *Element du menu
 */
+
+GtkWidget *Button_log2;
+GtkWidget *Button_log1;
+GtkWidget *Button_log3;
+GtkWidget *Button_choix_logs1;
+GtkWidget *Button_choix_logs2;
+GtkWidget *Button_choix_logs3;
 
 GtkWidget *pMenuBar;
 GtkWidget *pMenu;
@@ -30,6 +38,7 @@ GtkWidget *Item_remise_a_zero;
 GtkWidget *Item_retour_pt_normaux;
 GtkWidget *Item_afficher_pt_suppr;
 GtkWidget *Item_anonym_auto;
+GtkWidget *Item_anonym_manu;
 GtkWidget *Item_mode_dynam;
 GtkWidget *Menu_gestion;
 GtkWidget *Menu_Ouverture_Logs;
@@ -46,6 +55,8 @@ int route;
 point pt_tampon;
 float x;
 float y;
+long double pt_x;
+long double pt_y;
 
 void on_click_map(GtkWidget* darea,GdkEventButton* event, void* data);
 int popup(char* nom);
@@ -53,10 +64,13 @@ void popupclose(char* nom);
 void do_anonymous(GtkWidget* pbutton, GdkEventButton* event, void* data);
 void on_key_press(GtkWidget *widget, GdkEventKey *event);
 void ouverture_logs();
-void choix_logs(GtkButton* boutton,gpointer data);
+void popup2(char* nom);
+
 void adresse_pt_interet();
 //void choix_logs1();
 //void choix_logs2();
 //void choix_logs3();
+
+void choix_logs();
 
 #endif
