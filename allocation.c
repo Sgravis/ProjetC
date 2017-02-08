@@ -44,7 +44,7 @@
 
 void init_tableau_global(int taille)
  {
-    logGlobal.tableauPoint= (point*)malloc(taille*sizeof(point));
+    logGlobal.tableauPoint= (point*)calloc(taille,sizeof(point));
 
  }
 

@@ -14,6 +14,7 @@ void agglomeration()
 {
 	int i,j,k,cpt=0;
 	logs detectmp;
+    printf("%d\n",logGlobalClean[id_en_cours].tailleTab );
 	for (i=0 ; i<logGlobalClean[id_en_cours].tailleTab ; i++) 
 	{
 		for (j = i+1 ; j < logGlobalClean[id_en_cours].tailleTab ; j++)

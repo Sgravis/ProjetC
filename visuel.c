@@ -186,6 +186,8 @@ void on_draw(GtkWidget *widget, cairo_t *crg,gpointer data)
 	}
 	else
 	{
+		
+	    printf("%d\n",logGlobalClean[id_en_cours].tailleTab );
 		if (route==1)
 			do_route(ind_dyn);
 		afficher_logs(1);

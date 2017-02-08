@@ -20,6 +20,7 @@ void affichage_points_interets();
 void recherche_adresse_point(point p,int cpt);
 void cacher_points_interets();
 int recherche_seuil(point p);
+void ajout_log_file(char * name_file);
 
 /*void copie_points_base_addr (pointaddr* point1, pointaddr* point2);*/
 /*addr copie_tableau_addr(addr tab,int taille);*/

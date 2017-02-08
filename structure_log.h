@@ -21,7 +21,6 @@ typedef struct
 	int tailleTab;
 }logs;
 
-
 int id_en_cours;
 int nb_id;
 int * tableid;

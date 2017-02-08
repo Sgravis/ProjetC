@@ -1,5 +1,5 @@
 #include "interaction.h"
-
+#include "remplissage.h"
 
 
 
@@ -185,19 +185,19 @@ void ouverture_logs()
 
     res = gtk_dialog_run (GTK_DIALOG (nav));
     if (res == GTK_RESPONSE_ACCEPT)
-      {
+    {
         char *filename;
         list_logs = gtk_file_chooser_get_filenames (chooser);
-      }
-    else{
-        gtk_widget_destroy(nav);
-    }
-    while (list_logs != NULL){
-        printf("location du fichier : %s\n",(char*)list_logs->data);
-        list_logs=list_logs->next;
-    }
-    g_slist_free(list_logs);
+        while (list_logs != NULL){
 
+            printf("location du fichier : %s\n",(char*)list_logs->data);
+            char * name = list_logs->data;
+            printf("%s\n",name );
+            ajout_log_file(name);
+            list_logs=list_logs->next;
+        }
+        g_slist_free(list_logs);
+    }
     gtk_widget_destroy (nav);
 }
 
