@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <fcntl.h>
 #include <time.h>
 #include "remplissage.h"
@@ -28,6 +29,8 @@ int main(int argc, char** argv)
     logs tlog;
     FILE *fp;
     info_pt_inte=0;
+    system("/home/lville/Documents/ProjetC/integration_log.sh");
+
 
     fp=fopen("geoloc-logs.txt","r");
     recuperation_donnees(fp);
@@ -42,11 +45,12 @@ int main(int argc, char** argv)
     printf("nb_id %i\n",nb_id );
     for(id_en_cours=0;id_en_cours<nb_id;id_en_cours++){   
         printf("id_en_cours %i\n",id_en_cours );
-        initialisation_route();
         agglomeration();
+        initialisation_route();
     }
     
     id_en_cours=0;
+
 
     reset_log_aff();
     //ajout_log_aff(&logGlobalClean[id_en_cours]);

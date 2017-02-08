@@ -1,7 +1,9 @@
 #include "interaction.h"
+#include "remplissage.h"
+
+
 
 void init_boutton(){
-
 
     Button_log1 = gtk_toggle_button_new_with_label("log 1");
     g_signal_connect(G_OBJECT(Button_log1), "clicked",G_CALLBACK(choix_logs),NULL);
@@ -16,7 +18,9 @@ void init_boutton(){
     gtk_box_pack_start(GTK_BOX (pHBox), Button_log3, FALSE, FALSE, 0);
 
 
+    
     g_signal_connect (G_OBJECT (window), "key_press_event",G_CALLBACK (on_key_press), NULL);
+
 
     gtk_box_pack_start(GTK_BOX(pVBox), pHBox, FALSE, FALSE, 0); 
 }
@@ -61,10 +65,10 @@ void on_click_map(GtkWidget* darea, GdkEventButton* event, void* data)
         pt_x=event->x;
         pt_y=event->y;
 
-        int i=0;
+        int i=1;
         int rue = NULL;
-        char string[40] = "Aucun point d'interets trouvés";
-        char string2[40]= "tempon";
+        char string[60] = "Aucun point d'interets trouvés";
+        char string2[60]= "tempon";
         while (i<tableau_centre_interet[0].taillept+1){
 
                 if (pt_x<coord_to_pixel_long(tableau_centre_interet[i].longitude)+(100/6) && pt_x>coord_to_pixel_long(tableau_centre_interet[i].longitude)-(100/6) && pt_y>coord_to_pixel_lat(tableau_centre_interet[i].latitude)-(100/6) && pt_y<coord_to_pixel_lat(tableau_centre_interet[i].latitude)+(100/6))
@@ -175,7 +179,10 @@ void ouverture_logs()
         char *filename;
         list_logs = gtk_file_chooser_get_filenames (chooser);
         while (list_logs != NULL){
+
             printf("location du fichier : %s\n",(char*)list_logs->data);
+            char * name = list_logs->data;
+            ajout_log_file(name);
             list_logs=list_logs->next;
         }
         g_slist_free(list_logs);
@@ -183,8 +190,16 @@ void ouverture_logs()
     gtk_widget_destroy (nav);
 }
 
+
 void choix_logs()
 {
+    GdkRGBA color;
+    color.red=1;
+    color.alpha=1;
+    gtk_widget_override_color(GTK_WIDGET(Button_log1),GTK_STATE_NORMAL, NULL);
+    gtk_widget_override_color(GTK_WIDGET(Button_log2),GTK_STATE_NORMAL, NULL);
+    gtk_widget_override_color(GTK_WIDGET(Button_log3),GTK_STATE_NORMAL, NULL);
+
     reset_log_aff();
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button_log1))){
         id_en_cours=0;
@@ -198,6 +213,25 @@ void choix_logs()
         id_en_cours=2;
         ajout_log_aff(&logGlobalClean[2]);
     }
+
+    /*if (!gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button_log1))&&!gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button_log2))&&!gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button_log3))){
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(Button_log1),TRUE);
+        id_en_cours=0;
+
+    }  */
+    
+    switch(id_en_cours){
+        case 0:
+        gtk_widget_override_color(GTK_WIDGET(Button_log1),GTK_STATE_NORMAL, &color);
+        break;
+        case 1 :
+        gtk_widget_override_color(GTK_WIDGET(Button_log2),GTK_STATE_NORMAL, &color);
+        break;
+        case 2 :
+        gtk_widget_override_color(GTK_WIDGET(Button_log3),GTK_STATE_NORMAL, &color);
+    }
+
+
     maj_map();
 }
 
