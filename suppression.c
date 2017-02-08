@@ -112,7 +112,13 @@ int comparaison_point(point p1, point p2)
 void detection_pt_interet()
 {
     int i,j;
-    int nb_pt_centre_interet=((logGlobalClean[id_en_cours].tailleAvantSup)/17);
+    int nb_pt_centre_interet;
+    if (logGlobalClean[id_en_cours].tailleAvantSup> 1000){
+        nb_pt_centre_interet=((logGlobalClean[id_en_cours].tailleAvantSup)/17);
+    }
+    else{
+          nb_pt_centre_interet=((logGlobalClean[id_en_cours].tailleAvantSup)/10);
+    }
     printf("%i\n",nb_pt_centre_interet);
     logs tmp=copie_tableau(logGlobalClean[id_en_cours],logGlobalClean[id_en_cours].tailleTab);
     logs tab_cercle;

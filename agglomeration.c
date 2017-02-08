@@ -186,7 +186,13 @@ void initialisation_route_logBack()
 void detection_agglomerat_logBack()
 {
     int i,j;
-    int nb_pt_centre_interet=((logBack.tailleTab)/17);
+    int nb_pt_centre_interet;
+    if (logGlobalClean[id_en_cours].tailleAvantSup> 1000){
+        nb_pt_centre_interet=((logGlobalClean[id_en_cours].tailleAvantSup)/17);
+    }
+    else{
+      nb_pt_centre_interet=((logGlobalClean[id_en_cours].tailleAvantSup)/10);
+  }
     logs tmp=copie_tableau(logBack,logBack.tailleTab);
     logs tab_cercle;
     logs tab_cercle2;

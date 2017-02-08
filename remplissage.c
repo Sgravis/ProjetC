@@ -409,7 +409,13 @@ void affichage_points_interets()
     gtk_widget_hide(Button_Affichage_Points_Interets);
     gtk_widget_show(Button_DesAffichage_Points_Interets);
     int i,j,seuil;
-    int nb_pt_centre_interet=((logGlobalClean[id_en_cours].tailleAvantSup)/17);
+    int nb_pt_centre_interet;
+    if (logGlobalClean[id_en_cours].tailleAvantSup> 1000){
+        nb_pt_centre_interet=((logGlobalClean[id_en_cours].tailleAvantSup)/17);
+    }
+    else{
+          nb_pt_centre_interet=((logGlobalClean[id_en_cours].tailleAvantSup)/10);
+    }
     logs tmp=copie_tableau(logGlobalClean[id_en_cours],logGlobalClean[id_en_cours].tailleTab);
     logs tab_cercle;
     logs tab_cercle2;
@@ -438,8 +444,7 @@ void affichage_points_interets()
             tableau_centre_interet[cpt].taillept=rayon; 
             recherche_adresse_point(tab_cercle.tableauPoint[0],cpt);
             seuil=recherche_seuil(tab_cercle.tableauPoint[0]);
-            printf("seuil : %i \n",seuil);
-                        seuil=0;
+            tableau_centre_interet[cpt].agglomerat=seuil;
             cpt++;  
             free(tab_cercle.tableauPoint);
             
@@ -457,49 +462,54 @@ int recherche_seuil(point p){
     int a;
     int nombre=0;
     point centre;
-        for (a=0;a<nb_id;a++)
+    for (a=0;a<nb_id;a++)
+    {
+        if (id_en_cours != a)
         {
-            if (id_en_cours != a)
+            int i,j;
+            int nb_pt_centre_interet;
+            if (logGlobalClean[id_en_cours].tailleAvantSup> 1000){
+                nb_pt_centre_interet=((logGlobalClean[id_en_cours].tailleAvantSup)/17);
+            }
+            else{
+              nb_pt_centre_interet=((logGlobalClean[id_en_cours].tailleAvantSup)/10);
+          }
+          logs tmp=copie_tableau(logGlobalClean[a],logGlobalClean[a].tailleTab);
+          logs tab_cercle;
+          logs tab_cercle2;
+          int rayon=100;
+          tableau_centre_interet[0].taillept=0;
+          for(i=0;i<tmp.tailleTab;i++)
+          {
+           tab_cercle=detection_circulaire(tmp.tableauPoint[i],rayon,tmp);
+           if (tab_cercle.tailleTab >=nb_pt_centre_interet)
+           {
+               for(j=0;j<tab_cercle.tailleTab;j++)
+               {
+                   tab_cercle2=detection_circulaire(tab_cercle.tableauPoint[j],rayon,tmp);
+                   if (tab_cercle2.tailleTab>tab_cercle.tailleTab)
+                   {
+                    free(tab_cercle.tableauPoint);
+                    tab_cercle.tailleTab=tab_cercle2.tailleTab;
+                    tab_cercle.tableauPoint=tab_cercle2.tableauPoint;
+                    j=0;
+                }
+
+            }
+            suppression_sans_backup(tab_cercle,&tmp);
+            centre=tab_cercle.tableauPoint[0];
+            if (sqrt(pow(((p.latitude-centre.latitude)*111*1000),2)+pow(((centre.longitude-p.longitude)*76*1000),2))<rayon)
             {
-                printf("oui\n");
-                     int i,j;
-                     int nb_pt_centre_interet=((logGlobalClean[a].tailleAvantSup)/17);
-                     logs tmp=copie_tableau(logGlobalClean[a],logGlobalClean[a].tailleTab);
-                     logs tab_cercle;
-                     logs tab_cercle2;
-                     int rayon=100;
-                     tableau_centre_interet[0].taillept=0;
-                     for(i=0;i<tmp.tailleTab;i++)
-                     {
-                         tab_cercle=detection_circulaire(tmp.tableauPoint[i],rayon,tmp);
-                         if (tab_cercle.tailleTab >=nb_pt_centre_interet)
-                         {
-                             for(j=0;j<tab_cercle.tailleTab;j++)
-                             {
-                                 tab_cercle2=detection_circulaire(tab_cercle.tableauPoint[j],rayon,tmp);
-                                 if (tab_cercle2.tailleTab>tab_cercle.tailleTab)
-                               {
-                                    free(tab_cercle.tableauPoint);
-                                  tab_cercle.tailleTab=tab_cercle2.tailleTab;
-                                    tab_cercle.tableauPoint=tab_cercle2.tableauPoint;
-                                    j=0;
-                                }
-
-                            }
-                            suppression_sans_backup(tab_cercle,&tmp);
-                            centre=tab_cercle.tableauPoint[0];
-                            if (sqrt(pow(((p.latitude-centre.latitude)*111*1000),2)+pow(((centre.longitude-p.longitude)*76*1000),2))<rayon)
-                             {
-                                 nombre++;
-                             }
+               nombre++;
+           }
 
 
-                        } 
-                 }
+       } 
+   }
 
-             }
-     }
-     return nombre;
+}
+}
+return nombre;
 }
 
 
