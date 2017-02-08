@@ -67,7 +67,6 @@ void init_logparid()
     }
 }
 
-
 /*void liberer(logs tlog)
 {
     int i;

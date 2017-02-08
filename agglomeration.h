@@ -16,7 +16,11 @@
 void agglomeration ();
 void initialisation_route();
 void detection_agglomerat();
-void redefinition_grosseur_agglomerat(logs a_supr, float rayon, logs * tmp);
 void ajout_agglomerat(logs tableau_agglomerat, float rayon, logs *tmp);
 
+
+void agglomeration_logBack ();
+void initialisation_route_logBack();
+void ajout_agglomerat_logBack(logs tableau_agglomerat, float rayon, logs *tmp);
+void detection_agglomerat_logBack();
 #endif

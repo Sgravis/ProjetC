@@ -164,6 +164,7 @@ void init_log_clean_id ()
     for (i=0 ; i<nb_id ; i++)
     {
         logGlobalClean[i].tailleTab=tableid[i];
+        logGlobalClean[i].tailleAvantSup=tableid[i];
         printf("%d\n", logGlobalClean[i].tailleTab);
         for(j=0 ; j < tableid[i] ; j++)
         {
@@ -252,9 +253,9 @@ void backup_file(logs tlog)
 void resurrection_point()
 {
 
- FILE * fp;
- if (id_en_cours == 0)
- {
+   FILE * fp;
+   if (id_en_cours == 0)
+   {
     fp=fopen("zero","r");
 }
 if (id_en_cours == 1)
@@ -300,8 +301,11 @@ for(i=0;i<nb_lignes;i++)
     logBack.tableauPoint[i].agglomerat=0;
 }
 logBack.tailleTab=nb_lignes;
+logBack.tailleAvantSup=nb_lignes;
         //reset_log_aff();
 ajout_log_aff(&logBack);
+initialisation_route_logBack();
+agglomeration_logBack();
         //g_signal_connect(G_OBJECT(darea),"draw",G_CALLBACK(on_draw),&logBack);
 maj_map();
 }
@@ -320,7 +324,6 @@ void remise_pt_normal(){
 void recuperation_addr() /* au lieu initialiser ici la base adresse, faire une fonction d'initialisation*/
 {
     FILE *fp;
-    //int numero;
     char c;
     char adresse[40];
     int i,j,nb_lignes,k=0;
@@ -369,17 +372,35 @@ void remise_a_zero()
     for (i=0 ; i<nb_id ; i++) {
         free(logGlobalClean[i].tableauPoint);
     }
+    int en_cours=id_en_cours;
     free(logGlobalClean);
     init_logparid();
     init_log_clean_id();
-    agglomeration();
-    initialisation_route();
-    if(remove("BackupPoints.txt")<0)
+    if(remove("zero")<0)
     {
         perror("");
     }
+    if(remove("un")<0)
+    {
+        perror("");
+    }
+    if(remove("deux")<0)
+    {
+        perror("");
+    }
+    if(remove("trois")<0)
+    {
+        perror("");
+    }
+    for(id_en_cours=0;id_en_cours<nb_id;id_en_cours++){   
+        printf("id_en_cours %i\n",id_en_cours );
+        initialisation_route();
+        agglomeration();
+    }
+    id_en_cours=en_cours;
     reset_log_aff();
     ajout_log_aff(&logGlobalClean[id_en_cours]);
+
     maj_map();
 }
 
@@ -397,7 +418,7 @@ void affichage_points_interets()
     gtk_widget_hide(Button_Affichage_Points_Interets);
     gtk_widget_show(Button_DesAffichage_Points_Interets);
     int i,j,seuil;
-    int nb_pt_centre_interet=((logGlobalClean[id_en_cours].tailleTab)/17);
+    int nb_pt_centre_interet=((logGlobalClean[id_en_cours].tailleAvantSup)/17);
     logs tmp=copie_tableau(logGlobalClean[id_en_cours],logGlobalClean[id_en_cours].tailleTab);
     logs tab_cercle;
     logs tab_cercle2;
@@ -459,35 +480,45 @@ int recherche_seuil(point p){
             tableau_centre_interet[0].taillept=0;
             for(i=0;i<tmp.tailleTab;i++)
             {
-               tab_cercle=detection_circulaire(tmp.tableauPoint[i],rayon,tmp);
-               if (tab_cercle.tailleTab >=nb_pt_centre_interet)
-               {
-                   for(j=0;j<tab_cercle.tailleTab;j++)
-                   {
-                       tab_cercle2=detection_circulaire(tab_cercle.tableauPoint[j],rayon,tmp);
-                       if (tab_cercle2.tailleTab>tab_cercle.tailleTab)
-                       {
-                        free(tab_cercle.tableauPoint);
-                        tab_cercle.tailleTab=tab_cercle2.tailleTab;
-                        tab_cercle.tableauPoint=tab_cercle2.tableauPoint;
-                        j=0;
-                    }
-
-                }
-                suppression_sans_backup(tab_cercle,&tmp);
-                centre=tab_cercle.tableauPoint[0];
-                if (sqrt(pow(((p.latitude-centre.latitude)*111*1000),2)+pow(((centre.longitude-p.longitude)*76*1000),2))<rayon)
+                printf("oui\n");
+                int i,j;
+                int nb_pt_centre_interet=((logGlobalClean[a].tailleAvantSup)/17);
+                logs tmp=copie_tableau(logGlobalClean[a],logGlobalClean[a].tailleTab);
+                logs tab_cercle;
+                logs tab_cercle2;
+                int rayon=100;
+                tableau_centre_interet[0].taillept=0;
+                for(i=0;i<tmp.tailleTab;i++)
                 {
-                   nombre++;
-               }
+                 tab_cercle=detection_circulaire(tmp.tableauPoint[i],rayon,tmp);
+                 if (tab_cercle.tailleTab >=nb_pt_centre_interet)
+                 {
+                     for(j=0;j<tab_cercle.tailleTab;j++)
+                     {
+                         tab_cercle2=detection_circulaire(tab_cercle.tableauPoint[j],rayon,tmp);
+                         if (tab_cercle2.tailleTab>tab_cercle.tailleTab)
+                         {
+                            free(tab_cercle.tableauPoint);
+                            tab_cercle.tailleTab=tab_cercle2.tailleTab;
+                            tab_cercle.tableauPoint=tab_cercle2.tableauPoint;
+                            j=0;
+                        }
+
+                    }
+                    suppression_sans_backup(tab_cercle,&tmp);
+                    centre=tab_cercle.tableauPoint[0];
+                    if (sqrt(pow(((p.latitude-centre.latitude)*111*1000),2)+pow(((centre.longitude-p.longitude)*76*1000),2))<rayon)
+                    {
+                     nombre++;
+                 }
 
 
-           } 
-       }
+             } 
+         }
 
-   }
-}
-return nombre;
+     }
+ }
+ return nombre;
 }
 
 

@@ -9,8 +9,8 @@
 #include "structure_log.h"
 #include "interaction.h"
 #include "allocation.h"
-#define HFENETRE 1628.0
-#define LFENETRE 680.0
+#define HFENETRE 1628
+#define LFENETRE 680
 
 /*
 *position de la map en fonction du zoom

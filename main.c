@@ -15,8 +15,7 @@
 #include "structure_log.h"
 #include "interaction.h"
 #include "agglomeration.h"
-#define HFENETRE 1628.0
-#define LFENETRE 680.0
+
 
 
 int main(int argc, char** argv)
@@ -79,17 +78,22 @@ int main(int argc, char** argv)
 
     //initialisation_route(logGlobalClean[id_en_cours]);
     
-    gtk_widget_set_size_request(window, 1628, 680);
+    gtk_widget_set_size_request(window, HFENETRE,LFENETRE);
     gtk_window_set_resizable(GTK_WINDOW(window),FALSE);
     gtk_widget_show_all(window); 
+
     gtk_widget_hide(Button_hidePoints);
     gtk_widget_hide(Button_showPoints);
     gtk_widget_hide(Button_noroad);
     gtk_widget_hide(Button_Remise_pt_normal);
     gtk_widget_hide(Button_DesAffichage_Points_Interets);
+    
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(Button_log1),TRUE);
 
 
     gtk_main();
+    fopen("zero","w");
+    remove("zero");
     fopen("un","w");
     remove("un");
     fopen("deux","w");

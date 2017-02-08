@@ -19,6 +19,7 @@ typedef struct
 {
 	point * tableauPoint;
 	int tailleTab;
+	int tailleAvantSup;
 }logs;
 
 int id_en_cours;
