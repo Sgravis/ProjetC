@@ -253,9 +253,9 @@ void backup_file(logs tlog)
 void resurrection_point()
 {
 
-   FILE * fp;
-   if (id_en_cours == 0)
-   {
+ FILE * fp;
+ if (id_en_cours == 0)
+ {
     fp=fopen("zero","r");
 }
 if (id_en_cours == 1)
@@ -466,59 +466,49 @@ int recherche_seuil(point p){
     int a;
     int nombre=0;
     point centre;
-    for (a=0;a<nb_id;a++)
-    {
-        if (id_en_cours != a)
+        for (a=0;a<nb_id;a++)
         {
-            printf("oui\n");
-            int i,j;
-            int nb_pt_centre_interet=((logGlobalClean[a].tailleTab)/17);
-            logs tmp=copie_tableau(logGlobalClean[a],logGlobalClean[a].tailleTab);
-            logs tab_cercle;
-            logs tab_cercle2;
-            int rayon=100;
-            tableau_centre_interet[0].taillept=0;
-            for(i=0;i<tmp.tailleTab;i++)
+            if (id_en_cours != a)
             {
                 printf("oui\n");
-                int i,j;
-                int nb_pt_centre_interet=((logGlobalClean[a].tailleAvantSup)/17);
-                logs tmp=copie_tableau(logGlobalClean[a],logGlobalClean[a].tailleTab);
-                logs tab_cercle;
-                logs tab_cercle2;
-                int rayon=100;
-                tableau_centre_interet[0].taillept=0;
-                for(i=0;i<tmp.tailleTab;i++)
-                {
-                 tab_cercle=detection_circulaire(tmp.tableauPoint[i],rayon,tmp);
-                 if (tab_cercle.tailleTab >=nb_pt_centre_interet)
-                 {
-                     for(j=0;j<tab_cercle.tailleTab;j++)
+                     int i,j;
+                     int nb_pt_centre_interet=((logGlobalClean[a].tailleAvantSup)/17);
+                     logs tmp=copie_tableau(logGlobalClean[a],logGlobalClean[a].tailleTab);
+                     logs tab_cercle;
+                     logs tab_cercle2;
+                     int rayon=100;
+                     tableau_centre_interet[0].taillept=0;
+                     for(i=0;i<tmp.tailleTab;i++)
                      {
-                         tab_cercle2=detection_circulaire(tab_cercle.tableauPoint[j],rayon,tmp);
-                         if (tab_cercle2.tailleTab>tab_cercle.tailleTab)
+                         tab_cercle=detection_circulaire(tmp.tableauPoint[i],rayon,tmp);
+                         if (tab_cercle.tailleTab >=nb_pt_centre_interet)
                          {
-                            free(tab_cercle.tableauPoint);
-                            tab_cercle.tailleTab=tab_cercle2.tailleTab;
-                            tab_cercle.tableauPoint=tab_cercle2.tableauPoint;
-                            j=0;
-                        }
+                             for(j=0;j<tab_cercle.tailleTab;j++)
+                             {
+                                 tab_cercle2=detection_circulaire(tab_cercle.tableauPoint[j],rayon,tmp);
+                                 if (tab_cercle2.tailleTab>tab_cercle.tailleTab)
+                               {
+                                    free(tab_cercle.tableauPoint);
+                                  tab_cercle.tailleTab=tab_cercle2.tailleTab;
+                                    tab_cercle.tableauPoint=tab_cercle2.tableauPoint;
+                                    j=0;
+                                }
 
-                    }
-                    suppression_sans_backup(tab_cercle,&tmp);
-                    centre=tab_cercle.tableauPoint[0];
-                    if (sqrt(pow(((p.latitude-centre.latitude)*111*1000),2)+pow(((centre.longitude-p.longitude)*76*1000),2))<rayon)
-                    {
-                     nombre++;
+                            }
+                            suppression_sans_backup(tab_cercle,&tmp);
+                            centre=tab_cercle.tableauPoint[0];
+                            if (sqrt(pow(((p.latitude-centre.latitude)*111*1000),2)+pow(((centre.longitude-p.longitude)*76*1000),2))<rayon)
+                             {
+                                 nombre++;
+                             }
+
+
+                        } 
                  }
 
-
-             } 
-         }
-
+             }
      }
- }
- return nombre;
+     return nombre;
 }
 
 
@@ -579,4 +569,5 @@ void ajout_log_file(char * name_file)
         agglomeration();
         initialisation_route();
     }
+    printf("ajout du fichier terminé\n");
 }

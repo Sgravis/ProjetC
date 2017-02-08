@@ -187,7 +187,6 @@ void ouverture_logs()
 
             printf("location du fichier : %s\n",(char*)list_logs->data);
             char * name = list_logs->data;
-            printf("%s\n",name );
             ajout_log_file(name);
             list_logs=list_logs->next;
         }
@@ -195,6 +194,7 @@ void ouverture_logs()
     }
     gtk_widget_destroy (nav);
 }
+
 
 void choix_logs()
 {
@@ -204,7 +204,6 @@ void choix_logs()
     gtk_widget_override_color(GTK_WIDGET(Button_log1),GTK_STATE_NORMAL, NULL);
     gtk_widget_override_color(GTK_WIDGET(Button_log2),GTK_STATE_NORMAL, NULL);
     gtk_widget_override_color(GTK_WIDGET(Button_log3),GTK_STATE_NORMAL, NULL);
-
 
     reset_log_aff();
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button_log1))){
@@ -219,20 +218,22 @@ void choix_logs()
         id_en_cours=2;
         ajout_log_aff(&logGlobalClean[2]);
     }
-    if (!gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button_log1))&&!gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button_log2))&&!gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button_log3))){
+
+    /*if (!gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button_log1))&&!gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button_log2))&&!gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button_log3))){
         gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(Button_log1),TRUE);
         id_en_cours=0;
 
-    }   
+    }  */
+    
     switch(id_en_cours){
         case 0:
-            gtk_widget_override_color(GTK_WIDGET(Button_log1),GTK_STATE_NORMAL, &color);
-            break;
+        gtk_widget_override_color(GTK_WIDGET(Button_log1),GTK_STATE_NORMAL, &color);
+        break;
         case 1 :
-            gtk_widget_override_color(GTK_WIDGET(Button_log2),GTK_STATE_NORMAL, &color);
-            break;
+        gtk_widget_override_color(GTK_WIDGET(Button_log2),GTK_STATE_NORMAL, &color);
+        break;
         case 2 :
-            gtk_widget_override_color(GTK_WIDGET(Button_log3),GTK_STATE_NORMAL, &color);
+        gtk_widget_override_color(GTK_WIDGET(Button_log3),GTK_STATE_NORMAL, &color);
     }
 
 
