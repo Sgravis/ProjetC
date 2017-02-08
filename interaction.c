@@ -68,9 +68,8 @@ void on_click_map(GtkWidget* darea, GdkEventButton* event, void* data)
         int i=1;
         int rue = NULL;
         char string[60] = "Aucun point d'interets trouvés";
-        char string2[60]= "tempon";
+        char string2[60]= "";
         while (i<tableau_centre_interet[0].taillept+1){
-
                 if (pt_x<coord_to_pixel_long(tableau_centre_interet[i].longitude)+(100/6) && pt_x>coord_to_pixel_long(tableau_centre_interet[i].longitude)-(100/6) && pt_y>coord_to_pixel_lat(tableau_centre_interet[i].latitude)-(100/6) && pt_y<coord_to_pixel_lat(tableau_centre_interet[i].latitude)+(100/6))
                 {
         
@@ -78,9 +77,10 @@ void on_click_map(GtkWidget* darea, GdkEventButton* event, void* data)
                     sprintf(string,"%d ",rue);
                     strcat(string,tableau_centre_interet[i].adresse);
                     sprintf(string2,"%d ",tableau_centre_interet[i].agglomerat);
-                    strcat(string,"\n Le seuil est de : ");
+                    printf("%s\n", string2);
+                    strcat(string," Le seuil est de : ");
                     strcat(string,string2);
-
+                    printf("%s\n",string );
                     break;
                 }
                 i++;
