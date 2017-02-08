@@ -189,9 +189,9 @@ void afficher_tableau(int taille, logs tab)
     int i;
     for(i=0;i<taille;i++)
     {
-       //printf("date:%ld,lat:%Lf,long:%Lf\n",tab.tableauPoint[i].date,tab.tableauPoint[i].latitude,tab.tableauPoint[i].longitude);
        printf("\nici :%d\n",i );
-       printf("taille : %i\n",tab.tableauPoint[i].taillept);
+       printf("date:%ld,lat:%Lf,long:%Lf\n",tab.tableauPoint[i].date,tab.tableauPoint[i].latitude,tab.tableauPoint[i].longitude);
+       //printf("taille : %i\n",tab.tableauPoint[i].taillept);
        //printf("adresse : %i,%s\n",tab.tableauPoint[i].numero_rue,tab.tableauPoint[i].adresse);
     }
 }

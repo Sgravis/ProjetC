@@ -1,6 +1,11 @@
 #! /bin/bash
 
+
 nbdonnes=0
+if [ -d geoloc-logs.txt ]
+then
+	rm geoloc-logs.txt
+fi
 nbid=$(ls logs[0-9].txt | wc -l)
 echo $nbid > geoloc-logs.txt
 for i in $(seq 1 $nbid) 
